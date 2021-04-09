@@ -17,7 +17,7 @@
 - As a user, I want to add events to the calendar, because I want myself and the collaborators to see it
 - As a user, I want to add groceries, because I want to keep a record of what I need
 - As a user, I want to vote on an option, because we value democracy
-- As a user, I want to add a recipe and update it, because I like it's easier to cook with it
+- As a user, I want to add a recipe and update it, because I it's easier to cook with it
 - As a user, I want to select ingredients and send them to the groceries list, because I'm lazy
 - As a user, I want to share and view pictures with collaborators, because I don't want to ask anybody to send me pics
 - As a user, I want to assign chores that can update a progress bar, because we like gamifying stuff
@@ -26,6 +26,7 @@
 - As a user, I want to be greeted by a home page, because I want to feel welcomed and get some direction
 - As a user, I want to see hints on how to use widgets when they're empty, because I don't know how to use them
 - As a user, I want to add groceries by using my google assistant, because it's convenient
+- groceries send msg/email on calendar event
 
 ### Project
 - As a user, I want to add equipment for my supervisor to buy, because it's easier
