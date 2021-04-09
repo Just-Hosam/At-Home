@@ -1,0 +1,16 @@
+INSERT INTO groceries (dashboard_id, text) VALUES
+(1, 'milk'),
+(1, 'cereal'),
+(1, 'chicken'),
+(1, 'juice'),
+(1, 'cheese'),
+(2, 'milk'),
+(2, 'cereal'),
+(2, 'chicken'),
+(2, 'juice'),
+(2, 'cheese'),
+(3, 'milk'),
+(3, 'cereal'),
+(3, 'chicken'),
+(3, 'juice'),
+(3, 'cheese');
