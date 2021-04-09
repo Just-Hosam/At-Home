@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS ingredients CASCADE;
+
+CREATE TABLE ingredients (
+  id SERIAL PRIMARY KEY NOT NULL,
+  recipe_id INTEGER REFERENCES recipes(id) ON DELETE CASCADE,
+  item VARCHAR(255) NOT NULL,
+  measurement VARCHAR(255) NOT NULL
+);

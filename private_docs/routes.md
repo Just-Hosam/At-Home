@@ -18,10 +18,10 @@ DELETE  DELETE  /dashboards/:id (STRETCH)
 
 ## DASHBOARD/ID/GROCERIES
 
-BROWSE  GET     /groceries
+BROWSE  GET     /groceries (DONE)
 <!-- READ    GET     /groceries/:id -->
-EDIT    PATCH   /groceries/:id
-ADD     POST    /groceries
+EDIT    PATCH   /groceries/:id (DONE)
+ADD     POST    /groceries (DONE)
 DELETE  DELETE  /groceries/:id (STRETCH)
 
 ## DASHBOARD/ID/RECIPES
