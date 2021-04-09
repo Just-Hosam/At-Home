@@ -35,12 +35,14 @@ app.use(methodOverride('_method'));
 
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
-const pollsRouter = require('./routes/polls.js');
 
+
+const pollsRouter = require('./routes/polls.js');
 // Mount all resource routes
 app.use('/users', usersRouter);
-app.use('/dashboard/:dashboardId/polls', pollsRouter);
 
+
+app.use('/dashboard/:dashboardId/polls', pollsRouter);
 // Main routes
 app.get('/', (req, res) => {
 	res.send('Hello World');
