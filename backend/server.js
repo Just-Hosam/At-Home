@@ -35,9 +35,11 @@ app.use(methodOverride('_method'));
 
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
+const groceriesRouter = require('./routes/groceries.js');
 
 // Mount all resource routes
 app.use('/users', usersRouter);
+app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 
 // Main routes
 app.get('/', (req, res) => {
