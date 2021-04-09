@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS events CASCADE;
+
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY NOT NULL,
+  dashboard_id INTEGER REFERENCES dashboards(id) ON DELETE CASCADE,
+  name VARCHAR(255) NOT NULL,
+  start_at DATE NOT NULL,
+  end_at DATE NOT NULL,
+  description TEXT NOT NULL
+);

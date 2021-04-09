@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS dashboards CASCADE;
+
+CREATE TABLE dashboards (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  groceries BOOLEAN NOT NULL,
+  recipes BOOLEAN NOT NULL,
+  events BOOLEAN NOT NULL,
+  polls BOOLEAN NOT NULL,
+  photos BOOLEAN NOT NULL,
+  chores BOOLEAN NOT NULL,
+  contacts BOOLEAN NOT NULL
+);
