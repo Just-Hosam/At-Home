@@ -1,5 +1,3 @@
-import '../styles/Polls.scss';
-
 const OptionsListItem = (props) => {
 
 const onVote = () => {

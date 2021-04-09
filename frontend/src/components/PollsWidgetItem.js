@@ -1,5 +1,3 @@
-import '../styles/Polls.scss';
-
 const PollsWidgetItem = (props) => {
 
 	return (
@@ -16,7 +14,6 @@ const PollsWidgetItem = (props) => {
 			</h3>
 		</div>
 	
-		
 		</section>
 	);
 };
