@@ -38,15 +38,21 @@ const usersRouter = require('./routes/users.js');
 const groceriesRouter = require('./routes/groceries.js');
 const photosRouter = require('./routes/photos.js');
 
+
+const pollsRouter = require('./routes/polls.js');
+
 // Mount all resource routes
 app.use('/users', usersRouter);
 app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
 
+app.use('/dashboard/:dashboardId/polls', pollsRouter);
+
 // Main routes
 app.get('/', (req, res) => {
 	res.send('Hello World');
 });
+
 
 app.listen(PORT, () => {
 	console.log(`Final_Project listening on port ${PORT}`);
