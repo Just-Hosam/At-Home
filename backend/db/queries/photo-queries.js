@@ -32,45 +32,46 @@ const getPhoto = (dashboardId, photoId) => {
 };
 
 // might change depending on how react behaves
-const addGrocery = (dashboardId, newGrocery) => {
+const addPhoto = (dashboardId, imgUrl, imgText) => {
 	const text = `
-  INSERT INTO groceries (dashboard_id, text)
-	VALUES ($1, $2);`;
-	const values = [dashboardId, newGrocery];
+  INSERT INTO photos (dashboard_id, img_url, text)
+	VALUES ($1, $2, $3)
+	RETURNING *;`;
+	const values = [dashboardId, imgUrl, imgText];
 
 	return db
 		.query(text, values)
 		.then((res) => res)
 		.catch((err) =>
-			console.log('Error at groceries queries "addGrocery"', err)
+			console.log('Error at photos queries "addPhoto"', err)
 		);
 };
 
-const toggleGrocery = (dashboardId, groceryId) => {
-	return getGrocery(dashboardId, groceryId)
+const editPhoto = (dashboardId, imgUrl, imgText, photoId) => {
+	return getPhoto(dashboardId, photoId)
 		.then((res) => {
 			const text = `
-			UPDATE groceries
-			SET done = $1
-			WHERE dashboard_id = $2
-			AND id = $3;`;
-			const values = [!res.done, dashboardId, groceryId];
+			UPDATE photos
+			SET img_url = $2 AND text = $3
+			WHERE dashboard_id = $1
+			AND id = $4;`;
+			const values = [dashboardID, imgUrl, imgText, photoId];
 
 			return db
 				.query(text, values)
 				.then((res) => res)
 				.catch((err) =>
-					console.log('Error at groceries queries "toggleGrocery"', err)
+					console.log('Error at photos queries "editPhoto"', err)
 				);
 		})
 		.catch((err) =>
-			console.log('Error at groceries queries "toggleGrocery"', err)
+			console.log('Error at photos queries "editPhoto"', err)
 		);
 };
 
 module.exports = {
 	getPhotos,
 	getPhoto,
-	addGrocery,
-	toggleGrocery,
+	addPhoto,
+	editPhoto,
 };
