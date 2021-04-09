@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers } = require('../db/user-queries');
+const { getUsers } = require('../db/queries/user-queries');
 
 // use bcrypt to hash passwords (we might have to add the other bcrypt for nolan)
 // const bcrypt = require('bcrypt');

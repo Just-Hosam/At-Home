@@ -5,7 +5,7 @@ const {
 	addGrocery,
 	toggleGrocery,
 	getGrocery,
-} = require('../db/grocery-queries');
+} = require('../db/queries/grocery-queries');
 
 router.get('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
