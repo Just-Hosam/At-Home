@@ -1,4 +1,4 @@
-const db = require('../lib/db.js');
+const db = require('../../lib/db.js');
 
 const getGroceries = (dashboardId) => {
 	const text = `
@@ -11,7 +11,7 @@ const getGroceries = (dashboardId) => {
 		.query(text, values)
 		.then((res) => res.rows)
 		.catch((err) =>
-			console.log('Error at groceries queries "addGrocery"', err)
+			console.log('Error at groceries queries "getGroceries"', err)
 		);
 };
 
