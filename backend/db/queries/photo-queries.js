@@ -31,7 +31,6 @@ const getPhoto = (dashboardId, photoId) => {
 		);
 };
 
-// might change depending on how react behaves
 const addPhoto = (dashboardId, imgUrl, imgText) => {
 	const text = `
   INSERT INTO photos (dashboard_id, img_url, text)
@@ -48,22 +47,16 @@ const addPhoto = (dashboardId, imgUrl, imgText) => {
 };
 
 const editPhoto = (dashboardId, imgUrl, imgText, photoId) => {
-	return getPhoto(dashboardId, photoId)
-		.then((res) => {
-			const text = `
-			UPDATE photos
-			SET img_url = $2 AND text = $3
-			WHERE dashboard_id = $1
-			AND id = $4;`;
-			const values = [dashboardID, imgUrl, imgText, photoId];
+	const text = `
+	UPDATE photos
+	SET img_url = $1, text = $2
+	WHERE dashboard_id = $3
+	AND id = $4;`;
+	const values = [imgUrl, imgText, dashboardId, photoId];
 
-			return db
-				.query(text, values)
-				.then((res) => res)
-				.catch((err) =>
-					console.log('Error at photos queries "editPhoto"', err)
-				);
-		})
+	return db
+		.query(text, values)
+		.then((res) => res)
 		.catch((err) =>
 			console.log('Error at photos queries "editPhoto"', err)
 		);

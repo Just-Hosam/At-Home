@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
 		.catch((err) => console.log('Error at photos GET route "/"', err));
 });
 
-// Used for testing purposes only
 router.get('/:photoId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 	const photoId = req.params.photoId;
@@ -29,9 +28,12 @@ router.get('/:photoId', (req, res) => {
 
 router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const photo = req.body.img_src;
+	const imgUrl = req.body.img_url;
+	const imgText = req.body.text;
 
-	addPhoto(dashboardId, photo)
+	console.log(req.body)
+
+	addPhoto(dashboardId, imgUrl, imgText)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at photos POST route "/"', err));
 });
@@ -39,8 +41,10 @@ router.post('/', (req, res) => {
 router.patch('/:photoId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 	const photoId = req.params.photoId;
+	const imgUrl = req.body.img_url;
+	const imgText = req.body.text;
 
-	editPhoto(dashboardId, photoId)
+	editPhoto(dashboardId, imgUrl, imgText, photoId)
 		.then((data) => res.json(data))
 		.catch((err) =>
 			console.log('Error at photos PATCH route "/:photoId"', err)
