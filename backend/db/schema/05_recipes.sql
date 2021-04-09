@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS recipes CASCADE;
+
+CREATE TABLE recipes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  dashboard_id INTEGER REFERENCES dashboards(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  directions TEXT NOT NULL
+);
