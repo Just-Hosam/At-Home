@@ -1,16 +1,4 @@
-// import React from 'react'
-// import 
-// export default function Photos() {
-//   return (
-//     <div>
-      
-//     </div>
-//   )
-// }
-
-
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
@@ -18,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import axios from 'axios';
 
 const tutorialSteps = [
   {
@@ -72,8 +61,22 @@ export default function Photos() {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = tutorialSteps.length;
+  
+  const dashboardId = 1; // TODO: needs useContext
+  const [photos, setPhotos] = useState([]);
+  const maxSteps = photos.length;
 
+	useEffect(() => {
+		axios
+			.get(`/dashboards/${dashboardId}/photos/`)
+			.then((res) => {
+        console.log('setState', res.data)
+        setPhotos(res.data)
+      })
+			.catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
+	}, []);
+  console.log(photos)
+  console.log(activeStep)
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -85,12 +88,12 @@ export default function Photos() {
   return (
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
-        <Typography>{tutorialSteps[activeStep].label}</Typography>
+        <Typography>{maxSteps > 0 && photos[activeStep].text}</Typography>
       </Paper>
       <img
         className={classes.img}
-        src={tutorialSteps[activeStep].imgPath}
-        alt={tutorialSteps[activeStep].label}
+        src={maxSteps > 0 && photos[activeStep].img_url}
+        alt={maxSteps > 0 && photos[activeStep].text}
       />
       <MobileStepper
         steps={maxSteps}
