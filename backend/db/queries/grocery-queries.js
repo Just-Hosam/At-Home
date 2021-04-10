@@ -4,7 +4,8 @@ const getGroceries = (dashboardId) => {
 	const text = `
   SELECT * 
   FROM groceries
-  WHERE dashboard_id = $1;`;
+  WHERE dashboard_id = $1
+	ORDER BY id DESC;`;
 	const values = [dashboardId];
 
 	return db
@@ -31,16 +32,16 @@ const getGrocery = (dashboardId, groceryId) => {
 		);
 };
 
-// might change depending on how react behaves
 const addGrocery = (dashboardId, newGrocery) => {
 	const text = `
   INSERT INTO groceries (dashboard_id, text)
-	VALUES ($1, $2);`;
+	VALUES ($1, $2)
+	RETURNING *;`;
 	const values = [dashboardId, newGrocery];
 
 	return db
 		.query(text, values)
-		.then((res) => res)
+		.then((res) => res.rows[0])
 		.catch((err) =>
 			console.log('Error at groceries queries "addGrocery"', err)
 		);
