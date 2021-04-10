@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import parsePollingData from "./Polling/parsePollingData";
+import parsePollingData from "./parsePollingData";
 
 const PollsWidgetItem = (props) => {
 
@@ -9,6 +9,7 @@ const PollsWidgetItem = (props) => {
   //set initial state
   const [state, setState] = useState({
 		isCreate: false,
+		pollsInput: '',
 		poll: [],
     options: [],
 		hasVoted: true
@@ -52,14 +53,48 @@ const renderWidget = () => {
 };
 
 
-const transitionToCreate = () => {
+// const transitionToCreate = () => {
 
+// 		setState((prev) => ({
+//         ...prev,
+//         isCreate: true
+//       }));
+
+// }
+
+const createPoll = input => {
+
+	if (!input || state.options.length > 0){
+		return alert("Invalid Input")
+	}
+
+	for (const item in input){
+
+		if(!input[item] || input[item === '']){
+			return alert("Missing Require Field")
+		}
+	}
+
+
+		axios.post(`/dashboards/${dash_id}/polls`, {input})
+		.then((res) => {
+    return axios.post(`/dashboards/${dash_id}/polls/options`, {input});
+  })
+  .then((final) => {
+   
 		setState((prev) => ({
         ...prev,
-        isCreate: true
+				isCreate: false,
+				pollsInput: '',
+        poll: [],
+				options: [],
+				hasVoted:false
       }));
+		renderWidget();
+  });
+};
 
-}
+
 
 
 const castVote = index => {
@@ -67,12 +102,11 @@ const castVote = index => {
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
 	
-		renderWidget();
 		setState((prev) => ({
         ...prev,
         hasVoted: true
       }));
-
+	renderWidget();
 	})
 	).catch(err => console.log(err));
 }
@@ -80,9 +114,9 @@ const castVote = index => {
 
 const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
-	if(!admin){
-		return alert("You do not have delete privlages.")
-	}
+	// if(!admin){
+	// 	return alert("You do not have delete privlages.")
+	// }
 	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
@@ -94,7 +128,6 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
         poll: [],
 				options: [],
 				hasVoted: false
-			
       }));
 
     }).catch(err => console.log(err));
@@ -102,7 +135,7 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
 
 //parse polling data for UI
-	const pollingData = parsePollingData(state, castVote);
+	const pollingData = parsePollingData(state, createPoll, castVote);
 
 	return (
 		<section className="polls">
@@ -122,6 +155,7 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 	
 		<footer className='footer'>
 	{state.options[0] ? 	<button onClick={() => deletePoll()}>Delete</button> : null}
+
 		</footer>
 
 		</section>
