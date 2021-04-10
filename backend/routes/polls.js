@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const { getPolls,
 				getOptions,
+				createPoll,
+				createOptions,
 				addVote,
 				deletePoll,
 				deleteOptions
@@ -19,10 +21,32 @@ router.get('/', (req, res) => {
 //fetch options details
 router.get('/options', (req, res) => {
 	const values = [req.params.dashboardId];
-console.log(values);
+
 	getOptions(values)
 	.then((pollsData) => res.json(pollsData.rows))
 	.catch((err) => console.log('Error at options GET route "/"', err));
+});
+
+//create a new poll
+router.post('/', (req, res) => {
+
+	const values  = [req.params.dashboardId];
+	console.log(req.body);
+
+	createPoll(values)
+	.then((createdData) => res.json(createdData))
+	.catch((err) => console.log('Error at polls CREATE route "/"', err));
+});
+
+//create new options
+router.post('/options', (req, res) => {
+
+	const values  = [req.params.dashboardId];
+	console.log(req.body);
+
+	createOptions(values)
+	.then((createdData) => res.json(createdData))
+	.catch((err) => console.log('Error at polls CREATE route "/"', err));
 });
 
 

@@ -22,6 +22,24 @@ const getOptions = values => {
 	return db.query(text,values);
 };
 
+const createPoll = values => {
+
+		const text = `
+	INSERT INTO polls (dashboard_id, title, description) 
+	VALUES($1,$2,$3);`;
+
+	return db.query(text,values);
+}
+
+const createOptions = values => {
+
+	const text = `
+	INSERT INTO options (poll_id, choice, votes) 
+	VALUES ($1,$2, 0);`;
+
+	return db.query(text,values);
+}
+
 
 const addVote = values => {
 
