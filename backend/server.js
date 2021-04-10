@@ -22,6 +22,7 @@ app.use(morgan('dev'));
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
 app.use(
 	cookieSession({
@@ -38,7 +39,6 @@ const usersRouter = require('./routes/users.js');
 const groceriesRouter = require('./routes/groceries.js');
 const photosRouter = require('./routes/photos.js');
 
-
 const pollsRouter = require('./routes/polls.js');
 
 // Mount all resource routes
@@ -52,7 +52,6 @@ app.use('/dashboard/:dashboardId/polls', pollsRouter);
 app.get('/', (req, res) => {
 	res.send('Hello World');
 });
-
 
 app.listen(PORT, () => {
 	console.log(`Final_Project listening on port ${PORT}`);
