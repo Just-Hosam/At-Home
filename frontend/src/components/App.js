@@ -1,6 +1,6 @@
+import Groceries from './widgets/Groceries'; // will be added later
 import usePolling from "../hooks/usePolling";
 import parsePollingData from "./Polling/parsePollingData";
-
 
 const App = () => {
 
