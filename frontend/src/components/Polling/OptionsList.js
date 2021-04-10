@@ -5,8 +5,11 @@ const OptionsList = (props) => {
 	return (
 		
 	<OptionsListItem
+		index={props.index}
 		options={props.options}
 		votes={props.votes}
+		vote={props.vote}
+		hasVoted={props.hasVoted}
   />
 	);
 };

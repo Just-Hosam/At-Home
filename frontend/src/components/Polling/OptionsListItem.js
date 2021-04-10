@@ -1,8 +1,5 @@
 const OptionsListItem = (props) => {
 
-const onVote = () => {
-	alert("Democracy coming soon...");
-}
 
 	return (
 		
@@ -12,7 +9,7 @@ const onVote = () => {
 
 		<div className='vote'>
 		{props.votes}
-		<button onClick={() => onVote()}>Vote</button>
+		<button disabled={props.hasVoted} onClick={() => props.vote(props.id)}>Vote</button>
 		</div>
 		</div>
 		</section>
