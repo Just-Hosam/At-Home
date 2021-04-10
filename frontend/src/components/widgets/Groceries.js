@@ -2,68 +2,67 @@ import React, { useState, useEffect } from 'react'
 
 import Grocery from './Grocery';
 
+const axios = require('axios');
+
 export default function Groceries() {
-  // const dashboardId = 1;
+  const dashboardId = 1; // TODO: needs useContext
 
-  // useEffect(() => {
-  //   axios.get(`http://localhost:8080/dashboards/${dashboardId}/groceries/`)
-  //     .then((res) => setGroceries(res))
-  //     .catch(err => console.log('I AM A COMPONENT ERROR', err))
-  // })
-  const tempGroceries = [
-    {
-      "id": 1,
-      "dashboard_id": 1,
-      "text": "milk",
-      "done": false
-    },
-    {
-      "id": 2,
-      "dashboard_id": 1,
-      "text": "cereal",
-      "done": false
-    },
-    {
-      "id": 4,
-      "dashboard_id": 1,
-      "text": "juice",
-      "done": false
-    },
-    {
-      "id": 5,
-      "dashboard_id": 1,
-      "text": "cheese",
-      "done": true
-    },
-    {
-      "id": 16,
-      "dashboard_id": 1,
-      "text": "pens",
-      "done": true
-    },
-    {
-      "id": 3,
-      "dashboard_id": 1,
-      "text": "chicken",
-      "done": true
-    }
-  ]
+  const [groceries, setGroceries] = useState([]);
+  const [input, setInput] = useState('');
 
-  const [groceries, setGroceries] = useState(tempGroceries);
+  useEffect(() => {
+    axios.get(`/dashboards/${dashboardId}/groceries/`)
+      .then((res) => setGroceries(res.data))
+      .catch(err => console.log('I AM A COMPONENT ERROR', err))
+  }, [])
+
+  const toggleGrocery = (dashboardId, groceryId) => {
+    axios.patch(`/dashboards/${dashboardId}/groceries/${groceryId}`)
+      .then(() => {
+        const newGroceriesArr = groceries.map(elem => (elem.id === groceryId) ? { ...elem, done: !elem.done } : elem);
+        setGroceries([...newGroceriesArr]);
+      })
+      .catch(err => console.log('I"M THE PATCH MONSTER', err))
+  };
+
+  const addGrocery = (inputGrocery) => {
+    axios.post(`/dashboards/${dashboardId}/groceries/`, {inputGrocery})
+      .then((res) => {
+        setGroceries([res.data, ...groceries]);
+        setInput('');
+      })
+      .catch(err => console.log('I"M THE POST MONSTER', err));
+  };
 
   const unCheckedList = groceries.filter(grocery => !grocery.done);
   const checkedList = groceries.filter(grocery => grocery.done);
 
-  const unCheckedComponents = unCheckedList.map(grocery => <Grocery itemId={grocery.id} item={grocery.text} />)
-  const checkedComponents = checkedList.map(grocery => <Grocery itemId={grocery.id} item={grocery.text} />)
+  const unCheckedComponents = unCheckedList.map(grocery => (
+    <Grocery
+      key={grocery.id}
+      itemId={grocery.id}
+      item={grocery.text}
+      onClick={toggleGrocery}
+      dashboardId={dashboardId}
+    />
+  ))
+  const checkedComponents = checkedList.map(grocery => (
+    <Grocery
+      key={grocery.id}
+      itemId={grocery.id}
+      item={grocery.text}
+      onClick={toggleGrocery}
+      dashboardId={dashboardId}
+    />
+  ))
   
   return (
     <div id='widget-groceries'>
       <h1>Groceries</h1>
-      <div id='input-groceries'>
-        <input type="text"/>
-        <button>Hello</button>
-      </div>
+      <form id='input-groceries' onSubmit={event => event.preventDefault()}>
+        <input value={input} onChange={event => setInput(event.target.value)} type="text"/>
+        <button onClick={() => addGrocery(input)}>Hello</button>
+      </form>
       {unCheckedList.length > 0 && unCheckedComponents}
       <p>checked list</p>
       {checkedList.length > 0 && checkedComponents}
