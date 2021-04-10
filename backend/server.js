@@ -45,8 +45,7 @@ const pollsRouter = require('./routes/polls.js');
 app.use('/users', usersRouter);
 app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
-
-app.use('/dashboard/:dashboardId/polls', pollsRouter);
+app.use('/dashboards/:dashboardId/polls', pollsRouter);
 
 // Main routes
 app.get('/', (req, res) => {
