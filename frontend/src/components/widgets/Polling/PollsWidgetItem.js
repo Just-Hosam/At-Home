@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import parsePollingData from "./parsePollingData";
+import PieChart from "./PieChart";
 
 const PollsWidgetItem = (props) => {
 
@@ -114,9 +115,9 @@ const castVote = index => {
 
 const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
-	// if(!admin){
-	// 	return alert("You do not have delete privlages.")
-	// }
+	if(!admin){
+		return alert("You do not have delete privlages.")
+	}
 	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
@@ -144,11 +145,15 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 		<h1>{!state.hasVoted ? pollingData.title :  "Thanks for Voting!"}</h1>
 		</header>
 
-		<h3>{!state.hasVoted ? pollingData.description : "PIE CHART"}</h3>
+		<h3>{!state.hasVoted ? pollingData.description : <PieChart
+																											title={pollingData.title}
+																											options={pollingData.options}
+																										 />
+		}</h3>
 		
 		<div>
 			<h3>
-				{pollingData.options}
+				{!state.hasVoted ? pollingData.options : null}
 			</h3>
 		</div>
 
