@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import parsePollingData from "./Polling/parsePollingData";
+import parsePollingData from "./parsePollingData";
+import PieChart from "./PieChart";
 
 const PollsWidgetItem = (props) => {
 
@@ -9,6 +10,7 @@ const PollsWidgetItem = (props) => {
   //set initial state
   const [state, setState] = useState({
 		isCreate: false,
+		pollsInput: '',
 		poll: [],
     options: [],
 		hasVoted: true
@@ -52,14 +54,48 @@ const renderWidget = () => {
 };
 
 
-const transitionToCreate = () => {
+// const transitionToCreate = () => {
 
+// 		setState((prev) => ({
+//         ...prev,
+//         isCreate: true
+//       }));
+
+// }
+
+const createPoll = input => {
+
+	if (!input || state.options.length > 0){
+		return alert("Invalid Input")
+	}
+
+	for (const item in input){
+
+		if(!input[item] || input[item === '']){
+			return alert("Missing Require Field")
+		}
+	}
+
+
+		axios.post(`/dashboards/${dash_id}/polls`, {input})
+		.then((res) => {
+    return axios.post(`/dashboards/${dash_id}/polls/options`, {input});
+  })
+  .then((final) => {
+   
 		setState((prev) => ({
         ...prev,
-        isCreate: true
+				isCreate: false,
+				pollsInput: '',
+        poll: [],
+				options: [],
+				hasVoted:false
       }));
+		renderWidget();
+  });
+};
 
-}
+
 
 
 const castVote = index => {
@@ -67,12 +103,11 @@ const castVote = index => {
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
 	
-		renderWidget();
 		setState((prev) => ({
         ...prev,
         hasVoted: true
       }));
-
+	renderWidget();
 	})
 	).catch(err => console.log(err));
 }
@@ -94,7 +129,6 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
         poll: [],
 				options: [],
 				hasVoted: false
-			
       }));
 
     }).catch(err => console.log(err));
@@ -102,7 +136,7 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
 
 //parse polling data for UI
-	const pollingData = parsePollingData(state, castVote);
+	const pollingData = parsePollingData(state, createPoll, castVote);
 
 	return (
 		<section className="polls">
@@ -111,17 +145,22 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 		<h1>{!state.hasVoted ? pollingData.title :  "Thanks for Voting!"}</h1>
 		</header>
 
-		<h3>{!state.hasVoted ? pollingData.description : "PIE CHART"}</h3>
+		<h3>{!state.hasVoted ? pollingData.description : <PieChart
+																											title={pollingData.title}
+																											options={pollingData.options}
+																										 />
+		}</h3>
 		
 		<div>
 			<h3>
-				{pollingData.options}
+				{!state.hasVoted ? pollingData.options : null}
 			</h3>
 		</div>
 
 	
 		<footer className='footer'>
 	{state.options[0] ? 	<button onClick={() => deletePoll()}>Delete</button> : null}
+
 		</footer>
 
 		</section>
