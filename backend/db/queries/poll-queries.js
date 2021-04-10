@@ -33,9 +33,9 @@ const createPoll = values => {
 
 const createOptions = values => {
 
-	const text = `
-	INSERT INTO options (poll_id, choice, votes) 
-	VALUES ($1,$2, 0);`;
+const text = `
+INSERT INTO options (poll_id, choice, votes) 
+VALUES ($1,$2,0),($1,$3,0),($1,$4,0);`;
 
 	return db.query(text,values);
 }
@@ -72,6 +72,8 @@ console.log("VALUES", values);
 module.exports = {
 	getPolls,
 	getOptions,
+	createPoll,
+	createOptions,
 	addVote,
 	deletePoll,
 	deleteOptions,

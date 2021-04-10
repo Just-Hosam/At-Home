@@ -1,12 +1,15 @@
 import OptionsList from './OptionsList';
+import CreatePoll from './CreatePoll';
 
-export default function parsePollingData(state, castVote){
+export default function parsePollingData(state, createPoll, castVote){
 
 let data = {
   id: 1,
   title: "Create A New Poll",
-  description: null,
-  options: <button onClick={() => alert("Create new interactive poll!")}>+</button>
+  description: <CreatePoll
+  createPoll={createPoll}
+  />,
+  options: null
 }
 
 if(state.options[0]) {

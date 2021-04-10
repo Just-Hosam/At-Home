@@ -30,8 +30,7 @@ router.get('/options', (req, res) => {
 //create a new poll
 router.post('/', (req, res) => {
 
-	const values  = [req.params.dashboardId];
-	console.log(req.body);
+	const values = [req.params.dashboardId, req.body.input.title, req.body.input.description];
 
 	createPoll(values)
 	.then((createdData) => res.json(createdData))
@@ -41,9 +40,8 @@ router.post('/', (req, res) => {
 //create new options
 router.post('/options', (req, res) => {
 
-	const values  = [req.params.dashboardId];
-	console.log(req.body);
-
+	const values = [req.params.dashboardId, req.body.input.option1, req.body.input.option2,req.body.input.option3];
+	
 	createOptions(values)
 	.then((createdData) => res.json(createdData))
 	.catch((err) => console.log('Error at polls CREATE route "/"', err));
