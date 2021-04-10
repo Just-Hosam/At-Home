@@ -1,4 +1,5 @@
-import PollsWidgetItem from './PollsWidgetItem';
+// import Groceries from './widgets/Groceries';
+
 
 const App = () => {
 
