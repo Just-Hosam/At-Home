@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+// import ListSubheader from '@material-ui/core/ListSubheader';
+// import IconButton from '@material-ui/core/IconButton';
+// import InfoIcon from '@material-ui/icons/Info';
 import axios from 'axios';
 // import tileData from './tileData';
 
@@ -44,14 +44,15 @@ const useStyles = makeStyles((theme) => ({
  *   },
  * ];
  */
-const genCols = () => {
-  axios
-    .get(`/dashboards/${dashboardId}/photos/`)
-};
+// const genCols = () => {
+//   axios
+//     .get(`/dashboards/${dashboardId}/photos/`)
+// };
 
 export default function Gallery() {
   const classes = useStyles();
   const dashboardId = 1;
+  const photoId = null;
   const [tileData, setTileData] = useState([]);
 
   useEffect(() => {
@@ -60,6 +61,13 @@ export default function Gallery() {
       .then((res) => setTileData(res.data))
       .catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
   }, []);
+
+  const loadImage = (i) => {
+    axios
+      .get(`/dashboards/${dashboardId}/photos/${photoId}`)
+  }
+  
+
 
   return (
     <>
@@ -79,19 +87,19 @@ export default function Gallery() {
           <ListSubheader component="div">December</ListSubheader>
         </GridListTile> */}
         {tileData.map((tile) => (
-          <GridListTile key={tile.img_url}>
+          <GridListTile key={tile.img_url} onClick={()=>console.log(`image ${tile.id}`)}>
             <img src={tile.img_url} alt={tile.text} />
             <GridListTileBar
               title={tile.text}
               // subtitle={<span>by: {tile.author}</span>}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about ${tile.title}`}
-                  className={classes.icon}>
-                  action={}
-                  <InfoIcon />
-                </IconButton>
-              }
+              // actionIcon={
+              //   <IconButton
+              //     aria-label={`info about ${tile.title}`}
+              //     className={classes.icon}
+              //   >
+              //     <InfoIcon />
+              //   </IconButton>
+              // }
             />
           </GridListTile>
         ))}
