@@ -2,6 +2,8 @@
 
 
 
+// import Photos from './widgets/Photos';
+// import Gallery from './widgets/Gallery';
 
 
 
