@@ -1,34 +1,35 @@
-import PollsWidget from '../PollsWidget';
-import OptionsList from '../OptionsList';
-export default function parsePollingData(data){
+import OptionsList from './OptionsList';
 
-let polling = <PollsWidget
-key={1}
-title={"Create New Poll"}
-options={<button onClick={() => alert("Add universal create new widget component here...")}>+</button>}
-/>;
+export default function parsePollingData(state, castVote){
 
-if (data[0]){
+let data = {
+  id: 1,
+  title: "Create A New Poll",
+  description: null,
+  options: <button onClick={() => alert("Create new interactive poll!")}>+</button>
+}
 
- const options = data.map((o, index) => {
-  return(
-    <OptionsList
-    key={index}
-    options={o.choice}
-    votes={o.votes}
-    />
-  )
-})
+if(state.options[0]) {
 
-polling = <PollsWidget
-key={1}
-title={data[0].title}
-description={data[0].description}
-options={options}
-/>
+data.title = state.poll[0].title;
+data.description = state.poll[0].description;
+
+data.options = state.options.map((o,index) => {
+
+	return(
+		<OptionsList
+		key={index}
+		index={o.id}
+		options={o.choice}
+		votes={o.votes}
+    vote={() => castVote(o.id)}
+    hasVoted={state.hasVoted}
+  />
+	)
+});
+}
+
+  return data;
 
 }
 
-  return polling;
-
-}
