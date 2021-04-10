@@ -4,7 +4,8 @@ const getGroceries = (dashboardId) => {
 	const text = `
   SELECT * 
   FROM groceries
-  WHERE dashboard_id = $1;`;
+  WHERE dashboard_id = $1
+	ORDER BY id DESC;`;
 	const values = [dashboardId];
 
 	return db
@@ -31,7 +32,6 @@ const getGrocery = (dashboardId, groceryId) => {
 		);
 };
 
-// might change depending on how react behaves
 const addGrocery = (dashboardId, newGrocery) => {
 	const text = `
   INSERT INTO groceries (dashboard_id, text)
