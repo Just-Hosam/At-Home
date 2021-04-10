@@ -26,11 +26,11 @@ DELETE  DELETE  /groceries/:id (STRETCH)
 
 ## DASHBOARD/ID/RECIPES
 
-BROWSE  GET     /recipes
-READ    GET     /recipes/:id
+BROWSE  GET     /recipes (DONE)
+READ    GET     /recipes/:id (DONE)
 EDIT    PATCH   /recipes/:id
-ADD     POST    /recipes
-DELETE  DELETE  /recipes/:id
+ADD     POST    /recipes (DONE)
+DELETE  DELETE  /recipes/:id (DONE)
 
 ## DASHBOARD/ID/RECIPES/ID/INDGREDIENTS
 
