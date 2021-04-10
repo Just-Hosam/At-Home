@@ -54,12 +54,8 @@ export default function Groceries() {
   const unCheckedList = groceries.filter(grocery => !grocery.done);
   const checkedList = groceries.filter(grocery => grocery.done);
 
-  const toggleGrocery = () => {
-
-  }
-
-  const unCheckedComponents = unCheckedList.map(grocery => <Grocery onClick={} itemId={grocery.id} item={grocery.text} />)
-  const checkedComponents = checkedList.map(grocery => <Grocery onClick={} itemId={grocery.id} item={grocery.text} />)
+  const unCheckedComponents = unCheckedList.map(grocery => <Grocery itemId={grocery.id} item={grocery.text} />)
+  const checkedComponents = checkedList.map(grocery => <Grocery itemId={grocery.id} item={grocery.text} />)
   
   return (
     <div id='widget-groceries'>
