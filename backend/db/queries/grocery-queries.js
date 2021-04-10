@@ -35,12 +35,13 @@ const getGrocery = (dashboardId, groceryId) => {
 const addGrocery = (dashboardId, newGrocery) => {
 	const text = `
   INSERT INTO groceries (dashboard_id, text)
-	VALUES ($1, $2);`;
+	VALUES ($1, $2)
+	RETURNING *;`;
 	const values = [dashboardId, newGrocery];
 
 	return db
 		.query(text, values)
-		.then((res) => res)
+		.then((res) => res.rows[0])
 		.catch((err) =>
 			console.log('Error at groceries queries "addGrocery"', err)
 		);
