@@ -7,12 +7,10 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import axios from 'axios';
-import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: '80vw',
-    maxHeight: '80vh',
+    maxHeight: '90vh',
     flexGrow: 1,
   },
   header: {
@@ -23,13 +21,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    // maxHeight: 255,
-    // maxWidth: 400,
-    // overflow: 'hidden',
+    maxHeight: '70vh',
     display: 'block',
-    width: '100%',
-    marginTop: '-24vh',
-    // backgroundSize: 'contains',
+    objectFit: 'contain',
   },
 }));
 
@@ -68,24 +62,16 @@ export default function Photos(props) {
     }
   }
 
-  const divStyle = {
-    maxWidth: '60vw',
-    maxHeight: '60vh',
-    overflow: 'hidden',
-  };
-
   return (
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
         <Typography>{maxSteps > 0 && photos[activeStep].text}</Typography>
       </Paper>
-      <div style={divStyle}>
-        {maxSteps > 0 && <img
-          className={classes.img}
-          src={maxSteps > 0 && photos[activeStep].img_url}
-          alt={maxSteps > 0 ? photos[activeStep].text : "ph"}
-        />}
-      </div>
+      {maxSteps > 0 && <img
+        className={classes.img}
+        src={maxSteps > 0 && photos[activeStep].img_url}
+        alt={maxSteps > 0 ? photos[activeStep].text : "ph"}
+      />}
       <MobileStepper
         steps={maxSteps}
         position="static"
