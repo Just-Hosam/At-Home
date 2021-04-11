@@ -39,9 +39,6 @@ export default function TransitionsModal() {
 
   return (
     <div>
-      {/* <button type="button" onClick={handleOpen}>
-        react-transition-group
-      </button> */}
       <Gallery onClick={(sam) => handleOpen(sam)}/>
       <Modal
         aria-labelledby="transition-modal-title"
