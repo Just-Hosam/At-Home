@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 
 import Gallery from './Gallery';
+import Photos from './Photos';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -23,21 +24,25 @@ const useStyles = makeStyles((theme) => ({
 export default function TransitionsModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [image, setImage] = useState(0);
 
-  const handleOpen = () => {
+  const handleOpen = (i) => {
     setOpen(true);
+    console.log('i', i);
+    setImage(i);
   };
-
+  console.log(`image`, image)
   const handleClose = () => {
     setOpen(false);
+    setImage(0);
   };
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      {/* <button type="button" onClick={handleOpen}>
         react-transition-group
-      </button>
-      <Gallery onClick={handleOpen}/>
+      </button> */}
+      <Gallery onClick={(sam) => handleOpen(sam)}/>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -52,9 +57,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            {open && 'hello'}
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+            <Photos imgIndex={image} />
           </div>
         </Fade>
       </Modal>

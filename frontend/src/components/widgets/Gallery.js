@@ -38,7 +38,8 @@ export default function Gallery(props) {
 
   const loadImage = (targetImg) => {
     setExpandImg(targetImg)
-    props.onClick()
+    console.log(`targetImg.id`, targetImg.id)
+    props.onClick(targetImg.id)
   }
 
   console.log('expandImg : line 67', expandImg)

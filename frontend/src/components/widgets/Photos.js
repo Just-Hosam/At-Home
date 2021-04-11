@@ -7,10 +7,12 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import axios from 'axios';
+import { Hidden } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
+    maxWidth: '80vw',
+    maxHeight: '80vh',
     flexGrow: 1,
   },
   header: {
@@ -21,15 +23,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    height: 255,
-    maxWidth: 400,
-    overflow: 'hidden',
+    // maxHeight: 255,
+    // maxWidth: 400,
+    // overflow: 'hidden',
     display: 'block',
     width: '100%',
+    marginTop: '-24vh',
+    // backgroundSize: 'contains',
   },
 }));
 
-export default function Photos() {
+export default function Photos(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -43,12 +47,13 @@ export default function Photos() {
 			.get(`/dashboards/${dashboardId}/photos/`)
 			.then((res) => {
         console.log('setState', res.data)
-        setPhotos(res.data)
+        setPhotos(res.data);
+        setActiveStep(kyle(res.data, props.imgIndex));
       })
 			.catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
 	}, []);
-  console.log(photos)
-  console.log(activeStep)
+  console.log('props.imgIndex', props.imgIndex)
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -57,16 +62,30 @@ export default function Photos() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const kyle = (photosArr, photoIndex) => {
+    for (const index in photosArr) {
+      if (photosArr[index].id === photoIndex) return Number(index);
+    }
+  }
+
+  const divStyle = {
+    maxWidth: '60vw',
+    maxHeight: '60vh',
+    overflow: 'hidden',
+  };
+
   return (
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
         <Typography>{maxSteps > 0 && photos[activeStep].text}</Typography>
       </Paper>
-      <img
-        className={classes.img}
-        src={maxSteps > 0 && photos[activeStep].img_url}
-        alt={maxSteps > 0 && photos[activeStep].text}
-      />
+      <div style={divStyle}>
+        {maxSteps > 0 && <img
+          className={classes.img}
+          src={maxSteps > 0 && photos[activeStep].img_url}
+          alt={maxSteps > 0 ? photos[activeStep].text : "ph"}
+        />}
+      </div>
       <MobileStepper
         steps={maxSteps}
         position="static"
