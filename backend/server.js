@@ -41,6 +41,7 @@ const photosRouter = require('./routes/photos.js');
 
 const pollsRouter = require('./routes/polls.js');
 const recipesRouter = require('./routes/recipes.js');
+const ingredientsRouter = require('./routes/ingredients.js');
 
 // Mount all resource routes
 app.use('/users', usersRouter);
@@ -48,6 +49,10 @@ app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
 app.use('/dashboards/:dashboardId/polls', pollsRouter);
 app.use('/dashboards/:dashboardId/recipes', recipesRouter);
+app.use(
+	'/dashboards/:dashboardId/recipes/:recipeId/ingredients',
+	ingredientsRouter
+);
 
 // Main routes
 app.get('/', (req, res) => {
