@@ -25,7 +25,7 @@ export default function RecipeEdit(props) {
 				setIngredients(res.data.ingredients);
 			})
 			.catch((err) => console.log('Error getting recipe', err));
-	}, []);
+	}, [dashboardId]);
 
 	const ingredientsList = ingredients.map((elem) => {
 		return (
