@@ -1,5 +1,6 @@
 // import Groceries from './widgets/Groceries';
-// import PollsWidgetItem from './widgets/Polling/PollsWidgetItem';
+import PollsWidget from './widgets/Polling/PollsWidget';
+// import CalendarWidget from './widgets/Calendar/CalendarWidget'
 
 
 
@@ -18,7 +19,7 @@ const App = () => {
 
 	return (
 		<div className="App">
-	
+	<PollsWidget/>
 		</div>
 	);
 };

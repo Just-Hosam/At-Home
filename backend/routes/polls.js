@@ -12,7 +12,7 @@ const { getPolls,
 //fetch poll details
 router.get('/', (req, res) => {
 	const values = [req.params.dashboardId];
-
+console.log(values);
 	getPolls(values)
 	.then((pollsData) => res.json(pollsData.rows))
 	.catch((err) => console.log('Error at polls GET route "/"', err));
@@ -49,7 +49,7 @@ router.post('/options', (req, res) => {
 
 
 // add vote to options
-router.post('/:optionsId', (req, res) => {
+router.post('/', (req, res) => {
 
 	const values  = [req.params.optionsId, req.params.dashboardId];
 

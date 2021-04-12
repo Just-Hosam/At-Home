@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import parsePollingData from "./parsePollingData";
+import parsePollingData from "./ParsePollingData";
 import PieChart from "./PieChart";
 
 const PollsWidgetItem = (props) => {
@@ -54,24 +54,15 @@ const renderWidget = () => {
 };
 
 
-// const transitionToCreate = () => {
-
-// 		setState((prev) => ({
-//         ...prev,
-//         isCreate: true
-//       }));
-
-// }
-
 const createPoll = input => {
 
-	if (!input || state.options.length > 0){
+	if (!input || state.options.length < 1){
 		return alert("Invalid Input")
 	}
 
 	for (const item in input){
 
-		if(!input[item] || input[item === '']){
+		if(!input[item] || input[item] === ''){
 			return alert("Missing Require Field")
 		}
 	}
@@ -92,14 +83,14 @@ const createPoll = input => {
 				hasVoted:false
       }));
 		renderWidget();
-  });
+  }).catch(err => console.log(err));
 };
 
 
 
 
 const castVote = index => {
-
+console.log('index: ', index);
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
 	
