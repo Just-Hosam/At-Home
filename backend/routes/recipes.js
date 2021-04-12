@@ -5,6 +5,7 @@ const {
 	getRecipe,
 	addRecipe,
 	deleteRecipe,
+	updateRecipe,
 } = require('../db/queries/recipe-queries');
 
 router.get('/', (req, res) => {
@@ -27,11 +28,21 @@ router.get('/:recipeId', (req, res) => {
 
 router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const recipe = req.body.inputRecipe;
+	const recipe = req.body;
 
 	addRecipe(dashboardId, recipe)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at recipes POST route "/"', err));
+});
+
+router.patch('/:recipeId', (req, res) => {
+	const recipeObj = req.body;
+
+	updateRecipe(recipeObj)
+		.then((res) => res)
+		.catch((err) =>
+			console.log('Error at recipes PATCH route "/:recipeId"', err)
+		);
 });
 
 router.delete('/:recipeId', (req, res) => {
