@@ -46,6 +46,7 @@ const addPhoto = (dashboardId, imgUrl, imgText) => {
 		);
 };
 
+// TODO : Remove? Edit imgUrl not required. Maybe edit text?
 const editPhoto = (dashboardId, imgUrl, imgText, photoId) => {
 	const text = `
 	UPDATE photos

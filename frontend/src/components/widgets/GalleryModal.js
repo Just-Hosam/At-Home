@@ -28,10 +28,9 @@ export default function TransitionsModal() {
 
   const handleOpen = (i) => {
     setOpen(true);
-    console.log('i', i);
     setImage(i);
   };
-  console.log(`image`, image)
+
   const handleClose = () => {
     setOpen(false);
     setImage(0);
@@ -39,7 +38,7 @@ export default function TransitionsModal() {
 
   return (
     <div>
-      <Gallery onClick={(sam) => handleOpen(sam)}/>
+      <Gallery onClick={(e) => handleOpen(e)}/>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

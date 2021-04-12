@@ -40,13 +40,11 @@ export default function Photos(props) {
 		axios
 			.get(`/dashboards/${dashboardId}/photos/`)
 			.then((res) => {
-        console.log('setState', res.data)
         setPhotos(res.data);
-        setActiveStep(kyle(res.data, props.imgIndex));
+        setActiveStep(getImgIndex(res.data, props.imgIndex));
       })
 			.catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
 	}, []);
-  console.log('props.imgIndex', props.imgIndex)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -56,9 +54,21 @@ export default function Photos(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const kyle = (photosArr, photoIndex) => {
+  const getImgIndex = (photosArr, photoIndex) => {
     for (const index in photosArr) {
       if (photosArr[index].id === photoIndex) return Number(index);
+    }
+  }
+
+  const handleNextKey = (key) => {
+    if (key === 'ArrowRight') {
+      handleNext();
+    }
+  }
+  
+  const handleBackKey = (key) => {
+    if (key === 'ArrowLeft') {
+      handleBack();
     }
   }
 
@@ -78,13 +88,14 @@ export default function Photos(props) {
         variant="text"
         activeStep={activeStep}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+          <Button size="small" onClick={handleNext} onKeyDown={(k) => handleNextKey(k.key)} disabled={activeStep === maxSteps - 1}>
             Next
+            
             {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+          <Button size="small" onClick={handleBack} onKeyDown={(k) => handleBackKey(k.key)} disabled={activeStep === 0}>
             {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
             Back
           </Button>

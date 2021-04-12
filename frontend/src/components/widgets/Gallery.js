@@ -27,7 +27,6 @@ export default function Gallery(props) {
   const classes = useStyles();
   const dashboardId = 1;
   const [tileData, setTileData] = useState([]);
-  const [expandImg, setExpandImg] = useState({});
 
   useEffect(() => {
     axios
@@ -37,12 +36,8 @@ export default function Gallery(props) {
   }, []);
 
   const loadImage = (targetImg) => {
-    setExpandImg(targetImg)
-    console.log(`targetImg.id`, targetImg.id)
     props.onClick(targetImg.id)
   }
-
-  console.log('expandImg : line 67', expandImg)
   
   return (
     <div className={classes.root}>
