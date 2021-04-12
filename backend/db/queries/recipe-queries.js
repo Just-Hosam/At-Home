@@ -1,8 +1,13 @@
 const db = require('../../lib/db.js');
+const {
+	getIngredients,
+	addIngredients,
+	updateIngredients,
+} = require('./ingredients-queries');
 
 const getRecipes = (dashboardId) => {
 	const text = `
-  SELECT * 
+  SELECT *
   FROM recipes
   WHERE dashboard_id = $1
 	ORDER BY title;`;
@@ -15,43 +20,35 @@ const getRecipes = (dashboardId) => {
 };
 
 const getRecipe = (recipeId) => {
-	const textRecipe = `
+	const text = `
 	SELECT *
 	FROM recipes
 	WHERE id = $1;`;
-	const valuesRecipe = [recipeId];
+	const values = [recipeId];
 
-	const textIngredients = `
-  SELECT *
-  FROM ingredients
-  WHERE recipe_id = $1;`;
-	const valuesIngredients = [recipeId];
-
-	return Promise.all([
-		db.query(textRecipe, valuesRecipe),
-		db.query(textIngredients, valuesIngredients),
-	])
-		.then((resArr) => {
-			const recipeDetails = resArr[0].rows[0];
-			recipeDetails.ingredients = resArr[1].rows;
-			return recipeDetails;
+	return db
+		.query(text, values)
+		.then((recipeRes) => {
+			const recipeDetails = recipeRes.rows[0];
+			return getIngredients(recipeId).then((ingRes) => {
+				recipeDetails.ingredients = ingRes;
+				return recipeDetails;
+			});
 		})
 		.catch((err) => console.log('Error at recipes queries "getRecipe"', err));
 };
 
-const addRecipe = (dashboardId, { title, description, time, ingredients }) => {
+const addRecipe = (dashboardId, { title, directions, time, ingredients }) => {
 	const textRecipes = `
-	INSERT INTO recipes (dashboard_id, title, description, time)
+	INSERT INTO recipes (dashboard_id, title, directions, time)
 	VALUES ($1, $2, $3, $4)
 	RETURNING *;`;
-	const valuesRecipes = [dashboardId, title, description, time];
+	const valuesRecipes = [dashboardId, title, directions, time];
 
 	return db
 		.query(textRecipes, valuesRecipes)
 		.then((resRecipe) => {
-			const textIngredients = ingredientsInsertQuery(ingredients);
-
-			db.query(textIngredients)
+			return addIngredients(resRecipe.rows[0].id, ingredients)
 				.then((resIngredients) => {
 					return { ...resRecipe.rows[0], ingredients: resIngredients.rows };
 				})
@@ -62,6 +59,29 @@ const addRecipe = (dashboardId, { title, description, time, ingredients }) => {
 		.catch((err) =>
 			console.log('Error at recipes queries "addRecipe" (OUTER)', err)
 		);
+};
+
+const updateRecipe = ({
+	id,
+	title,
+	time,
+	img_url,
+	directions,
+	ingredients,
+}) => {
+	const text = `
+	UPDATE recipes
+	SET title = $1, time = $2, img_url = $3, directions = $4
+	WHERE id = $5
+	RETURNING *;`;
+	const values = [title, time, img_url, directions, id];
+
+	return db.query(text, values).then((res) => {
+		const updatedRecipe = res.rows[0];
+		return updateIngredients(ingredients).then(() => {
+			getRecipe(updatedRecipe.id).then((recipe) => recipe);
+		});
+	});
 };
 
 const deleteRecipe = (recipeId) => {
@@ -77,18 +97,10 @@ const deleteRecipe = (recipeId) => {
 		);
 };
 
-const ingredientsInsertQuery = (ingredientsArr) => {
-	let query = 'INSERT INTO ingredients (recipe_id, item, measurement) VALUES\n';
-	for (const elem of ingredientsArr) {
-		query += `(${elem.recipe_id}, ${elem.item}, ${elem.measurement}),\n`;
-	}
-	query += 'RETURNING *;';
-	return query;
-};
-
 module.exports = {
 	getRecipes,
 	getRecipe,
 	addRecipe,
 	deleteRecipe,
+	updateRecipe,
 };
