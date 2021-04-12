@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+// import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -8,6 +9,11 @@ import Gallery from './Gallery';
 import Photos from './Photos';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -21,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal() {
+export default function GalleryModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState(0);
@@ -38,7 +44,7 @@ export default function TransitionsModal() {
 
   return (
     <div>
-      <Gallery onClick={(e) => handleOpen(e)}/>
+      <Gallery onClick={(e) => handleOpen(e)} />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

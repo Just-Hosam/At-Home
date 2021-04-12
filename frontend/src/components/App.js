@@ -3,7 +3,7 @@
 
 
 
-// import Photos from './widgets/Photos';
+
 import GalleryModal from './widgets/GalleryModal';
 
 
@@ -18,7 +18,6 @@ const App = () => {
 
 	return (
 		<div className="App">
-			{/* <Gallery /> */}
 			<GalleryModal />
 		</div>
 	);

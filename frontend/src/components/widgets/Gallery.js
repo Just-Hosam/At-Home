@@ -6,6 +6,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
+import AddPhotoModal from './AddPhotoModal';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -37,18 +39,26 @@ export default function Gallery(props) {
 
   const loadImage = (targetImg) => {
     props.onClick(targetImg.id)
+    console.log(`targetImg`, targetImg)
   }
+
+  const addNewImg = (tile) => {
+    setTileData((prev) => [...prev, tile]);
+  }
+  
   
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
         {tileData.map((tile) => (
-          <GridListTile key={tile.img_url} onClick={() => loadImage(tile)}>
+          <GridListTile key={tile.id} onClick={() => loadImage(tile)}>
             <img src={tile.img_url} alt={tile.text} />
             <GridListTileBar title={tile.text} />
           </GridListTile>
         ))}
       </GridList>
+      <br />
+      <AddPhotoModal addNewImg={addNewImg} />
     </div>
   );
 }
