@@ -40,7 +40,7 @@ const addPhoto = (dashboardId, imgUrl, imgText) => {
 
 	return db
 		.query(text, values)
-		.then((res) => res)
+		.then((res) => res.rows[0])
 		.catch((err) =>
 			console.log('Error at photos queries "addPhoto"', err)
 		);
