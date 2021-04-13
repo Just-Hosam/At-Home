@@ -4,7 +4,7 @@ import RecipesListItem from './RecipesListItem';
 
 import axios from 'axios';
 
-export default function RecipesMin() {
+export default function RecipesMin(props) {
 	const dashboardId = 1; // TODO: needs useContext
 
 	const [recipes, setRecipes] = useState([]);
@@ -23,12 +23,14 @@ export default function RecipesMin() {
 			title={recipe.title}
 			time={recipe.time}
 			img_url={recipe.img_url}
+			handleView={props.handleView}
 		/>
 	));
 
 	return (
 		<div id="widget-recipes">
 			<h2>Recipes</h2>
+			<button onClick={() => props.handleView('RECIPE_ADD')}>Add Recipe</button>
 			<ul>{recipeList}</ul>
 		</div>
 	);

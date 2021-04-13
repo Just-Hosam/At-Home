@@ -100,7 +100,10 @@ export default function RecipeAdd(props) {
 	const submitRecipe = (dashboardId, inputRecipe) => {
 		axios
 			.post(`/dashboards/${dashboardId}/recipes/`, inputRecipe)
-			.then((res) => res);
+			.then((res) => {
+				props.handleView('');
+				return res;
+			});
 	};
 
 	return (
@@ -143,7 +146,7 @@ export default function RecipeAdd(props) {
 						onChange={(event) => updateRecipe('directions', event.target.value)}
 					/>
 				</div>
-				<button>Cancel</button>
+				<button onClick={() => props.handleView('')}>Cancel</button>
 				<button
 					onClick={() => {
 						submitRecipe(dashboardId, recipe);
