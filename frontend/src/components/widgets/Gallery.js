@@ -35,8 +35,7 @@ export default function Gallery(props) {
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => setTileData(res.data))
       .catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
-  }, []);
-
+  }, [props.childState]);
   const loadImage = (targetImg) => {
     props.onClick(targetImg.id)
   }

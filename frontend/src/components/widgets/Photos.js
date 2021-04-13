@@ -71,19 +71,28 @@ export default function Photos(props) {
     axios
       .delete(`/dashboards/${dashboardId}/photos/${staging.id}`)
       .then(() => {
-        setStaging({});
-        handleBack();
+        axios
+          .get(`/dashboards/${dashboardId}/photos/`)
+          .then((res) => {
+            props.handleState(res.data)
+            setPhotos(res.data)
+          })
+          .then(() => {
+            setStaging({})
+            handleBack()
+          })
       })
       .catch((err) => console.log("DELETE PHOTOS ERROR", err));
   };
   
-
+  // TODO: Delete? Fix?
   const handleNextKey = (key) => {
     if (key === "ArrowRight") {
       handleNext();
     }
   };
-
+  
+  // TODO: Delete? Fix?
   const handleBackKey = (key) => {
     if (key === "ArrowLeft") {
       handleBack();

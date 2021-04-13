@@ -31,6 +31,7 @@ export default function GalleryModal() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState(0);
+  const [childState, setChildState] = useState([]);
 
   const handleOpen = (i) => {
     setOpen(true);
@@ -42,9 +43,13 @@ export default function GalleryModal() {
     setImage(0);
   };
 
+  const handleState = (childData) => {
+    setChildState([...childData]);
+  }
+
   return (
     <div>
-      <Gallery onClick={(e) => handleOpen(e)} />
+      <Gallery onClick={(e) => handleOpen(e)} childState={childState}/>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -59,7 +64,7 @@ export default function GalleryModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <Photos imgIndex={image} />
+            <Photos imgIndex={image} handleState={handleState}/>
           </div>
         </Fade>
       </Modal>
