@@ -1,0 +1,82 @@
+.nav{
+position: fixed;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+top: 0;
+left: 0;
+width: 100%;
+height: 60px;
+color: white;
+background-color: #06aff5;
+
+.nav-content{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+width: 100%;
+padding: 20px;
+
+.nav-title{
+
+  text-decoration: none;
+  color: white;
+
+  &:hover{
+    cursor: pointer;
+    color:black;
+  }
+
+}
+
+.nav-settings{
+  color: white;
+
+  &:hover{
+    cursor: pointer;
+    color:black;
+  }
+}
+
+}
+
+.drawer{
+position: fixed;
+top: 0;
+right: 0;
+width: 25%;
+height: 75%;
+background-color: transparent;
+border-style: solid;
+border-color: violet;
+}
+
+
+#slide {
+  position: absolute;
+  right:-101%;
+  width: 100%;
+  height: 100%;
+  background: blue;
+  transition: 1s;
+}
+
+.show #slide {
+  transition: 1s;
+  right: 0;
+
+
+}
+
+.hide #slide{
+  transition: 1s;
+  right: -101%;
+
+ 
+}
+
+
+}
+

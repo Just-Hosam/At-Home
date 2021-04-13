@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import parsePollingData from "./ParsePollingData";
+import parsePollingData from "./parsePollingData";
 import PieChart from "./PieChart";
 import CreatePoll from "./CreatePoll";
 
@@ -151,7 +151,12 @@ const castVote = (index, choice) => {
 
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
-	showPie();
+
+		setTimeout(function(){
+			showPie();
+		},500)
+
+
 		setState((prev) => ({
         ...prev,
 				hasVoted: true,

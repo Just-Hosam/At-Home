@@ -1,5 +1,5 @@
 // import Groceries from './widgets/Groceries';
-// import PollsWidget from './widgets/Polling/PollsWidget';
+import Dropdown from './widgets/DropdownMenu/Dropdown';
 // import CalendarWidget from './widgets/Calendar/CalendarWidget'
 
 
@@ -19,7 +19,7 @@ const App = () => {
 
 	return (
 		<div className="App">
-	
+	<Dropdown/>
 		</div>
 	);
 };
