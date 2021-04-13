@@ -251,7 +251,7 @@ const pollingData = parsePollingData(state, castVote);
 		
       <Dialog
 			 classes={{ paper : classes.dialogPaper,
-			container: classes.dialogBacking}}
+			 container: classes.dialogBacking}}
         open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}

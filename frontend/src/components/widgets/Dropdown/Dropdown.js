@@ -181,7 +181,7 @@ const Dropdown = (props) => {
           </div>
         </div>
 
-        <div onClick={() => settingSelected('INVITE')} className='settings-list-dos'>
+        <div onClick={() => settingSelected('INVITE')} className='settings-list'>
           <div className='settings-list-item'>
           <h3>Send Invite</h3>
           </div>
@@ -194,7 +194,7 @@ const Dropdown = (props) => {
         </div>
 
       
-        <div onClick={() => settingSelected('GIT')} className='settings-list-dos'>
+        <div onClick={() => settingSelected('GIT')} className='settings-list'>
           <div className='settings-list-item'>
           <h3>Github</h3>
           </div>
