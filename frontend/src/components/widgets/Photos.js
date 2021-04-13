@@ -45,7 +45,7 @@ export default function Photos(props) {
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => {
         setPhotos(res.data);
-        setActiveStep(getImgIndex(res.data, props.imgIndex).id);
+        setActiveStep(getImgIndex(res.data, props.imgIndex));
       })
       .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
   }, []);
@@ -61,13 +61,22 @@ export default function Photos(props) {
   const getImgIndex = (photosArr, photoIndex) => {
     for (const index in photosArr) {
       if (photosArr[index].id === photoIndex) {
-        console.log(`photosArr[index]`, photosArr[index]);
         setStaging(photosArr[index]);
-        return photosArr[index];
-        // return Number(index);
+        return Number(index);
       }
     }
   };
+
+  const handleDelete = () => {
+    axios
+      .delete(`/dashboards/${dashboardId}/photos/${staging.id}`)
+      .then(() => {
+        setStaging({});
+        handleBack();
+      })
+      .catch((err) => console.log("DELETE PHOTOS ERROR", err));
+  };
+  
 
   const handleNextKey = (key) => {
     if (key === "ArrowRight") {
@@ -88,7 +97,7 @@ export default function Photos(props) {
           {maxSteps > 0 && photos[activeStep].text}
 
           <span className={classes.root}>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={handleDelete}>
               <DeleteIcon />
             </IconButton>
           </span>

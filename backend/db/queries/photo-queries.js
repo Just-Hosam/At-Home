@@ -63,9 +63,26 @@ const editPhoto = (dashboardId, imgUrl, imgText, photoId) => {
 		);
 };
 
+const deletePhoto = (dashboardId, photoId) => {
+	const text = `
+	DELETE FROM photos
+	WHERE dashboard_id = $1
+	AND id = $2
+	RETURNING *;`;
+	const values = [dashboardId, photoId];
+
+	return db
+		.query(text, values)
+		.then((res) => res)
+		.catch((err) =>
+			console.log('Error at photos queries "deletePhoto"', err)
+		);
+};
+
 module.exports = {
 	getPhotos,
 	getPhoto,
 	addPhoto,
 	editPhoto,
+	deletePhoto,
 };

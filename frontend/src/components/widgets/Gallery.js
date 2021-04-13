@@ -45,8 +45,7 @@ export default function Gallery(props) {
   const addNewImg = (tile) => {
     setTileData((prev) => [...prev, tile]);
   }
-  
-  
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>

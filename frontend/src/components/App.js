@@ -4,6 +4,7 @@
 
 
 
+import Gallery from './widgets/Gallery';
 import GalleryModal from './widgets/GalleryModal';
 
 
@@ -18,7 +19,8 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<GalleryModal />
+			{/* <GalleryModal /> */}
+			<Gallery />
 		</div>
 	);
 };
