@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 const CreatePoll = (props) => {
 
 const [input, setInput] = useState({
