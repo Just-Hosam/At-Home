@@ -1,82 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import MobileStepper from "@material-ui/core/MobileStepper";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import axios from "axios";
 
-const tutorialSteps = [
-  {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bird',
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-  },
-  {
-    label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-];
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
+    maxHeight: "90vh",
     flexGrow: 1,
   },
   header: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     height: 50,
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
   img: {
-    height: 255,
-    maxWidth: 400,
-    overflow: 'hidden',
-    display: 'block',
-    width: '100%',
+    maxHeight: "70vh",
+    display: "block",
+    objectFit: "contain",
   },
 }));
 
-export default function Photos() {
+export default function Photos(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  
+  const [activeStep, setActiveStep] = useState(0);
+
   const dashboardId = 1; // TODO: needs useContext
   const [photos, setPhotos] = useState([]);
+  const [staging, setStaging] = useState({});
   const maxSteps = photos.length;
 
-	useEffect(() => {
-		axios
-			.get(`/dashboards/${dashboardId}/photos/`)
-			.then((res) => {
-        console.log('setState', res.data)
-        setPhotos(res.data)
+  useEffect(() => {
+    axios
+      .get(`/dashboards/${dashboardId}/photos/`)
+      .then((res) => {
+        setPhotos(res.data);
+        setActiveStep(getImgIndex(res.data, props.imgIndex).id);
       })
-			.catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
-	}, []);
-  console.log(photos)
-  console.log(activeStep)
+      .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
+  }, []);
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -85,30 +58,80 @@ export default function Photos() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const getImgIndex = (photosArr, photoIndex) => {
+    for (const index in photosArr) {
+      if (photosArr[index].id === photoIndex) {
+        setStaging(photosArr[index]);
+        return photosArr[index];
+        // return Number(index);
+      }
+    }
+  };
+
+  const handleNextKey = (key) => {
+    if (key === "ArrowRight") {
+      handleNext();
+    }
+  };
+
+  const handleBackKey = (key) => {
+    if (key === "ArrowLeft") {
+      handleBack();
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper square elevation={0} className={classes.header}>
-        <Typography>{maxSteps > 0 && photos[activeStep].text}</Typography>
+        <Typography>
+          {maxSteps > 0 && photos[activeStep].text}
+
+          <span className={classes.root}>
+            <IconButton aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
+          </span>
+        </Typography>
       </Paper>
-      <img
-        className={classes.img}
-        src={maxSteps > 0 && photos[activeStep].img_url}
-        alt={maxSteps > 0 && photos[activeStep].text}
-      />
+      {maxSteps > 0 && (
+        <img
+          className={classes.img}
+          src={maxSteps > 0 && photos[activeStep].img_url}
+          alt={maxSteps > 0 ? photos[activeStep].text : "ph"}
+        />
+      )}
       <MobileStepper
         steps={maxSteps}
         position="static"
         variant="text"
         activeStep={activeStep}
         nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+          <Button
+            size="small"
+            onClick={handleNext}
+            onKeyDown={(k) => handleNextKey(k.key)}
+            disabled={activeStep === maxSteps - 1}
+          >
             Next
-            {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+          <Button
+            size="small"
+            onClick={handleBack}
+            onKeyDown={(k) => handleBackKey(k.key)}
+            disabled={activeStep === 0}
+          >
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
             Back
           </Button>
         }
