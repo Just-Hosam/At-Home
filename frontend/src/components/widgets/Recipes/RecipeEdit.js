@@ -132,7 +132,7 @@ export default function RecipeEdit(props) {
 				ingredientsList.push(newEmptyFields);
 			});
 	};
-	console.log(recipe);
+	
 
 	return (
 		<div>
