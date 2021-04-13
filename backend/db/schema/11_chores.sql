@@ -4,6 +4,6 @@ CREATE TABLE chores (
   id SERIAL PRIMARY KEY NOT NULL,
   dashboard_id INTEGER REFERENCES dashboards(id) ON DELETE CASCADE,
   text VARCHAR(255) NOT NULL,
-  done BOOLEAN,
+  done BOOLEAN DEFAULT false,
   name VARCHAR(255) NOT NULL
 );

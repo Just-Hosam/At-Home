@@ -1,0 +1,16 @@
+INSERT INTO chores (dashboard_id, text, name) VALUES
+(1, 'put away clean dishes', 'none'),
+(1, 'vacuum upper floor', 'none'),
+(1, 'scrub toilets', 'none'),
+(1, 'empty dishwasher', 'none'),
+(1, 'eat your wheaties', 'none'),
+(2, 'put away clean dishes', 'none'),
+(2, 'vacuum upper floor', 'none'),
+(2, 'scrub toilets', 'none'),
+(2, 'empty dishwasher', 'none'),
+(2, 'eat your wheaties', 'none'),
+(3, 'put away clean dishes', 'none'),
+(3, 'vacuum upper floor', 'none'),
+(3, 'scrub toilets', 'none'),
+(3, 'empty dishwasher', 'none'),
+(3, 'eat your wheaties', 'none');
