@@ -50,11 +50,11 @@ DELETE  DELETE  /chores/:id (STRETCH)
 
 ## DASHBOARD/ID/PHOTOS
 
-BROWSE  GET     /photos
-READ    GET     /photos/:id
-EDIT    PATCH   /photos/:id
-ADD     POST    /photos
-DELETE  DELETE  /photos/:id (STRETCH)
+BROWSE  GET     /photos               (DONE)
+READ    GET     /photos/:id           (DONE)
+<!-- EDIT    PATCH   /photos/:id -->  (DELETE?)
+ADD     POST    /photos               (DONE)
+DELETE  DELETE  /photos/:id           (DONE)
 
 ## DASHBOARD/ID/EVENTS
 

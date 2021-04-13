@@ -32,8 +32,6 @@ router.post('/', (req, res) => {
 	const imgUrl = req.body.img_url;
 	const imgText = req.body.text;
 
-	console.log(req.body)
-
 	addPhoto(dashboardId, imgUrl, imgText)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at photos POST route "/"', err));
