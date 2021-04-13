@@ -61,7 +61,6 @@ export default function Photos(props) {
   const getImgIndex = (photosArr, photoIndex) => {
     for (const index in photosArr) {
       if (photosArr[index].id === photoIndex) {
-        console.log(`photosArr[index]`, photosArr[index]);
         setStaging(photosArr[index]);
         return photosArr[index];
         // return Number(index);
