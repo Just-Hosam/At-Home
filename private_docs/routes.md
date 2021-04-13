@@ -42,11 +42,11 @@ DELETE  DELETE  /indgredients/:id (STRETCH)
 
 ## DASHBOARD/ID/CHORES
 
-BROWSE  GET     /chores
-<!-- READ    GET     /chores/:id -->
-EDIT    PATCH   /chores/:id
-ADD     POST    /chores
-DELETE  DELETE  /chores/:id (STRETCH)
+BROWSE  GET     /chores               (DONE)
+<!-- READ    GET     /chores/:id -->  (DONE)
+EDIT    PATCH   /chores/:id           (DONE) text, done, name,
+ADD     POST    /chores               (DONE)
+DELETE  DELETE  /chores/:id (STRETCH) (DONE)
 
 ## DASHBOARD/ID/PHOTOS
 

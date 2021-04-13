@@ -1,62 +1,63 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const {
-	getPhotos,
-	getPhoto,
-	addPhoto,
-	editPhoto,
-	deletePhoto,
-} = require('../db/queries/photo-queries');
+	getChores,
+	getChore,
+	addChore,
+	editChore,
+	deleteChore,
+} = require('../db/queries/chore-queries');
 
 router.get('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 
-	getPhotos(dashboardId)
+	getChores(dashboardId)
 		.then((data) => res.json(data))
-		.catch((err) => console.log('Error at photos GET route "/"', err));
+		.catch((err) => console.log('Error at chores GET route "/"', err));
 });
 
-router.get('/:photoId', (req, res) => {
+router.get('/:choreId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const photoId = req.params.photoId;
+	const choreId = req.params.choreId;
 
-	getPhoto(dashboardId, photoId)
+	getChore(dashboardId, choreId)
 		.then((data) => res.json(data))
 		.catch((err) =>
-			console.log('Error at photos PATCH route "/:photoId"', err)
+			console.log('Error at chores GET route "/:choreId"', err)
 		);
 });
 
 router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const imgUrl = req.body.img_url;
-	const imgText = req.body.text;
-
-	addPhoto(dashboardId, imgUrl, imgText)
-		.then((data) => res.json(data))
-		.catch((err) => console.log('Error at photos POST route "/"', err));
+	const choreText = req.body.text;
+	const assignedName = req.body.name;
+	
+	addChore(dashboardId, choreText, assignedName)
+	.then((data) => res.json(data))
+	.catch((err) => console.log('Error at chores POST route "/"', err));
 });
 
-router.patch('/:photoId', (req, res) => {
+router.patch('/:choreId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const photoId = req.params.photoId;
-	const imgUrl = req.body.img_url;
-	const imgText = req.body.text;
+	const choreId = req.params.choreId;
+	const choreText = req.body.text;
+	const assignedName = req.body.name;
+	const choreDone = req.body.done;
 
-	editPhoto(dashboardId, imgUrl, imgText, photoId)
+	editChore(dashboardId, choreId, choreText, assignedName, choreDone)
 		.then((data) => res.json(data))
 		.catch((err) =>
-			console.log('Error at photos PATCH route "/:photoId"', err)
+			console.log('Error at chores PATCH route "/:choreId"', err)
 		);
 });
 
-router.delete('/:photoId', (req, res) => {
+router.delete('/:choreId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const photoId = req.params.photoId;
+	const choreId = req.params.choreId;
 
-	deletePhoto(dashboardId, photoId)
+	deleteChore(dashboardId, choreId)
 		.then((data) => res.json(data))
-		.catch((err) => console.log(`Error at photos DELETE route /${photoId}`, err));
+		.catch((err) => console.log(`Error at chores DELETE route /${choreId}`, err));
 });
 
 module.exports = router;
