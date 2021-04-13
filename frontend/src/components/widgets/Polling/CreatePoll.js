@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 const CreatePoll = (props) => {
 
 const [input, setInput] = useState({
@@ -17,7 +18,7 @@ const [input, setInput] = useState({
 				<input
 					type="text"
 					placeholder="title"
-					value={input.title}
+					value={input.title ? input.title : ''}
 					onChange={(event) => setInput((prev) => ({
 					...prev,
 					title: event.target.value
@@ -26,7 +27,7 @@ const [input, setInput] = useState({
 				<input
 					type="text"
 					placeholder="description"
-					value={input.description}
+					value={input.description ? input.description : ''}
 					onChange={(event) => setInput((prev) => ({
 					...prev,
 					description: event.target.value
@@ -35,7 +36,7 @@ const [input, setInput] = useState({
 				<input
 					type="text"
 					placeholder='option 1'
-					value={input.option1}
+					value={input.option1 ? input.option1 : ''}
 					onChange={(event) => setInput((prev) => ({
 					...prev,
 					option1: event.target.value
@@ -44,7 +45,7 @@ const [input, setInput] = useState({
 				<input
 				type="text"
 					placeholder='option 2'
-					value={input.option2}
+					value={input.option2 ? input.option2 : ''}
 					onChange={(event) => setInput((prev) => ({
 					...prev,
 					option2: event.target.value
@@ -53,7 +54,7 @@ const [input, setInput] = useState({
 				<input
 					type="text"
 					placeholder='option 3'
-					value={input.option3}
+					value={input.option3 ? input.option3 : ''}
 					onChange={(event) => setInput((prev) => ({
 					...prev,
 					option3: event.target.value
