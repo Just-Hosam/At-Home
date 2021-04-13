@@ -39,7 +39,6 @@ export default function Gallery(props) {
 
   const loadImage = (targetImg) => {
     props.onClick(targetImg.id)
-    console.log(`targetImg`, targetImg)
   }
 
   const addNewImg = (tile) => {
