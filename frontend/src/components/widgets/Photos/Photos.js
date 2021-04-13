@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import axios from "axios";
-
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +45,7 @@ export default function Photos(props) {
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => {
         setPhotos(res.data);
-        setActiveStep(getImgIndex(res.data, props.imgIndex).id);
+        setActiveStep(getImgIndex(res.data, props.imgIndex));
       })
       .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
   }, []);
@@ -62,18 +62,36 @@ export default function Photos(props) {
     for (const index in photosArr) {
       if (photosArr[index].id === photoIndex) {
         setStaging(photosArr[index]);
-        return photosArr[index];
-        // return Number(index);
+        return Number(index);
       }
     }
   };
 
+  const handleDelete = () => {
+    axios
+      .delete(`/dashboards/${dashboardId}/photos/${staging.id}`)
+      .then(() => {
+        axios
+          .get(`/dashboards/${dashboardId}/photos/`)
+          .then((res) => {
+            props.handleState(res.data);
+            setPhotos(res.data);
+          })
+          .then(() => {
+            setStaging({});
+          });
+      })
+      .catch((err) => console.log("DELETE PHOTOS ERROR", err));
+  };
+
+  // TODO: Delete? Fix?
   const handleNextKey = (key) => {
     if (key === "ArrowRight") {
       handleNext();
     }
   };
 
+  // TODO: Delete? Fix?
   const handleBackKey = (key) => {
     if (key === "ArrowLeft") {
       handleBack();
@@ -87,7 +105,7 @@ export default function Photos(props) {
           {maxSteps > 0 && photos[activeStep].text}
 
           <span className={classes.root}>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={handleDelete}>
               <DeleteIcon />
             </IconButton>
           </span>
