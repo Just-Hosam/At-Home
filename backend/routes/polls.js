@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 	const values = [req.params.dashboardId];
 
 	getPolls(values)
-	.then((pollsData) => res.json(pollsData.rows))
+	.then((pollsData) => res.json(pollsData.rows[0]))
 	.catch((err) => console.log('Error at polls GET route "/"', err));
 });
 

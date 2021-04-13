@@ -1,9 +1,10 @@
 .polls {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 300px;
 	padding:10px;
-
+text-align: center;
 	background: white;
 	border-style:solid;
 	border-color:lightgrey;
@@ -11,64 +12,147 @@
 	border-radius:5px;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 
-	h3{
-	line-height:1.5;
-	text-align:center;
+	.header-wrapper{
+		padding-bottom: 120px;
 	}
 
 	.header{
-		text-align:center;
-		background:#06aff5;
-		padding:10px;
-		border-radius:5px;
+	  position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background-color: #0066aa;
+		border-radius: 5px 5px 0px 0px;
 	
-		h1{
-			color: white;
-		}
 	}
-	
-	
-		.options{
-		display:flex;
-		flex-direction:row;
-		justify-content:space-between;
-		align-items:center;
-		width:100%;
-		padding:20px 0px;
-		border:none;
-		border-bottom-style: solid;
-	
-	
-		.vote{
-		display:flex;
-		flex-direction:row;
-		justify-content:space-between;
-		align-items:center;
-	
-		button{
-				cursor: pointer;
-				margin:0px 5px;
-				border:none;
-				color:white;
-				background:#06aff5;
-				font-weight:bold;
-				padding:5px;
-				border-radius:5px;
-				box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-	
-		}
 
-		}
-		.footer{
-			button{
-				border:none;
-				background:red;
-				color:white;
-			}
-		}
+	h1{
+		border:none;
+		color:white;
+		font-size: 2rem;
 	}
+
+	h2{
+	color: whitesmoke;
+	font-size: 1rem;
+	padding: 10px;
+	}
+
+
 
 }
+
+.options{
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	align-items:center;
+	margin: 10px 0px;
+	width:100%;
+
+
+}
+
+.pre-vote-option{
+
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	align-items:center;
+	width:100%;
+	padding:20px 10px;
+	border:none;
+	border-radius: 5px;
+&:hover{
+	cursor: pointer;
+
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+	border-bottom-style: none;
+}
+}
+
+.post-vote-option{
+
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	align-items:center;
+	width:100%;
+	padding:20px 10px;
+	border:none;
+	border-bottom-style: none;
+&:hover{
+	cursor: text;
+	box-shadow: none;
+}
+
+}
+
+.picked{
+
+	border-style: solid;
+	background-color:  #d4effa;
+	border-color: #06aff5;
+	border-radius: 5px;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+
+.vote{
+display:flex;
+flex-direction:row;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.pre-vote{
+		cursor: pointer;
+		margin:0px 5px;
+		border:none;
+		color:white;
+		background:#06aff5;
+		font-weight:bold;
+		padding:5px;
+		border-radius:5px;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+}
+
+.post-vote{
+		cursor: pointer;
+		opacity: 0.2;
+		margin:0px 5px;
+		border:none;
+		color:white;
+		background:#06aff5;
+		font-weight:bold;
+		padding:5px;
+		border-radius:5px;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+}
+
+.add-poll-icon{
+	cursor: pointer;
+	color: black;
+	font-size: large;
+
+	&:hover{
+		color:#06aff5;
+	
+	}
+}
+
+.footer-icons{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+		
+	
 
 
 .create-poll{

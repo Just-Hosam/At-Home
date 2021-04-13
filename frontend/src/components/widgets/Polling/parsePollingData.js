@@ -1,33 +1,32 @@
-import OptionsList from './OptionsList';
-import CreatePoll from './CreatePoll';
+import Options from './Options';
 
-export default function parsePollingData(state, createPoll, castVote){
+export default function parsePollingData(state, castVote){
 
-let data = {
-  id: 1,
-  title: "Create A New Poll",
-  description: <CreatePoll
-  createPoll={createPoll}
-  />,
-  options: null
-}
+
+let data = {}
 
 if(state.options[0]) {
 
-data.title = state.poll[0].title;
-data.description = state.poll[0].description;
+data.title = state.poll.title;
+data.description = state.poll.description;
 
 data.options = state.options.map((o,index) => {
 
+const picked = state.picked === o.choice ? 'picked' : null;
+const opStyle = state.hasVoted ? 'post-vote-option' : 'pre-vote-option';
+
 	return(
-		<OptionsList
+		<Options
 		key={index}
-		index={o.id}
+    index={o.id}
+    picked={picked}
+    opStyle={opStyle}
 		options={o.choice}
 		votes={o.votes}
-    vote={() => castVote(o.id)}
+    vote={() => castVote(o.id, o.choice)}
     hasVoted={state.hasVoted}
   />
+  
 	)
 });
 }

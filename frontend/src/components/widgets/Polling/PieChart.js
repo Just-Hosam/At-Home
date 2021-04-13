@@ -11,13 +11,13 @@ const PieChart = (props) => {
 	}
 
 if (props.options){
-	 title = props.title ? props.title : "No title found...";
+	 title =  props.title;
 
 	 pieParams = props.options.map(o => {
-
+	
 		 pie = {
-			 option: o.props.options,
-			 votes: o.props.votes
+			 option: o.props.options ? o.props.options : '...',
+			 votes: o.props.votes ? o.props.votes : 0
 		 }
 
 		return pie;
@@ -26,7 +26,7 @@ if (props.options){
 
 	return (
 		
-		<Chart
+	<Chart
   width={'300px'}
   height={'200px'}
   chartType="PieChart"
@@ -38,9 +38,16 @@ if (props.options){
 		[pieParams[2].option, pieParams[2].votes],
   ]}
   options={{
+		
     title: title,
     is3D: true,
-		 colors: ['#06aff5', '0066aa', '#227da3']
+		colors: ['#06aff5', '0066aa', '#227da3'],
+		 
+		titleTextStyle: {
+		
+			fontSize: 16, 
+		
+	}
 		
   }}
   rootProps={{ 'data-testid': '2' }}
