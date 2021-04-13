@@ -24,7 +24,6 @@ const createEvent = values => {
 };
 
 const editEvent = values => {
-	console.log('VALS', values);
 	const text = `
 	UPDATE events 
 	SET title = $3, description = $4,  start_at = $5, end_at = $6

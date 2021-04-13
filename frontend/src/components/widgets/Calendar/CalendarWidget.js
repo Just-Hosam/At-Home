@@ -15,9 +15,10 @@ import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-		display: 'flex',
-		justifyContent: 'flex-end',
-    flexWrap: 'wrap',
+		// display: 'flex',
+		// // justifyContent: 'flex-end',
+		// // flexWrap: 'wrap',
+		
   },
   textField: {
 		
@@ -340,14 +341,16 @@ const closeDialog = () => {
 
 	return (
 	
-<section className='calendar-class'>
+<section>
 
+<div className='calendar-class'>
 	<Calendar 
+	
 	events={e.events}
 	onClickEvent={(event) => openEventDialog(event)}
 	onClickTimeLine={(event) => handleClickOpen(event)}
 	/>
-
+</div>
 
 			<Dialog open={open.inputDialog ? open.inputDialog : false}  
 			onClose={closeDialog}

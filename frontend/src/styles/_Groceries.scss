@@ -1,11 +1,17 @@
+@import './variables';
 @import './Grocery';
 
 #widget-groceries {
-  padding: 3px 30px 10px 30px;
-  border-radius: 15px;
-  background: #fff;
-  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	@include card-layout;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	h1 {
+		margin: 0;
+	}
+	p {
+		margin: 0;
+	}
 }

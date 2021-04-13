@@ -40,12 +40,13 @@ const addPhoto = (dashboardId, imgUrl, imgText) => {
 
 	return db
 		.query(text, values)
-		.then((res) => res)
+		.then((res) => res.rows[0])
 		.catch((err) =>
 			console.log('Error at photos queries "addPhoto"', err)
 		);
 };
 
+// TODO : Remove? Edit imgUrl not required. Maybe edit text?
 const editPhoto = (dashboardId, imgUrl, imgText, photoId) => {
 	const text = `
 	UPDATE photos

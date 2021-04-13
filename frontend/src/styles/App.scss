@@ -1,7 +1,11 @@
+@import './Grocery';
 @import './Groceries';
 @import './_Polls.scss';
-@import './_Calendar.scss';
 @import './_Dropdown.scss';
+@import './Recipes';
+@import './Calendar.scss';
+
+
 
 body {
 	background: #fafafa;

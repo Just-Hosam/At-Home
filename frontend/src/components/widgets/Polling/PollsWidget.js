@@ -27,6 +27,11 @@ const useStyles = makeStyles(theme => ({
     dialogPaper: {
        width : '400px'
 		},
+
+		dialogBacking:{
+			background:'rgb(0, 0, 0, 0.8)',
+			backgroundBlendMode: 'luminosity'
+		},
 		
 		pieIcon: {
 			
@@ -245,7 +250,8 @@ const pollingData = parsePollingData(state, castVote);
   {dialogBtns}
 		
       <Dialog
-			 classes={{ paper : classes.dialogPaper}}
+			 classes={{ paper : classes.dialogPaper,
+			container: classes.dialogBacking}}
         open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}

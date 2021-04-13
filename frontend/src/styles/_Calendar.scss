@@ -1,5 +1,11 @@
-.calendar-class{
-  width:100%;
+@import './variables';
 
-  
+.calendar-class{
+  @include card-layout;
+  z-index: 11;
+  height: auto;
+  width: 100%;
+  padding: 20px;
+  max-height: 400px;
+  overflow:scroll;
 }

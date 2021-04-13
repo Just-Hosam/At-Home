@@ -1,16 +1,14 @@
+@import './variables';
+
 .polls {
+	@include card-layout;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 300px;
 	padding:10px;
-text-align: center;
-	background: white;
-	border-style:solid;
-	border-color:lightgrey;
-	border-width:1px;
-	border-radius:5px;
-	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+	text-align: center;
+	
 
 	.header-wrapper{
 		padding-bottom: 120px;
@@ -21,7 +19,7 @@ text-align: center;
 		top: 0;
 		left: 0;
 		width: 100%;
-		background-color: #0066aa;
+		background-color: black;
 		border-radius: 5px 5px 0px 0px;
 	
 	}
@@ -92,7 +90,7 @@ text-align: center;
 
 	border-style: solid;
 	background-color:  #d4effa;
-	border-color: #06aff5;
+	border-color: $primary-color;
 	border-radius: 5px;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
@@ -111,7 +109,7 @@ align-items:center;
 		margin:0px 5px;
 		border:none;
 		color:white;
-		background:#06aff5;
+		background:$primary-color;
 		font-weight:bold;
 		padding:5px;
 		border-radius:5px;
@@ -125,7 +123,7 @@ align-items:center;
 		margin:0px 5px;
 		border:none;
 		color:white;
-		background:#06aff5;
+		background:$primary-color;
 		font-weight:bold;
 		padding:5px;
 		border-radius:5px;
@@ -135,11 +133,11 @@ align-items:center;
 
 .add-poll-icon{
 	cursor: pointer;
-	color: black;
+	color: grey;
 	font-size: large;
 
 	&:hover{
-		color:#06aff5;
+		color:$primary-color;
 	
 	}
 }

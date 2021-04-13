@@ -27,8 +27,8 @@ if (props.options){
 	return (
 		
 	<Chart
-  width={'300px'}
-  height={'200px'}
+  width={'350px'}
+  height={'250px'}
   chartType="PieChart"
   loader={<div>Loading Chart</div>}
   data={[
