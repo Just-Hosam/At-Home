@@ -4,25 +4,19 @@
 
 
 // import Photos from './widgets/Photos';
-// import Gallery from './widgets/Gallery';
+import Gallery from './widgets/Gallery';
 // import RecipesMin from './widgets/Recipes/RecipesMin';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 //import GalleryModal from './widgets/GalleryModal';
 
 
 const App = () => {
-	return <div className="App"></div>;
-
-
-
-
-
-
-
-
-
-
-
-
+	return (
+		<div className="App">
+			{/* <GalleryModal /> */}
+			<Gallery />
+		</div>
+	);
+};
 
 export default App;
