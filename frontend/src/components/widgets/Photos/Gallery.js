@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { makeStyles } from "@material-ui/core/styles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
 
-import AddPhotoModal from './AddPhotoModal';
+import AddPhotoModal from "./AddPhotoModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
   
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    color: "rgba(255, 255, 255, 0.54)",
   },
 }));
 
@@ -32,18 +31,16 @@ export default function Gallery(props) {
     axios
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => setTileData(res.data))
-      .catch((err) => console.log('PHOTOS COMPONENT ERROR', err));
-  }, []);
-
+      .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
+  }, [props.childState]);
   const loadImage = (targetImg) => {
-    props.onClick(targetImg.id)
-  }
+    props.onClick(targetImg.id);
+  };
 
   const addNewImg = (tile) => {
     setTileData((prev) => [...prev, tile]);
-  }
-  
-  
+  };
+
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>

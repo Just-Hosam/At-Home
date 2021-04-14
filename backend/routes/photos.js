@@ -5,6 +5,7 @@ const {
 	getPhoto,
 	addPhoto,
 	editPhoto,
+	deletePhoto,
 } = require('../db/queries/photo-queries');
 
 router.get('/', (req, res) => {
@@ -31,8 +32,6 @@ router.post('/', (req, res) => {
 	const imgUrl = req.body.img_url;
 	const imgText = req.body.text;
 
-	console.log(req.body)
-
 	addPhoto(dashboardId, imgUrl, imgText)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at photos POST route "/"', err));
@@ -49,6 +48,15 @@ router.patch('/:photoId', (req, res) => {
 		.catch((err) =>
 			console.log('Error at photos PATCH route "/:photoId"', err)
 		);
+});
+
+router.delete('/:photoId', (req, res) => {
+	const dashboardId = req.params.dashboardId;
+	const photoId = req.params.photoId;
+
+	deletePhoto(dashboardId, photoId)
+		.then((data) => res.json(data))
+		.catch((err) => console.log(`Error at photos DELETE route /${photoId}`, err));
 });
 
 module.exports = router;
