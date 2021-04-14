@@ -8,10 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DoneIcon from '@material-ui/icons/Done';
-
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -21,13 +23,19 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 600,
     backgroundColor: theme.palette.background.paper,
   },
+	choresHeader: {
+		marginTop: theme.spacing(1),
+		paddingTop: theme.spacing(1),
+		paddingBottom: theme.spacing(1),
+		paddingLeft: theme.spacing(1),
+		textAlign: 'center',
+		minWidth: 120,
+		backgroundColor: theme.palette.background.paper,
+	},
 	// input form
 	formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
 }));
 
@@ -57,44 +65,57 @@ export default function CheckboxList() {
   };
 
   return (
-    <List className={classes.root}>
-      {[0, 1, 2, 3].map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
+		<>
+			<Grid container className={classes.choresHeader}>
+				<Grid item xs>
+					<Typography variant="h4">
+						Chores
+					</Typography>
+				</Grid>
+			</Grid>
+			<Divider variant="middle" />
+			<List className={classes.root}>
+				{[0, 1, 2, 3].map((value) => {
+					const labelId = `checkbox-list-label-${value}`;
 
-        return (
-          <ListItem key={value} role={undefined} button onClick={handleToggle(value)}>
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={checked.indexOf(value) !== -1}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{ 'aria-labelledby': labelId }}
-              />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={`Line item ${value + 1}`} />																							{/* LIST ITEM VALUE */}
-            <ListItemSecondaryAction>
-              {checked.includes(value) && <IconButton edge="end" aria-label="done">
-                <DoneIcon />																																															{/* COMPLETE CHECKMARK */}
-              </IconButton>}
-							{!checked.includes(value) && <FormControl className={classes.formControl}>																	{/* DROP DOWN LIST */}
-								<InputLabel id="demo-simple-select-label">Age</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={age}
-									onChange={handleChange}
-								>
-									<MenuItem value={10}>Ten</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
-								</Select>
-							</FormControl>}
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
-      })}
-    </List>
+					return (
+						<>
+							<ListItem key={value} role={undefined} button onClick={handleToggle(value)}>
+								<ListItemIcon>
+									<Checkbox
+										edge="start"
+										checked={checked.indexOf(value) !== -1}
+										tabIndex={-1}
+										disableRipple
+										inputProps={{ 'aria-labelledby': labelId }}
+									/>
+								</ListItemIcon>
+								<ListItemText id={labelId} primary={`Line item ${value + 1}`} />																						  {/* LIST ITEM VALUE */}
+								<ListItemSecondaryAction>
+									{checked.includes(value) && <IconButton edge="end" aria-label="done">
+										<DoneIcon />																																															{/* COMPLETE CHECKMARK */}
+									</IconButton>}
+									{!checked.includes(value) && <FormControl size="small" className={classes.formControl}>																	{/* DROP DOWN LIST */}
+										<InputLabel id="demo-simple-select-label">Age</InputLabel>
+										<Select
+											labelId="demo-simple-select-label"
+											id="demo-simple-select"
+											value={age}
+											onChange={handleChange}
+											>
+											<MenuItem value={10}>Ten</MenuItem>
+											<MenuItem value={20}>Twenty</MenuItem>
+											<MenuItem value={30}>Thirty</MenuItem>
+										</Select>
+									</FormControl>}
+								</ListItemSecondaryAction>
+							</ListItem>
+							<Divider />
+						</>
+					);
+				})}
+			</List>
+		</>
   );
 }
 

@@ -5,7 +5,7 @@
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 // import GalleryModal from './widgets/Photos/GalleryModal';
 import Chores from './widgets/Chores/Chores';
-// import Chore from './widgets/Chores/Chore';
+import Chore from './widgets/Chores/Chore';
 
 
 
@@ -18,7 +18,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<Chores />
-			{/* <Chore /> */}
+			<Chore />
 		</div>
 	);
 };
