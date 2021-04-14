@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 		);
 });
 
-router.router('/:userId', (req, res) => {
+router.patch('/:userId', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 	const userId = req.params.userId;
 	const userStatus = req.body.userAdminStatus;
@@ -25,7 +25,7 @@ router.router('/:userId', (req, res) => {
 	toggleAdmin(userId, userStatus, dashboardId)
 		.then((data) => res.json(data))
 		.catch((err) =>
-			console.log('Error at dashbooards-users POST route "/"', err)
+			console.log('Error at dashbooards-users PATCH route "/:userId"', err)
 		);
 });
 
