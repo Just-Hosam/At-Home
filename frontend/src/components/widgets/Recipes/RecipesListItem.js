@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function RecipesListItem(props) {
-	console.log(props);
 	return (
 		<div
 			className="recipe-min"
