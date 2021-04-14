@@ -1,39 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import parsePollingData from "./ParsePollingData";
+import parsePollingData from "./parsePollingData";
 import PieChart from "./PieChart";
 import CreatePoll from "./CreatePoll";
-
-
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
+
 
 
 const useStyles = makeStyles(theme => ({
-    dialogPaper: {
-       width : '400px'
-		},
-		
+
+	loaderIcon:{
+		color:'black',
+	},
+  	
 		pieIcon: {
 			
 			color: 'grey',
 			'&:hover': {
 				cursor: 'pointer',
-				color: "#06aff5",
+				color: "turquoise",
 		 },
 		},
 
@@ -52,8 +44,9 @@ const classes = useStyles();
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
 	//set initial state
-	const [mode, setMode] = useState('INIT')
+	const [mode, setMode] = useState('LOAD')
   const [state, setState] = useState({
+		
 		poll: {},
 		options: [],
 		hasVoted: true,
@@ -66,14 +59,15 @@ const classes = useStyles();
 			axios.get(`/dashboards/${dash_id}/polls`),
 			axios.get(`/dashboards/${dash_id}/polls/options`)
     ]).then((all) => {
-
+		
       setState((prev) => ({
-        ...prev,
+				...prev,
         poll: all[0].data,
 				options: all[1].data,
 				hasVoted:false
-      
-      }));
+			}));
+			
+			setMode('OPTIONS');
      
     });
   }, []);
@@ -91,7 +85,6 @@ const renderWidget = () => {
         ...prev,
         poll: all[0].data,
 				options: all[1].data,
-			
       }));
      
     }).catch(err => console.log(err));
@@ -119,39 +112,32 @@ const createPoll = input => {
   .then((final) => {
    
 		setState((prev) => ({
-        ...prev,
+				...prev,
         poll: {},
 				options: [],
 				hasVoted:false
-      }));
+			}));
+			
+		setMode('OPTIONS');
+
 		renderWidget();
   }).catch(err => console.log(err));
 };
 
 const createMode = () => {
 	
-setMode(null);
-
+	setMode('CREATE');
 }
-
-const addOrCreate = mode === "INIT" 
-? 
-<AddCircleIcon className='add-poll-icon'
-style={{ fontSize: 80 }}
-onClick={() => createMode()}/>
-: 
-<CreatePoll
-createPoll={createPoll}
-/>;
-
 
 
 //vote on the poll
 const castVote = (index, choice) => {
 
+	if(state.hasVoted){return};
+
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
-	showPie();
+
 		setState((prev) => ({
         ...prev,
 				hasVoted: true,
@@ -164,15 +150,20 @@ const castVote = (index, choice) => {
 	).catch(err => console.log(err));
 }
 
+//shows the confirm delete mode
+const openConfirmDelete = () => {
+
+	setMode('DELETE');
+}
+
+const cancelDelete = () => {
+
+	setMode('OPTIONS');
+}
 
 //delete the entire poll
 const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
-		const confirmation = window.confirm("Are you sure you want to delete this poll?\nThis action cannot be undone.");
-
-	if(!confirmation) {
-		return;
-	}
 	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
@@ -180,31 +171,35 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
     ]).then((all) => {
 
       setState((prev) => ({
-        ...prev,
+				...prev,
         poll: {},
 				options: [],
 				hasVoted: false
-      }));
+			}));
+			
+			setMode('INIT');
 
     }).catch(err => console.log(err));
 }
 
 
 //shows the pie chart
- const [open, setOpen] = React.useState(false);
-
   const showPie = () => {
 	
-		setOpen(true);
+		if(mode === 'OPTIONS'){
+			setMode('PIE')
+		} else {
+			setMode('OPTIONS')
+		}
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+ 
+//CONDITIONAL UI RENDERING
 
+const loader = <div className='polls-loader'><CircularProgress className={classes.loaderIcon} disableShrink /></div>
 
-const dialogBtns = state.options.length < 1 ? null : 
-<div className='footer-icons'>
+const pollIcons = !state.options || state.options.length < 1 ? null : 
+<div className='poll-icons'>
 		
 <PieChartIcon
 			className={classes.pieIcon}
@@ -212,58 +207,81 @@ const dialogBtns = state.options.length < 1 ? null :
 		/>
 <DeleteIcon
 		className={classes.deleteIcon}
-		onClick={deletePoll}
+		onClick={openConfirmDelete}
+/>
+</div>
+
+const initial = 
+<div className='add-poll-container'>
+<h1>Create New Poll</h1>
+<AddCircleIcon 
+className='add-poll-icon'
+style={{ fontSize: 80 }}
+onClick={() => createMode()}/>
+</div>
+
+const create = <CreatePoll
+createPoll={createPoll}/>;
+
+const pollingData = parsePollingData(state, castVote);
+const op = 	pollingData.options ? pollingData.options : initial;
+
+const pie =
+<div className='pie-chart'>
+<PieChart
+title={state.poll}
+options={state.options}
 />
 </div>
 
 
-//parse polling data for UI
-const pollingData = parsePollingData(state, castVote);
+const confirmDelete =
+<div className='poll-delete'>
+<p>Are you sure you want to delete this poll?  This action cannot be undone.</p>
+<button onClick={() => cancelDelete()}>Cancel</button>
+<button id='poll-delete-btn' onClick={() => deletePoll()}>Delete</button>
+</div>
+
+const determineMode = mode => {
+
+	switch(mode) {
+		case 'LOAD':
+			return loader;
+		case 'OPTIONS':
+			return op;
+		case 'INIT':
+			return initial;
+		case 'CREATE':
+			return create;
+		case 'PIE':
+			return pie;
+		case 'DELETE':
+			return confirmDelete;
+		default:
+			console.log('error... MODE not found');
+			return loader;
+			
+	}
+}
+
+const core = determineMode(mode);
 
 	return (
 		<section className="polls">
-		
+
+		{pollIcons && mode !== 'DELETE' ? pollIcons : null}
+
 		<div className='header-wrapper'>
 		<header className='header'>
-		<h1>{pollingData.options ? pollingData.title : "Create New Poll"}</h1>
-		<h2>{pollingData.options ? pollingData.description : null}</h2>
+		<h1>{pollingData.options && mode === 'OPTIONS' ? pollingData.title : null}</h1>
 		</header>
 		</div>
 
 		<div>
 			<h3>
-				{pollingData.options ? pollingData.options : addOrCreate}
+			{core}
 			</h3>
 		</div>
-
-	
-  {dialogBtns}
-		
-      <Dialog
-			 classes={{ paper : classes.dialogPaper}}
-        open={open}
-				onClose={handleClose}
-				TransitionComponent={Transition}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{pollingData.title}</DialogTitle>
-        <DialogContent>
-         
-            <PieChart
-						title={pollingData.description}
-						options={pollingData.options}
-						/>
-         
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    
-		
 
 		</section>
 	);

@@ -1,8 +1,11 @@
+@import './Grid.scss';
 @import './Grocery';
 @import './Groceries';
-@import './_Polls.scss';
+@import './Polls.scss';
+@import './Dropdown.scss';
 @import './Recipes';
 @import './Calendar.scss';
+
 
 
 body {
@@ -10,4 +13,5 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
 }
