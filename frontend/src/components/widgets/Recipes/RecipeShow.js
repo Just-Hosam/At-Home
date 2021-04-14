@@ -27,6 +27,12 @@ export default function RecipeShow(props) {
 			.catch((err) => console.log('Error getting recipe', err));
 	}, [dashboardId, recipeId]);
 
+	const handleDelete = () => {
+		axios
+			.delete(`/dashboards/${dashboardId}/recipes/${recipeId}`)
+			.then(() => props.handleView(''));
+	};
+
 	const ingredientsList = ingredients.map((elem) => {
 		const ingStr = '- ' + elem.measurement + ' of ' + elem.item;
 		return <li key={elem.id}>{ingStr}</li>;
@@ -48,12 +54,21 @@ export default function RecipeShow(props) {
 						className="fas fa-pen"
 						onClick={() => props.handleEdit('EDIT')}
 					></i>
-					<i className="fas fa-trash"></i>
+					<i
+						className="fas fa-trash"
+						onClick={() => {
+							handleDelete();
+							props.handleView('LOADING');
+						}}
+					></i>
 				</div>
 			</div>
 			<div id="recipe-ingredients">
 				<h3>Ingredients:</h3>
-				<i className="fas fa-paper-plane" onClick={() => {}}></i>
+				<i
+					className="fas fa-paper-plane"
+					onClick={() => props.handleEdit('SEND')}
+				></i>
 				<ul>{ingredientsList}</ul>
 			</div>
 			<div id="recipe-directions">
