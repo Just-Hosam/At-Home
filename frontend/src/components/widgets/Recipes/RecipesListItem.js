@@ -2,7 +2,10 @@ import React from 'react';
 
 export default function RecipesListItem(props) {
 	return (
-		<div className="recipe-min">
+		<div
+			className="recipe-min"
+			onClick={() => props.handleView('RECIPE_SHOW', props.recipeId)}
+		>
 			<div className="recipe-details">
 				<p>{props.title}</p>
 				<div className="recipe-time">

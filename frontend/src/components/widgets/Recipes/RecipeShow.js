@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function RecipeShow(props) {
-	const dashboardId = props.dashboardId; // TODO: needs useContext
-	const recipeId = 1;
+	const dashboardId = props.dashboardId;
+	const recipeId = props.recipeId;
 
 	const [recipe, setRecipe] = useState({
 		id: 0,
@@ -25,7 +25,13 @@ export default function RecipeShow(props) {
 				setIngredients(res.data.ingredients);
 			})
 			.catch((err) => console.log('Error getting recipe', err));
-	}, [dashboardId]);
+	}, [dashboardId, recipeId]);
+
+	const handleDelete = () => {
+		axios
+			.delete(`/dashboards/${dashboardId}/recipes/${recipeId}`)
+			.then(() => props.handleView(''));
+	};
 
 	const ingredientsList = ingredients.map((elem) => {
 		const ingStr = '- ' + elem.measurement + ' of ' + elem.item;
@@ -46,19 +52,30 @@ export default function RecipeShow(props) {
 				<div>
 					<i
 						className="fas fa-pen"
-						onClick={() => props.handleView('EDIT')}
+						onClick={() => props.handleEdit('EDIT')}
 					></i>
-					<i className="fas fa-trash"></i>
+					<i
+						className="fas fa-trash"
+						onClick={() => {
+							handleDelete();
+							props.handleView('LOADING');
+						}}
+					></i>
 				</div>
 			</div>
 			<div id="recipe-ingredients">
 				<h3>Ingredients:</h3>
+				<i
+					className="fas fa-paper-plane"
+					onClick={() => props.handleEdit('SEND')}
+				></i>
 				<ul>{ingredientsList}</ul>
 			</div>
 			<div id="recipe-directions">
 				<h3>Description:</h3>
 				<p>{recipe.directions}</p>
 			</div>
+			<button onClick={() => props.handleView('')}>back</button>
 		</div>
 	);
 }

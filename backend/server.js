@@ -36,6 +36,8 @@ app.use(methodOverride('_method'));
 
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
+const usersDashboardsRouter = require('./routes/users-dashboards.js');
+const dashboardsUsersRouter = require('./routes/dashboards-users.js');
 const groceriesRouter = require('./routes/groceries.js');
 const photosRouter = require('./routes/photos.js');
 
@@ -46,6 +48,8 @@ const ingredientsRouter = require('./routes/ingredients.js');
 
 // Mount all resource routes
 app.use('/users', usersRouter);
+app.use('/users/:userId/dashboards', usersDashboardsRouter);
+app.use('/dashboards/:dashboardId/users', dashboardsUsersRouter);
 app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
 app.use('/dashboards/:dashboardId/polls', pollsRouter);

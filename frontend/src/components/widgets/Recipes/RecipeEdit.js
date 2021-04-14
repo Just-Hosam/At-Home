@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function RecipeEdit(props) {
-	const dashboardId = props.dashboardId; // TODO: needs useContext
-	const recipeId = 1;
+	const dashboardId = props.dashboardId;
+	const recipeId = props.recipeId;
 
 	const [ingredients, setIngredients] = useState([]);
 	const [recipe, setRecipe] = useState({
@@ -25,7 +25,7 @@ export default function RecipeEdit(props) {
 				setIngredients(res.data.ingredients);
 			})
 			.catch((err) => console.log('Error getting recipe', err));
-	}, [dashboardId]);
+	}, [dashboardId, recipeId]);
 
 	const ingredientsList = ingredients.map((elem) => {
 		return (
@@ -95,7 +95,7 @@ export default function RecipeEdit(props) {
 	const submitState = (dashboardId, recipe) => {
 		axios
 			.patch(`/dashboards/${dashboardId}/recipes/${recipe.id}`, recipe)
-			.then(() => {}) // transition to full recipe.
+			.then(() => props.handleEdit('SHOW'))
 			.catch((err) => console.log('hi', err));
 	};
 
@@ -132,7 +132,6 @@ export default function RecipeEdit(props) {
 				ingredientsList.push(newEmptyFields);
 			});
 	};
-	
 
 	return (
 		<div>
@@ -174,11 +173,11 @@ export default function RecipeEdit(props) {
 						onChange={(event) => updateRecipe('directions', event.target.value)}
 					/>
 				</div>
-				<button onClick={() => props.handleView('SHOW')}>Cancel</button>
+				<button onClick={() => props.handleEdit('SHOW')}>Cancel</button>
 				<button
 					onClick={() => {
 						submitState(dashboardId, recipe);
-						props.handleView('SHOW');
+						props.handleEdit('LOADING');
 					}}
 				>
 					Submit
