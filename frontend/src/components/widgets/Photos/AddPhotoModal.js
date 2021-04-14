@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -6,9 +7,8 @@ import Button from "@material-ui/core/Button";
 import Fade from "@material-ui/core/Fade";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
-
 import SaveIcon from "@material-ui/icons/Save";
-import axios from "axios";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +48,9 @@ export default function AddPhotoModal(props) {
   };
 
   const handleSubmit = (newImg) => {
-    console.log(`input submitted`, newImg);
     axios
       .post(`dashboards/${dashboardId}/photos/`, newImg)
       .then((res) => {
-        console.log(`submit photo::res.data`, res.data);
         props.addNewImg(res.data);
         setInput({ img_url: "", text: "" });
         setOpen(false);
