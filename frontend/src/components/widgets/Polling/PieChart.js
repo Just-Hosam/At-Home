@@ -1,7 +1,7 @@
 import Chart from "react-google-charts";
 const PieChart = (props) => {
 
-
+	
 	let title = "No Polling Data";
 	let pieParams = ['...','...','...'];
 
@@ -11,13 +11,16 @@ const PieChart = (props) => {
 	}
 
 if (props.options){
-	 title =  props.title;
 
-	 pieParams = props.options.map(o => {
 	
+	 title =  null;
+
+	 //map params
+	 pieParams = props.options.map(o => {
+		
 		 pie = {
-			 option: o.props.options ? o.props.options : '...',
-			 votes: o.props.votes ? o.props.votes : 0
+			 option: o.choice ? o.choice : '...',
+			 votes: o.votes ? o.votes : 0
 		 }
 
 		return pie;
@@ -27,8 +30,8 @@ if (props.options){
 	return (
 		
 	<Chart
-  width={'350px'}
-  height={'250px'}
+  width={'300px'}
+  height={'200px'}
   chartType="PieChart"
   loader={<div>Loading Chart</div>}
   data={[

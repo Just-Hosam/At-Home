@@ -14,12 +14,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-		// display: 'flex',
-		// // justifyContent: 'flex-end',
-		// // flexWrap: 'wrap',
-		
-  },
+ 
+	dialogBackground: {
+		background: 'black'		
+ },
+
+ dialogPaper: {
+	width : '400px',	
+},
+
+
   textField: {
 		
     marginTop: theme.spacing(1),
@@ -352,11 +356,13 @@ const closeDialog = () => {
 	/>
 </div>
 
-			<Dialog open={open.inputDialog ? open.inputDialog : false}  
+			<Dialog open={open.inputDialog ? open.inputDialog : false} 
+			className={classes.dialogBackground} 
 			onClose={closeDialog}
 			aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create a new event</DialogTitle>
-        <DialogContent>
+        <DialogContent
+				className={classes.dialogPaper}>
           <DialogContentText>
             Simply enter your event details and save.
           </DialogContentText>
@@ -418,10 +424,13 @@ const closeDialog = () => {
 
 
 			<Dialog open={open.editDialog ? open.editDialog : false}  
+			className={classes.dialogBackground}
 			onClose={closeDialog}
 			aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit event</DialogTitle>
-        <DialogContent>
+        <DialogContent
+				className={classes.dialogPaper}
+				>
           <DialogContentText>
             Simply edit your event details and save.
           </DialogContentText>
@@ -502,7 +511,7 @@ const closeDialog = () => {
       
 
 			<Dialog
-				
+				className={classes.dialogBackground}
         open={open.viewDialog ? open.viewDialog : false}
         TransitionComponent={Transition}
 				keepMounted
@@ -513,7 +522,9 @@ const closeDialog = () => {
         <DialogTitle className={classes.dialogTitle}>
 					{e.details ? e.details.title : ''}
 					</DialogTitle>
-        <DialogContent>
+        <DialogContent
+					className={classes.dialogPaper}
+				>
           <DialogContentText className={classes.dialogBody} id="alert-dialog-slide-description">
 					
           {e.details ? e.details.description : ''}
