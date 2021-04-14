@@ -39,7 +39,7 @@ router.patch('/:recipeId', (req, res) => {
 	const recipeObj = req.body;
 
 	updateRecipe(recipeObj)
-		.then((res) => res)
+		.then((data) => res.json(data))
 		.catch((err) =>
 			console.log('Error at recipes PATCH route "/:recipeId"', err)
 		);
