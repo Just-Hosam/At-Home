@@ -3,7 +3,9 @@
 // import CalendarWidget from './widgets/Calendar/CalendarWidget'
 // import RecipesMin from './widgets/Recipes/RecipesMin';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
-import GalleryModal from './widgets/Photos/GalleryModal';
+// import GalleryModal from './widgets/Photos/GalleryModal';
+import Chores from './widgets/Chores/Chores';
+// import Chore from './widgets/Chores/Chore';
 
 
 
@@ -15,7 +17,8 @@ import GalleryModal from './widgets/Photos/GalleryModal';
 const App = () => {
 	return (
 		<div className="App">
-			<GalleryModal />
+			<Chores />
+			{/* <Chore /> */}
 		</div>
 	);
 };
