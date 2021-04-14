@@ -47,6 +47,17 @@ const addGrocery = (dashboardId, newGrocery) => {
 		);
 };
 
+const addGroceries = (dashboardId, newGroceries) => {
+	let text = `INSERT INTO groceries (dashboard_id, text) VALUES\n`;
+	for (const elem of newGroceries) {
+		text += `(${dashboardId}, '${elem.item}'),\n`;
+	}
+	text = text.slice(0, text.length - 2);
+	text += '\nRETURNING *;';
+
+	return db.query(text).then((res) => res.rows);
+};
+
 const toggleGrocery = (dashboardId, groceryId) => {
 	return getGrocery(dashboardId, groceryId)
 		.then((res) => {
@@ -74,4 +85,5 @@ module.exports = {
 	addGrocery,
 	toggleGrocery,
 	getGrocery,
+	addGroceries,
 };
