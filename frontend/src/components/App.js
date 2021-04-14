@@ -6,30 +6,31 @@ import React, { useState } from 'react';
 
 // import Photos from './widgets/Photos';
 // import Gallery from './widgets/Gallery';
-import RecipesMin from './widgets/Recipes/RecipesMin';
-import RecipeMax from './widgets/Recipes/RecipeMax';
-import RecipeAdd from './widgets/Recipes/RecipeAdd';
-//import GalleryModal from './widgets/GalleryModal';
+// import RecipesMin from './widgets/Recipes/RecipesMin';
+// import RecipeMax from './widgets/Recipes/RecipeMax';
+// import RecipeAdd from './widgets/Recipes/RecipeAdd';
+// import GalleryModal from './widgets/GalleryModal';
+// import RecipeSend from './widgets/Recipes/RecipeSend';
 
 const App = () => {
-	const dashboardId = 1;
-	const [modalView, setModalView] = useState('');
-	const [itemId, setItemId] = useState(0);
+	// const dashboardId = 1;
+	// const [modalView, setModalView] = useState('');
+	// const [itemId, setItemId] = useState(0);
 
-	const handleView = (newView, id) => {
-		setModalView(newView);
-		setItemId(id);
-	};
+	// const handleView = (newView, id) => {
+	// 	setModalView(newView);
+	// 	setItemId(id);
+	// };
 
 	return (
 		<div className="App">
-			{modalView === '' && <RecipesMin handleView={handleView} />}
+			{/* {modalView === '' && <RecipesMin handleView={handleView} />}
 			{modalView === 'RECIPE_SHOW' && (
 				<RecipeMax recipeId={itemId} handleView={handleView} />
 			)}
 			{modalView === 'RECIPE_ADD' && (
 				<RecipeAdd handleView={handleView} dashboardId={dashboardId} />
-			)}
+			)} */}
 		</div>
 	);
 };
