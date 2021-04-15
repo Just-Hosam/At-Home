@@ -1,6 +1,21 @@
-#grocery-item {
-	// border: 1px solid red;
-	width: 100%;
+.grocery-item {
+	width: 97%;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
+	padding: 0 5px;
+	border-bottom: 1px solid var(--text-color-alt);
+
+	.grocery-check-icon {
+		padding: 3px;
+	}
+}
+
+.grocery-completed {
+	text-decoration: line-through;
+	opacity: 40%;
+
+	.grocery-check-icon {
+		color: var(--accent-color);
+	}
 }

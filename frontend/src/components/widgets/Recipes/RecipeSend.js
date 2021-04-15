@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import axios from 'axios';
+import { Icon } from '@material-ui/core';
 
 export default function RecipeSend(props) {
 	const dashboardId = props.dashboardId;
@@ -36,6 +41,7 @@ export default function RecipeSend(props) {
 		return (
 			<li key={elem.id}>
 				<Checkbox
+					className="checkbox"
 					checked={elem.checked}
 					onChange={() => handleChange(elem.id)}
 					inputProps={{ 'aria-label': 'primary checkbox' }}
@@ -50,13 +56,28 @@ export default function RecipeSend(props) {
 	const sendToIngredients = (ingArr) => {
 		axios
 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery: ingArr })
-			.then((res) => props.handleEdit('SHOW'));
+			.then(() => props.handleEdit('SHOW'));
 	};
 	return (
-		<div>
+		<div id="recipes-send">
+			<div id="recipes-send-header">
+				<IconButton
+					className="recipes-send-back"
+					onClick={() => props.handleView('SHOW')}
+				>
+					<ArrowBackIcon />
+				</IconButton>
+				<h2>Send to Groceries</h2>
+			</div>
 			<ul>{newList}</ul>
-			<button onClick={() => props.handleView('SHOW')}>back</button>
-			<button onClick={() => sendToIngredients(checkIngredients)}>send</button>
+			<Button
+				className="recipes-send-send"
+				fullWidth
+				variant="contained"
+				onClick={() => sendToIngredients(checkIngredients)}
+			>
+				send
+			</Button>
 		</div>
 	);
 }

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import Grocery from './Grocery';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const axios = require('axios');
 
@@ -50,6 +52,7 @@ export default function Groceries() {
 			item={grocery.text}
 			onClick={toggleGrocery}
 			dashboardId={dashboardId}
+			isDone={grocery.done}
 		/>
 	));
 	const checkedComponents = checkedList.map((grocery) => (
@@ -59,23 +62,36 @@ export default function Groceries() {
 			item={grocery.text}
 			onClick={toggleGrocery}
 			dashboardId={dashboardId}
+			isDone={grocery.done}
 		/>
 	));
 
 	return (
 		<div id="widget-groceries">
 			<h1>Groceries</h1>
-			<form id="input-groceries" onSubmit={(event) => event.preventDefault()}>
-				<input
+			<form onSubmit={(event) => event.preventDefault()}>
+				<TextField
+					id="groceries-text"
+					label="Add Grocery"
+					variant="outlined"
+					size="small"
 					value={input}
 					onChange={(event) => setInput(event.target.value)}
-					type="text"
+					autoComplete="off"
 				/>
-				<button onClick={() => addGrocery(input)}>Hello</button>
+				<Button
+					id="groceries-btn"
+					variant="contained"
+					onClick={() => addGrocery(input)}
+				>
+					<i className="fas fa-plus"></i>
+				</Button>
 			</form>
-			{unCheckedList.length > 0 && unCheckedComponents}
-			<p>checked list</p>
-			{checkedList.length > 0 && checkedComponents}
+			<ul>{unCheckedList.length > 0 && unCheckedComponents}</ul>
+			<p id="groceries-divider">
+				checked list <i className="fas fa-chevron-left"></i>
+			</p>
+			<ul>{checkedList.length > 0 && checkedComponents}</ul>
 		</div>
 	);
 }
