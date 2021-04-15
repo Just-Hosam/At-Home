@@ -7,11 +7,45 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	color: var(--text-color);
+
+	#groceries-text {
+	}
+
+	#groceries-btn {
+		height: 39px;
+		margin-left: 5px;
+		background-color: var(--accent-color-alt);
+		color: var(--card-color);
+	}
 
 	h1 {
 		margin: 0;
+		margin-bottom: 10px;
+		color: var(--accent-color);
 	}
-	p {
+
+	ul {
+		padding: 0;
 		margin: 0;
+		width: 100%;
+		list-style: none;
+	}
+
+	#groceries-divider {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		margin: 5px;
+		margin-left: 10px;
+		align-self: start;
+		font-size: 0.9rem;
+		color: var(--accent-color);
+
+		i {
+			padding-left: 3px;
+			font-size: 0.73rem;
+		}
 	}
 }

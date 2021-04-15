@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import RecipesListItem from './RecipesListItem';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
@@ -29,9 +30,15 @@ export default function RecipesMin(props) {
 
 	return (
 		<div id="widget-recipes">
-			<h2>Recipes</h2>
-			<button onClick={() => props.handleView('RECIPE_ADD')}>Add Recipe</button>
+			<h2>RECIPES</h2>
 			<ul>{recipeList}</ul>
+			<Button
+				id="add-recipe-btn"
+				variant="contained"
+				onClick={() => props.handleView('RECIPE_ADD')}
+			>
+				Add Recipe
+			</Button>
 		</div>
 	);
 }
