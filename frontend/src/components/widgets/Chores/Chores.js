@@ -56,13 +56,23 @@ export default function CheckboxList() {
 	const [choresList, setChoresList] = useState([]);
 	// check list
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([]);
+  const [checked, setChecked] = useState([]);
+  const [dashboardUsers, setDashboardUsers] = useState([]);
 
 	useEffect(() => {
     axios
       .get(`/dashboards/${dashboardId}/chores/`)
       .then((res) => {
         setChoresList(res.data);
+				setAssigned((prev) => {
+					return res.data.map((elem) => elem.name)
+				});
+				setDashboardUsers(usersOnDashDummy);
+				// axios
+					// .get(`/dashboards/${dashboardId}/users`)
+					// .then((res) => {
+						// setDashboardUsers(res.data);
+					// })
       })
       .catch((err) => console.log("CHORES COMPONENT ERROR", err));
   }, []);
@@ -81,12 +91,22 @@ export default function CheckboxList() {
   };
 
 	// form input
-  const [assigned, setAssigned] = React.useState('');
+  const [assigned, setAssigned] = useState(['none']);
 
-  const handleChange = (event) => {
-    setAssigned(event.target.value);
+  const handleChange = (event, choreId) => {
+		const eTarget = event.target.value;
+		console.log(`choreId`, choreId);
+		setChoresList((prev) => {
+			return prev.map((elem) => {
+				if (elem.id === choreId) {
+					return {...elem, name: eTarget}
+				}
+				return elem;
+			});
+		});
+    setAssigned(eTarget);
   };
-	console.log(`checked`, checked)
+	console.log(`assigned`, assigned)
 
 	
 
@@ -121,21 +141,22 @@ export default function CheckboxList() {
 									</ListItemIcon>
 									<ListItemText id={labelId} primary={`${value.text}`} />
 								</div>
-								{value.name === 'none' ? null : <Chip name={value.name} />}
+								{!value.name === 'none' ? null : <Chip name={value.name} />}
 								<div>
 									<ListItemSecondaryAction>
 											{checked.includes(value) && <IconButton edge="end" aria-label="done">
 												<DoneIcon />
 											</IconButton>}
 											{!checked.includes(value) && <FormControl size="small" className={classes.formControl}>
-												<InputLabel id="demo-simple-select-label">Assigned</InputLabel>
+												<InputLabel id="demo-simple-select-label">Users</InputLabel>
 												<Select
 													labelId="demo-simple-select-label"
 													id="demo-simple-select"
 													value={assigned}
-													onChange={handleChange}
+													// onChange={handleChange}
+													onChange={(e) => handleChange(e, value.id)}
 												>
-													{usersOnDashDummy.map((user) => <MenuItem value={`${user.first_name} ${user.last_name}`}>{`${user.first_name} ${user.last_name}`}</MenuItem>)}
+													{dashboardUsers.map((user) => <MenuItem value={`${user.first_name} ${user.last_name}`}>{`${user.first_name} ${user.last_name}`}</MenuItem>)}
 												</Select>
 											</FormControl>}
 									</ListItemSecondaryAction>
@@ -149,86 +170,3 @@ export default function CheckboxList() {
 		</div>
   );
 }
-
-
-
-// import React, { useState, useEffect } from 'react';
-
-// import Chore from './Chore';
-
-// const axios = require('axios');
-
-// export default function Chores() {
-// 	const dashboardId = 1; // TODO: needs useContext
-
-// 	const [groceries, setGroceries] = useState([]);
-// 	const [input, setInput] = useState('');
-
-// 	useEffect(() => {
-// 		axios
-// 			.get(`/dashboards/${dashboardId}/groceries/`)
-// 			.then((res) => setGroceries(res.data))
-// 			.catch((err) => console.log('I AM A COMPONENT ERROR', err));
-// 	}, []);
-
-// 	const toggleGrocery = (dashboardId, groceryId) => {
-// 		axios
-// 			.patch(`/dashboards/${dashboardId}/groceries/${groceryId}`)
-// 			.then(() => {
-// 				const newGroceriesArr = groceries.map((elem) =>
-// 					elem.id === groceryId ? { ...elem, done: !elem.done } : elem
-// 				);
-// 				setGroceries([...newGroceriesArr]);
-// 			})
-// 			.catch((err) => console.log('I"M THE PATCH MONSTER', err));
-// 	};
-
-// 	const addGrocery = (inputGrocery) => {
-// 		axios
-// 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery })
-// 			.then((res) => {
-// 				setGroceries([res.data, ...groceries]);
-// 				setInput('');
-// 			})
-// 			.catch((err) => console.log('I"M THE POST MONSTER', err));
-// 	};
-
-// 	const unCheckedList = groceries.filter((grocery) => !grocery.done);
-// 	const checkedList = groceries.filter((grocery) => grocery.done);
-
-// 	const unCheckedComponents = unCheckedList.map((grocery) => (
-// 		<Chore
-// 			key={grocery.id}
-// 			itemId={grocery.id}
-// 			item={grocery.text}
-// 			onClick={toggleGrocery}
-// 			dashboardId={dashboardId}
-// 		/>
-// 	));
-// 	const checkedComponents = checkedList.map((grocery) => (
-// 		<Chore
-// 			key={grocery.id}
-// 			itemId={grocery.id}
-// 			item={grocery.text}
-// 			onClick={toggleGrocery}
-// 			dashboardId={dashboardId}
-// 		/>
-// 	));
-
-// 	return (
-// 		<div id="widget-groceries">
-// 			<h1>Groceries</h1>
-// 			<form id="input-groceries" onSubmit={(event) => event.preventDefault()}>
-// 				<input
-// 					value={input}
-// 					onChange={(event) => setInput(event.target.value)}
-// 					type="text"
-// 				/>
-// 				<button onClick={() => addGrocery(input)}>Hello</button>
-// 			</form>
-// 			{unCheckedList.length > 0 && unCheckedComponents}
-// 			<p>checked list</p>
-// 			{checkedList.length > 0 && checkedComponents}
-// 		</div>
-// 	);
-// }
