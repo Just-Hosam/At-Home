@@ -11,8 +11,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
+import useSocket from "../../../hooks/useSocket";
 
 const useStyles = makeStyles(theme => ({
 
@@ -40,6 +39,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PollsWidgetItem = (props) => {
+
+  const {
+		sendSocketMessage,
+		broadcast,
+  } = useSocket();
+
+	
 const classes = useStyles();
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
@@ -53,8 +59,9 @@ const classes = useStyles();
 		picked: null
   });
 
-  //fetch polling data on inital render
+	//fetch polling data on inital render
   useEffect(() => {
+		
     Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
 			axios.get(`/dashboards/${dash_id}/polls/options`)
@@ -68,9 +75,10 @@ const classes = useStyles();
 			}));
 			
 			setMode('OPTIONS');
-     
+
+			console.log(broadcast)
     });
-  }, []);
+  }, [broadcast.polls]);
 
 
 
@@ -137,15 +145,15 @@ const castVote = (index, choice) => {
 
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
-
+		renderWidget();
 		setState((prev) => ({
         ...prev,
 				hasVoted: true,
 				picked: choice
 			}));
 	
-	
-	renderWidget();
+	sendSocketMessage(`polls`); //<--------SEND WEBSOCKET MSG
+
 	})
 	).catch(err => console.log(err));
 }

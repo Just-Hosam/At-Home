@@ -7,6 +7,7 @@ const axios = require('axios');
 export default function Groceries() {
 	const dashboardId = 1; // TODO: needs useContext
 
+	
 	const [groceries, setGroceries] = useState([]);
 	const [input, setInput] = useState('');
 

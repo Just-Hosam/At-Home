@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-awesome-calendar';
 import axios from "axios";
-
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,8 +9,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import Slide from '@material-ui/core/Slide';
+
+import useSocket from "../../../hooks/useSocket";
 
 const useStyles = makeStyles((theme) => ({
  
@@ -48,11 +48,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
+
+//websocket connection
+const {
+	sendSocketMessage,
+	broadcast,
+} = useSocket();
 
 //modal styling
 const classes = useStyles();
@@ -109,7 +115,7 @@ const [open, setOpen] = React.useState({
       }));
      
     });
-  }, []);
+  }, [broadcast.calendar]);
 
 
 
@@ -151,6 +157,8 @@ const createEvent = newEvent => {
 			setOpen({
 				inputDialog: false
 			});
+
+		sendSocketMessage('calendar'); // <------ websocket
 
   }).catch(err => console.log(err));
 };

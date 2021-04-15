@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 
 // import Groceries from './widgets/Groceries';
 // import Dropdown from './widgets/Dropdown/Dropdown';
 // import PollWidget from './widgets/Polling/PollsWidget';
 import Grid from './widgets/Grid';
+// import useSocket from "../hooks/useSocket";
 // import CalendarWidget from './widgets/Calendar/CalendarWidget'
 
 
@@ -28,9 +29,12 @@ const App = () => {
 	// 	setItemId(id);
 	// };
 
+	
+
 	return (
 		<div className="App">
-    	<Grid/>
+    {/* <Socket/> */}
+	<Grid/>
 			{/* {modalView === '' && <RecipesMin handleView={handleView} />}
 			{modalView === 'RECIPE_SHOW' && (
 				<RecipeMax recipeId={itemId} handleView={handleView} />

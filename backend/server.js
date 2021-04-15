@@ -11,6 +11,33 @@ const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 
+//web sockets
+const environment = ENV !== 'production' ? 'http://localhost:3030' : 'https://dash.io';
+const server = require('http').createServer(app);
+const io = require('socket.io')(server,{
+	cors: {
+    origin: environment, 
+    methods: ["GET", "POST"]
+  }
+});
+
+//create a socket.io connection
+io.on('connection', socket => {
+
+ 	 const message = 'message';
+	
+	 //listen for changes
+	 socket.on('input', input => {
+		 socket.broadcast.emit(message, input);
+	 });
+
+	//disconnects socket with update message
+	// socket.on("disconnect", () => {
+	// io.emit(message, "A user has signed off the dashbaord");		
+  // });
+});
+
+
 // PG database client/connection setup
 const db = require('./lib/db.js');
 db.connect();
@@ -66,6 +93,6 @@ app.get('/', (req, res) => {
 	res.send('Hello World');
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Final_Project listening on port ${PORT}`);
 });
