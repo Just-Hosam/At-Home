@@ -5,7 +5,7 @@
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 // import GalleryModal from './widgets/Photos/GalleryModal';
 import Chores from './widgets/Chores/Chores';
-import Chip from './widgets/Misc/Chip';
+// import Chip from './widgets/Misc/Chip';
 
 
 

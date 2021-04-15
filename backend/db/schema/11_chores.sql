@@ -5,5 +5,5 @@ CREATE TABLE chores (
   dashboard_id INTEGER REFERENCES dashboards(id) ON DELETE CASCADE,
   text VARCHAR(255) NOT NULL,
   done BOOLEAN DEFAULT false,
-  name VARCHAR(255) DEFAULT 'none',
+  name VARCHAR(255) DEFAULT 'none'
 );

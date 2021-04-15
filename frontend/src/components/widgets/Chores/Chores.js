@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CheckboxList() {
+export default function Chores() {
 	const dashboardId = 1;
 	const [choresList, setChoresList] = useState([]);
 	// check list
@@ -108,8 +108,6 @@ export default function CheckboxList() {
   };
 	console.log(`assigned`, assigned)
 
-	
-
   return (
 		<div className={classes.root}>
 			<Grid container className={classes.choresHeader}>
@@ -122,12 +120,12 @@ export default function CheckboxList() {
 			<Divider variant="middle" />
 			<List className={null}>
 				{choresList.map((value) => {
-
+					console.log(`assigned`, assigned)
 					const labelId = `checkbox-list-label-${value.id}`;
 
 					return (
 						<>
-							<ListItem key={value.id} role={undefined}   style={{display: 'flex', justifyContent: 'space-between'}}>
+							<ListItem key={value.id} role={undefined} style={{display: 'flex', justifyContent: 'space-between'}}>
 								<div style={{display: 'flex', alignItems: 'center'}}>
 									<ListItemIcon>
 										<Checkbox
@@ -152,7 +150,7 @@ export default function CheckboxList() {
 												<Select
 													labelId="demo-simple-select-label"
 													id="demo-simple-select"
-													value={assigned}
+													value={''}
 													// onChange={handleChange}
 													onChange={(e) => handleChange(e, value.id)}
 												>
