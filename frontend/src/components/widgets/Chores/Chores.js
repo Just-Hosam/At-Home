@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,11 +17,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Chip from '../Misc/Chip';
+
+const usersOnDashDummy = [
+	{user_id: 1, first_name: 'Shooter', last_name: 'McGavin'},
+	{user_id: 2, first_name: 'Happy', last_name: 'Gilmore'},
+	{user_id: 3, first_name: 'Darth', last_name: 'Vader'},
+	{user_id: 4, first_name: 'Kylo', last_name: 'Ren'},
+	{user_id: 5, first_name: 'Bobba', last_name: 'Fett'},
+	{user_id: 6, first_name: 'Din', last_name: 'Djarin'},
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '500px',
-    maxWidth: 600,
+    width: '600px',
+    // maxWidth: 1200,
+		// flexDirection: 'row',
     backgroundColor: theme.palette.background.paper,
   },
 	choresHeader: {
@@ -32,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 		minWidth: 120,
 		backgroundColor: theme.palette.background.paper,
 	},
-	// input form
+	// // input form
 	formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -40,9 +52,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CheckboxList() {
+	const dashboardId = 1;
+	const [choresList, setChoresList] = useState([]);
 	// check list
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
+
+	useEffect(() => {
+    axios
+      .get(`/dashboards/${dashboardId}/chores/`)
+      .then((res) => {
+        setChoresList(res.data);
+      })
+      .catch((err) => console.log("CHORES COMPONENT ERROR", err));
+  }, []);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -58,64 +81,72 @@ export default function CheckboxList() {
   };
 
 	// form input
-  const [age, setAge] = React.useState('');
+  const [assigned, setAssigned] = React.useState('');
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setAssigned(event.target.value);
   };
+	console.log(`checked`, checked)
+
+	
 
   return (
-		<>
+		<div className={classes.root}>
 			<Grid container className={classes.choresHeader}>
 				<Grid item xs>
-					<Typography variant="h4">
-						Chores
+					<Typography variant="h5">
+						To-Do
 					</Typography>
 				</Grid>
 			</Grid>
 			<Divider variant="middle" />
-			<List className={classes.root}>
-				{[0, 1, 2, 3].map((value) => {
-					const labelId = `checkbox-list-label-${value}`;
+			<List className={null}>
+				{choresList.map((value) => {
+
+					const labelId = `checkbox-list-label-${value.id}`;
 
 					return (
 						<>
-							<ListItem key={value} role={undefined} button onClick={handleToggle(value)}>
-								<ListItemIcon>
-									<Checkbox
-										edge="start"
-										checked={checked.indexOf(value) !== -1}
-										tabIndex={-1}
-										disableRipple
-										inputProps={{ 'aria-labelledby': labelId }}
-									/>
-								</ListItemIcon>
-								<ListItemText id={labelId} primary={`Line item ${value + 1}`} />																						  {/* LIST ITEM VALUE */}
-								<ListItemSecondaryAction>
-									{checked.includes(value) && <IconButton edge="end" aria-label="done">
-										<DoneIcon />																																															{/* COMPLETE CHECKMARK */}
-									</IconButton>}
-									{!checked.includes(value) && <FormControl size="small" className={classes.formControl}>																	{/* DROP DOWN LIST */}
-										<InputLabel id="demo-simple-select-label">Age</InputLabel>
-										<Select
-											labelId="demo-simple-select-label"
-											id="demo-simple-select"
-											value={age}
-											onChange={handleChange}
-											>
-											<MenuItem value={10}>Ten</MenuItem>
-											<MenuItem value={20}>Twenty</MenuItem>
-											<MenuItem value={30}>Thirty</MenuItem>
-										</Select>
-									</FormControl>}
-								</ListItemSecondaryAction>
+							<ListItem key={value.id} role={undefined}   style={{display: 'flex', justifyContent: 'space-between'}}>
+								<div style={{display: 'flex', alignItems: 'center'}}>
+									<ListItemIcon>
+										<Checkbox
+											edge="start"
+											checked={checked.indexOf(value) !== -1}
+											tabIndex={-1}
+											disableRipple
+											inputProps={{ 'aria-labelledby': labelId }}
+											onClick={handleToggle(value)}
+										/>
+									</ListItemIcon>
+									<ListItemText id={labelId} primary={`${value.text}`} />
+								</div>
+								{value.name === 'none' ? null : <Chip name={value.name} />}
+								<div>
+									<ListItemSecondaryAction>
+											{checked.includes(value) && <IconButton edge="end" aria-label="done">
+												<DoneIcon />
+											</IconButton>}
+											{!checked.includes(value) && <FormControl size="small" className={classes.formControl}>
+												<InputLabel id="demo-simple-select-label">Assigned</InputLabel>
+												<Select
+													labelId="demo-simple-select-label"
+													id="demo-simple-select"
+													value={assigned}
+													onChange={handleChange}
+												>
+													{usersOnDashDummy.map((user) => <MenuItem value={`${user.first_name} ${user.last_name}`}>{`${user.first_name} ${user.last_name}`}</MenuItem>)}
+												</Select>
+											</FormControl>}
+									</ListItemSecondaryAction>
+								</div>
 							</ListItem>
 							<Divider />
 						</>
 					);
 				})}
 			</List>
-		</>
+		</div>
   );
 }
 

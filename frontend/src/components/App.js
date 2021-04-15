@@ -5,7 +5,7 @@
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 // import GalleryModal from './widgets/Photos/GalleryModal';
 import Chores from './widgets/Chores/Chores';
-import Chore from './widgets/Chores/Chore';
+import Chip from './widgets/Misc/Chip';
 
 
 
@@ -17,8 +17,9 @@ import Chore from './widgets/Chores/Chore';
 const App = () => {
 	return (
 		<div className="App">
-			<Chores />
-			<Chore />
+			<div style={{display: 'flex'}}>
+				<Chores />
+			</div>
 		</div>
 	);
 };

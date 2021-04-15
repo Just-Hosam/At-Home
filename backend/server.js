@@ -38,6 +38,7 @@ app.use(methodOverride('_method'));
 const usersRouter = require('./routes/users.js');
 const groceriesRouter = require('./routes/groceries.js');
 const photosRouter = require('./routes/photos.js');
+const choresRouter = require('./routes/chores.js');
 
 const pollsRouter = require('./routes/polls.js');
 const eventsRouter = require('./routes/events.js');
@@ -48,6 +49,7 @@ const ingredientsRouter = require('./routes/ingredients.js');
 app.use('/users', usersRouter);
 app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
+app.use('/dashboards/:dashboardId/chores', choresRouter);
 app.use('/dashboards/:dashboardId/polls', pollsRouter);
 app.use('/dashboards/:dashboardId/events', eventsRouter);
 
