@@ -43,8 +43,6 @@ export default function Dashboards() {
 			.catch((err) => console.log(err));
 	};
 
-	console.log(users);
-
 	const usersList = users.map((elem) => {
 		return (
 			<li key={elem.user_id}>
