@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export default function RecipesMin(props) {
 	const [cookies] = useCookies(['userID']);
-	const dashboardId = useContext(cookies.dashboardId);
+	const dashboardId = cookies.dashboardId;
 
 	const [recipes, setRecipes] = useState([]);
 

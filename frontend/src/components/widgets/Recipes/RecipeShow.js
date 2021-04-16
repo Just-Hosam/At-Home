@@ -12,7 +12,7 @@ import axios from 'axios';
 
 export default function RecipeShow(props) {
 	const [cookies] = useCookies(['userID']);
-	const dashboardId = useContext(cookies.dashboardId);
+	const dashboardId = cookies.dashboardId;
 	const recipeId = props.recipeId;
 
 	const [recipe, setRecipe] = useState({

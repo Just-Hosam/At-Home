@@ -8,8 +8,8 @@ import RecipeEdit from './RecipeEdit';
 import RecipeSend from './RecipeSend';
 
 export default function RecipeMax(props) {
-	const [cookies, setCookie] = useCookies(['userID']);
-	const dashboardId = useContext(cookies.dashboardId);
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 
 	const [view, setView] = useState('SHOW');
 
