@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 export default function Dashboards() {
-	const [cookies, setCookie] = useCookies(['userID']);
+	const [cookies, setCookie] = useCookies(null);
 	const [dashboards, setDashboards] = useState([]);
 	// const [selectedDashboard, setSelectedDashboard] = useState(cookies.dashboardId)
 
@@ -37,14 +41,27 @@ export default function Dashboards() {
 		return (
 			<li key={elem.id}>
 				<p>{elem.name}</p>
-				<button onClick={() => selectDashboard(elem.id)}>select</button>
-				<button onClick={() => deleteDashboardLink(elem.id)}>Delete</button>
+				<div>
+					<IconButton
+						className="dashboards-deletebtn"
+						onClick={() => deleteDashboardLink(elem.id)}
+					>
+						<DeleteIcon />
+					</IconButton>
+					<Button
+						className="dashboards-btns"
+						variant="contained"
+						onClick={() => selectDashboard(elem.id)}
+					>
+						Select
+					</Button>
+				</div>
 			</li>
 		);
 	});
 
 	return (
-		<div>
+		<div id="settings-dashboards">
 			<h3>Dashboards</h3>
 			<ul>{dashboardsList}</ul>
 		</div>
