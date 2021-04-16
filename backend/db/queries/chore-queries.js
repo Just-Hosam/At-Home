@@ -4,7 +4,8 @@ const getChores = (dashboardId) => {
   const text = `
   SELECT * 
   FROM chores
-  WHERE dashboard_id = $1;`;
+  WHERE dashboard_id = $1
+  ORDER BY id;`;
   const values = [dashboardId];
 
   return db

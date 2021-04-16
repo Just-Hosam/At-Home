@@ -10,8 +10,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import DoneIcon from "@material-ui/icons/Done";
 import Divider from "@material-ui/core/Divider";
-// import Grid from "@material-ui/core/Grid";
-// import Typography from "@material-ui/core/Typography";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -66,8 +64,13 @@ export default function Chores() {
   }, []);
 
   const handleToggle = (value) => () => {
+			console.log(`value`, value)
+
     const currentIndex = checked.indexOf(value);
+			console.log(`currentIndex`, currentIndex)
+
     const newChecked = [...checked];
+			console.log(`newChecked`, newChecked)
 
     if (currentIndex === -1) {
       newChecked.push(value);
@@ -78,6 +81,7 @@ export default function Chores() {
     setChecked(newChecked);
   };
 
+	console.log(`checked`, checked)
 	console.log(`checked`, checked)
 
   // form input
