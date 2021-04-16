@@ -49,6 +49,7 @@ export default function Profile() {
 					onChange={(event) => updateUser('last_name', event.target.value)}
 				/>
 				<TextField
+					type="password"
 					required={true}
 					autoComplete="off"
 					className="profile-textfield"
