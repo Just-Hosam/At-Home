@@ -78,6 +78,8 @@ export default function Chores() {
     setChecked(newChecked);
   };
 
+	console.log(`checked`, checked)
+
   // form input
   const [assigned, setAssigned] = useState({});
 
@@ -91,24 +93,24 @@ export default function Chores() {
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
     setChoresList((prev) => {
-      console.log(`prev`, prev);
+      // console.log(`prev`, prev);
       const prevMap = prev.map((elem) => {
         if (elem.id === choreId) {
           const newElem = { ...elem, name: eTarget };
-          console.log(`newElem`, newElem);
+          // console.log(`newElem`, newElem);
           setAssigned(newElem);
 					updateChore(dashboardId, newElem);
           return newElem;
         }
         return elem;
       });
-      console.log(`prevMap`, prevMap);
+      // console.log(`prevMap`, prevMap);
       return prevMap;
     });
     // setAssigned(eTarget);
   };
-	console.log(`assigned`, assigned);
-  console.log(`choresList`, choresList);
+	// console.log(`assigned`, assigned);
+  // console.log(`choresList`, choresList);
 
   return (
     <div className={classes.root}>
