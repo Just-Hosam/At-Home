@@ -30,7 +30,7 @@ export default function Login(props) {
 			<header>
 				<h2>Login</h2>
 				<p>
-					Welcome to <span>PLACEHOLDER</span>
+					Welcome to <span>@Home</span>
 				</p>
 			</header>
 			<form onSubmit={(event) => submitUser(event, userDetails)}>

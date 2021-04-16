@@ -27,11 +27,11 @@ export default function Register(props) {
 	};
 
 	return (
-		<div id="login-page">
+		<div id="register-page">
 			<header>
 				<h2>Register</h2>
 				<p>
-					Welcome to <span>PLACEHOLDER</span>
+					Welcome to <span>@Home</span>
 				</p>
 			</header>
 			<form onSubmit={(event) => submitUser(event, userDetails)}>
