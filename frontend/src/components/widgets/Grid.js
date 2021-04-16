@@ -4,8 +4,6 @@ import PollWidget from './Polling/PollsWidget';
 import RecipesMin from './Recipes/RecipesMin';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 import GalleryModal from './Photos/GalleryModal';
-// import Photos from './Photos';
-// import Gallery from './Gallery';
 import CalendarWidget from './Calendar/CalendarWidget';
 
 const Grid = () => {

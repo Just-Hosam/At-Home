@@ -411,17 +411,18 @@ const closeDialog = () => {
 
 				<form className={classes.container} noValidate>
 							<TextField
+							  className={classes.textField}
 								id="date"
 								label="End Date"
 								type="date"
 								variant="outlined"
+								autoComplete="off"
 								value={input.to ? input.to : ''}
 								onChange={(event) => setInput((prev) => ({
 								...prev,
 								to: event.target.value
 								}))}
 
-								className={classes.textField}
 								InputLabelProps={{
 									shrink: true,
 								}}

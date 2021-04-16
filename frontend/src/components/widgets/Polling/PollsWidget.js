@@ -14,6 +14,7 @@ const PollsWidgetItem = (props) => {
 
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
+	//websocket connection
   const {
 		sendSocketMessage,
 		broadcast,
@@ -47,7 +48,7 @@ const PollsWidgetItem = (props) => {
 
 	
     });
-  }, [broadcast.polls]);
+  }, [broadcast.polls]); // <-- listen for websocket
 
 
 
@@ -87,7 +88,6 @@ const createPoll = input => {
   })
   .then((final) => {
 	
-	
 		setState((prev) => ({
 				...prev,
         poll: {},
@@ -97,7 +97,7 @@ const createPoll = input => {
 			
 		setMode('OPTIONS');
 		renderWidget();
-		sendSocketMessage(`polls`); //<--------SEND WEBSOCKET MSG
+		sendSocketMessage(`polls`); // <-- send websocket msg
 	
   }).catch(err => console.log(err));
 };
@@ -123,7 +123,7 @@ const castVote = (index, choice) => {
 			}));
 		renderWidget();
 	
-	sendSocketMessage(`polls`); //<--------SEND WEBSOCKET MSG
+	sendSocketMessage(`polls`); // <-- send websocket msg
 
 	})
 	).catch(err => console.log(err));
@@ -156,7 +156,7 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 			}));
 			
 			setMode('INIT');
-			sendSocketMessage(`polls`); // <--- SEND WEBSOCKET MSG
+			sendSocketMessage(`polls`); // <-- send websocket msg
 
     }).catch(err => console.log(err));
 }

@@ -47,7 +47,7 @@ if (props.options){
 		 
 		titleTextStyle: {
 		
-			fontSize: 16, 
+			fontSize: 18, 
 		
 	}
 		

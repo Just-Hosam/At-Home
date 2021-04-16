@@ -26,7 +26,8 @@
 		margin: auto;
 		margin-top: -5px;
 		width: 75%;
-		font-size: 1.8rem;
+	font-size: 1.5rem;
+		
 		color: var(--accent-color);
 	
 	}
@@ -83,6 +84,9 @@
 &:hover{
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	.pre-vote{
+		background-color: var(--accent-color);
+	}
 }
 }
 
@@ -124,7 +128,7 @@ align-items:center;
 		margin:0px 5px;
 		border:none;
 		color:white;
-		background:var(--accent-color);
+		background:var(--accent-color-alt);
 	
 		padding:5px;
 		border-radius:5px;
@@ -170,44 +174,38 @@ align-items:center;
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	margin-top: -20px;
-
+	margin-left: 40px;
 }
 
 		
 .create-poll{
 
-	input{
-		outline-color: gray;
-		display: block;
-		margin: 10px auto auto auto;
-		width: 80%;
-		padding: 10px;
-		border: none;
-		border-bottom: solid;
-		border-bottom-width: 1px;
-		border-bottom-color: lightgray;
-		color: var(--text-color);
-		font-size:1rem;
+	h1{
+		font-size: 2rem;
+		margin-bottom: 10px;
 	}
 
 	button{
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
+	
+		width: 85%;
+		margin-top: 10px;
 		padding: 15px;
+		border-radius: 5px;
 		color:white;
 		background-color: var(--accent-color-alt);
+		font-size: 1.2rem;
 &:hover{
 	background-color: var(--accent-color);
 }
 
 	}
 
-	label{
-		display:block;
-	}
+}
+
+.create-poll-input{
+	width: 85%;
+
+
 }
 
 .poll-delete{
@@ -237,11 +235,3 @@ align-items:center;
 		}
 	}
 }
-
-// --text-color: rgb(59, 59, 59);
-// --text-color-alt: rgba(65, 65, 65, 0.932);
-// --accent-color: rgb(96, 83, 247);
-// --accent-color-alt: rgb(128, 118, 251);
-// --card-color: #fff;
-// --background-color: #fdfdfd;
-// --error-color: rgb(253, 72, 72);

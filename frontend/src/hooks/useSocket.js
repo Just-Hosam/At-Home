@@ -22,9 +22,8 @@ export default function useSocket() {
 
     socket.on("message", widget => {
      
-      
         if(widget){
-          console.log('broadast widget: ',widget);
+          
           setBroadcast((prev) => ({
             ...prev,
             [widget]: Date.now(),
