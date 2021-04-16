@@ -34,6 +34,9 @@ app.use(
 // override for put, patch and delete methods
 app.use(methodOverride('_method'));
 
+// queries
+const { checkUserByEmail } = require('./db/queries/user-queries');
+
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
 const usersDashboardsRouter = require('./routes/users-dashboards.js');
@@ -64,6 +67,15 @@ app.use(
 // Main routes
 app.get('/', (req, res) => {
 	res.send('Hello World');
+});
+
+app.post('/login', (req, res) => {
+	const inputEmail = req.body.inputUser.email;
+	const inputPassword = req.body.inputUser.password;
+
+	checkUserByEmail(inputEmail, inputPassword)
+		.then((data) => res.json(data))
+		.catch((err) => console.log('Email/password is incorrect', err));
 });
 
 app.listen(PORT, () => {
