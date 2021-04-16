@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 export default function Dashboards() {
-	const [cookies, setCookie] = useCookies(['userID']);
+	const [cookies] = useCookies(['userID']);
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
