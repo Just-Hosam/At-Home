@@ -38,8 +38,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Chores() {
   const dashboardId = 1;
-  const classes = useStyles();
   const [choresList, setChoresList] = useState([]);
+  // check list
+  const classes = useStyles();
+  const [checked, setChecked] = useState([]);
   const [dashboardUsers, setDashboardUsers] = useState([]);
 
   useEffect(() => {
@@ -61,22 +63,35 @@ export default function Chores() {
   }, []);
 
   const handleToggle = (value) => () => {
-		value.done = !value.done;
-		axios
-			.patch(`/dashboards/${dashboardId}/chores/${value.id}`, value)
-			.then((res) => {
-				setChoresList((prev) => {
-					return prev.map((elem) => {
-						if (elem.id === value.id) return res.data
-						return elem
-					});
-				})
-			})
-			.catch((err) => console.log("handleToggle ERROR", err));
+			console.log(`value`, value)	
+		const newStupidAssBrokenValue = {...value, done: !value.done}
+			console.log(`newStupidAssBrokenValue`, newStupidAssBrokenValue)
+			
+    const currentIndex = checked.indexOf(value);
+			// console.log(`currentIndex`, currentIndex)
+
+    const newChecked = [...checked];
+			// console.log(`checked`, checked)
+			console.log(`newChecked`, newChecked)
+
+    if (currentIndex === -1 /* && !obj.done */) {
+      newChecked.push(value);
+			console.log('Task complete')
+			// change obj.done to true
+    } else {
+			newChecked.splice(currentIndex, 1);
+			console.log('Task incomplete')
+			// change obj.done to false
+    }
+
+    setChecked(newChecked);
   };
+	
+	console.log(`checked`, checked)
+	// console.log(`checked`, checked)
 
   // form input
-  // const [assigned, setAssigned] = useState({});
+  const [assigned, setAssigned] = useState({});
 
 	const updateChore = (dashboardId, chore) => {
 		axios
@@ -88,18 +103,24 @@ export default function Chores() {
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
     setChoresList((prev) => {
+      // console.log(`prev`, prev);
       const prevMap = prev.map((elem) => {
         if (elem.id === choreId) {
           const newElem = { ...elem, name: eTarget };
-          // setAssigned(newElem);
+          // console.log(`newElem`, newElem);
+          setAssigned(newElem);
 					updateChore(dashboardId, newElem);
           return newElem;
         }
         return elem;
       });
+      // console.log(`prevMap`, prevMap);
       return prevMap;
     });
+    // setAssigned(eTarget);
   };
+	// console.log(`assigned`, assigned);
+  // console.log(`choresList`, choresList);
 
   return (
     <div className={classes.root}>
@@ -123,6 +144,7 @@ export default function Chores() {
                   key={value.id}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
+                  // value={''}
                   defaultValue=""
                   onChange={(e) => handleChange(e, value.id)}
                 >
@@ -137,7 +159,7 @@ export default function Chores() {
               </FormControl>
             );
           } else {
-            if (value.done) {
+            if (checked.includes(value)) {
               secondaryElement = (
                 <IconButton edge="end" aria-label="done">
                   <DoneIcon />
@@ -159,8 +181,10 @@ export default function Chores() {
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <ListItemIcon>
                     <Checkbox
-                      // edge="start"
-                      checked={value.done}
+                      edge="start"
+                      checked={checked.indexOf(value) !== -1}
+                      tabIndex={-1}
+                      disableRipple
                       inputProps={{ "aria-labelledby": labelId }}
                       onClick={handleToggle(value)}
                     />
@@ -169,10 +193,8 @@ export default function Chores() {
                 </div>
                 <div>
                   <ListItemSecondaryAction>
-										<div style={{display: 'flex', alignItems: 'center'}}>
-											{secondarySwitcher}
-											{secondaryElement}
-										</div>
+                    {secondarySwitcher}
+                    {secondaryElement}
                   </ListItemSecondaryAction>
                 </div>
               </ListItem>

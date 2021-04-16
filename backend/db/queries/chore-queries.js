@@ -46,12 +46,13 @@ const editChore = (dashboardId, choreId, choreText, assignedName, choreDone) => 
 	UPDATE chores
 	SET text = $1, name = $2, done = $3
 	WHERE dashboard_id = $4
-	AND id = $5;`;
+	AND id = $5
+  RETURNING *;`;
   const values = [choreText, assignedName, choreDone, dashboardId, choreId];
 
   return db
     .query(text, values)
-    .then((res) => res)
+    .then((res) => res.rows[0])
     .catch((err) => console.log('Error at chores queries "editChore"', err));
 };
 
