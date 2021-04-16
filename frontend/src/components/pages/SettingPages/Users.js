@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 import { useCookies } from 'react-cookie';
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+
 import axios from 'axios';
 
 export default function Dashboards() {
@@ -48,29 +53,47 @@ export default function Dashboards() {
 	const usersList = users.map((elem) => {
 		return (
 			<li key={elem.user_id}>
-				<p>
-					{elem.first_name}
-					{elem.last_name}
-				</p>
-				<p>{elem.email}</p>
-				{elem.admin && (
-					<button onClick={() => toggleAdmin(elem.user_id, elem.admin)}>
-						ADMIN
-					</button>
-				)}
-				{!elem.admin && (
-					<button onClick={() => toggleAdmin(elem.user_id, elem.admin)}>
-						PEASANT
-					</button>
-				)}
-				<button onClick={() => removeUser(elem.user_id)}>Remove</button>
+				<div id="users-user-details">
+					<p>
+						{elem.first_name}
+						{elem.last_name}
+					</p>
+					<span>{elem.email}</span>
+				</div>
+				<div>
+					<IconButton
+						className="deletebtn"
+						onClick={() => removeUser(elem.user_id)}
+					>
+						<DeleteIcon />
+					</IconButton>
+
+					{elem.admin && (
+						<Button
+							className="admin-btns"
+							variant="contained"
+							onClick={() => toggleAdmin(elem.user_id, elem.admin)}
+						>
+							Admin
+						</Button>
+					)}
+					{!elem.admin && (
+						<Button
+							className="peasant-btns"
+							variant="contained"
+							onClick={() => toggleAdmin(elem.user_id, elem.admin)}
+						>
+							Peasant
+						</Button>
+					)}
+				</div>
 			</li>
 		);
 	});
 
 	return (
-		<div>
-			<h3>USERSSS</h3>
+		<div id="settings-users">
+			<h3>Users</h3>
 			<ul>{usersList}</ul>
 		</div>
 	);
