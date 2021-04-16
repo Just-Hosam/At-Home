@@ -4,11 +4,18 @@ import Grocery from './Grocery';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import useSocket from "../../../hooks/useSocket";
+
 const axios = require('axios');
 
 export default function Groceries() {
 	const dashboardId = 1; // TODO: needs useContext
 
+	//websocket connection
+	const {
+		sendSocketMessage,
+		broadcast,
+	} = useSocket();
 	
 	const [groceries, setGroceries] = useState([]);
 	const [input, setInput] = useState('');
@@ -18,7 +25,7 @@ export default function Groceries() {
 			.get(`/dashboards/${dashboardId}/groceries/`)
 			.then((res) => setGroceries(res.data))
 			.catch((err) => console.log('I AM A COMPONENT ERROR', err));
-	}, []);
+	}, [broadcast.groceries]); // <-- listen for websocket
 
 	const toggleGrocery = (dashboardId, groceryId) => {
 		axios
@@ -28,6 +35,7 @@ export default function Groceries() {
 					elem.id === groceryId ? { ...elem, done: !elem.done } : elem
 				);
 				setGroceries([...newGroceriesArr]);
+				sendSocketMessage('groceries'); // <-- send websocket msg
 			})
 			.catch((err) => console.log('I"M THE PATCH MONSTER', err));
 	};
@@ -38,6 +46,7 @@ export default function Groceries() {
 			.then((res) => {
 				setGroceries([res.data, ...groceries]);
 				setInput('');
+				sendSocketMessage('groceries'); // <-- send websocket msg
 			})
 			.catch((err) => console.log('I"M THE POST MONSTER', err));
 	};

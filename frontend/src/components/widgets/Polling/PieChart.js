@@ -1,6 +1,5 @@
 import Chart from "react-google-charts";
 const PieChart = (props) => {
-
 	
 	let title = "No Polling Data";
 	let pieParams = ['...','...','...'];
@@ -13,7 +12,7 @@ const PieChart = (props) => {
 if (props.options){
 
 	
-	 title =  null;
+	 title =  props.title;
 
 	 //map params
 	 pieParams = props.options.map(o => {
@@ -42,9 +41,9 @@ if (props.options){
   ]}
   options={{
 		
-    title: title,
+    title: title.title,
     is3D: true,
-		colors: ['#06aff5', '0066aa', '#227da3'],
+		colors: ['rgb(96, 83, 247)', 'rgb(128, 118, 251)', 'rgb(160, 153, 255)'],
 		 
 		titleTextStyle: {
 		

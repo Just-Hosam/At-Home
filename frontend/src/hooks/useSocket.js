@@ -8,7 +8,7 @@ export default function useSocket() {
 
   const [broadcast, setBroadcast] = useState({
     polls: false,
-    photos: false,
+    photo: false,
     groceries: false,
     recipes: false,
     calendar: false,
@@ -22,7 +22,9 @@ export default function useSocket() {
 
     socket.on("message", widget => {
      
+      
         if(widget){
+          console.log('broadast widget: ',widget);
           setBroadcast((prev) => ({
             ...prev,
             [widget]: Date.now(),
@@ -41,6 +43,7 @@ export default function useSocket() {
   
     const socket = socketConn;  
     socket.emit('input', widget);
+    
   }
 
 return {sendSocketMessage,broadcast}

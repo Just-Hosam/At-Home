@@ -7,6 +7,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 
 import AddPhotoModal from "./AddPhotoModal";
+import useSocket from "../../../hooks/useSocket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,12 +28,18 @@ export default function Gallery(props) {
   const dashboardId = 1;
   const [tileData, setTileData] = useState([]);
 
+  //websocket connection
+	const {
+		broadcast,
+	} = useSocket();
+
   useEffect(() => {
     axios
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => setTileData(res.data))
       .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
-  }, [props.childState]);
+  }, [props.childState, broadcast.photo]); // <-- listen for websocket
+
   const loadImage = (targetImg) => {
     props.onClick(targetImg.id);
   };

@@ -11,6 +11,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
+import useSocket from "../../../hooks/useSocket";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxHeight: "90vh",
@@ -40,15 +42,21 @@ export default function Photos(props) {
   const [staging, setStaging] = useState({});
   const maxSteps = photos.length;
 
+  //websocket connection
+	const {
+		sendSocketMessage
+	} = useSocket();
+
   useEffect(() => {
     axios
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => {
         setPhotos(res.data);
         setActiveStep(getImgIndex(res.data, props.imgIndex));
+       
       })
       .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
-  }, []);
+  }, []); 
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -79,6 +87,7 @@ export default function Photos(props) {
           })
           .then(() => {
             setStaging({});
+            sendSocketMessage('photo'); // <--- send websocket msg
           });
       })
       .catch((err) => console.log("DELETE PHOTOS ERROR", err));

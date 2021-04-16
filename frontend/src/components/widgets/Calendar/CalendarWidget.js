@@ -16,18 +16,17 @@ import useSocket from "../../../hooks/useSocket";
 const useStyles = makeStyles((theme) => ({
  
 	dialogBackground: {
-		background: 'black'		
+		background: 'rgba(128, 118, 251, 0.6);'		
  },
 
- dialogPaper: {
-	width : '400px',	
-},
-
+	dialogPaper: {
+		width : '400px',
+	},
 
   textField: {
-		
-    marginTop: theme.spacing(1),
-    width: '50%',
+    // marginTop: theme.spacing(1),
+		width: '50%',
+		marginTop: '15px',	
 	},
 	
 	dialogTitle: {
@@ -54,6 +53,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
 
+const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
+
 //websocket connection
 const {
 	sendSocketMessage,
@@ -62,8 +63,6 @@ const {
 
 //modal styling
 const classes = useStyles();
-
-const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
 const [e, setEvents] = useState({
 		events: [],
@@ -74,14 +73,15 @@ const [e, setEvents] = useState({
 			to: ''
 		}
 });
+
 const [input, setInput] = useState({
 	title: '',
 	description: '',
 	from: '',
 	to: '',
 });
-const [open, setOpen] = React.useState({
 
+const [open, setOpen] = React.useState({
 	inputDialog: false,
 	editDialog: false,
 	viewDialog: false
@@ -99,7 +99,7 @@ const [open, setOpen] = React.useState({
 		const parsedEvents = e[0].data.map(event => {
 			return (
 		{id: event.id,
-		color: '#06aff5',
+		color: 'rgb(128, 118, 251)',
 		from: event.start_at,
 		to: event.end_at,
 		title: event.title,
@@ -127,7 +127,7 @@ const renderWidget = () =>{
 		const parsedEvents = e[0].data.map(event => {
 			return (
 		{id: event.id,
-		color: '#06aff5',
+		color: 'rgb(128, 118, 251)',
 		from: event.start_at,
 		to: event.end_at,
 		title: event.title,
@@ -176,6 +176,8 @@ const editEvent = editedEvent => {
 				inputDialog: false
 			});
 
+		sendSocketMessage('calendar'); // <------ websocket
+
   }).catch(err => console.log(err));
 }
 
@@ -199,6 +201,7 @@ const deleteEvent = () => {
 				viewDialog: false
 			});
 
+	sendSocketMessage('calendar'); // <------ websocket
 		
   }).catch(err => console.log(err));
 }
@@ -279,7 +282,7 @@ const saveEdit = () => {
 
 	const editedEvent = {
 		id: e.details.id,
-		color: '#06aff5',
+		color: 'rgb(128, 118, 251)',
 		from: from,
 		to: to,
 		title: input.title,
@@ -375,11 +378,14 @@ const closeDialog = () => {
             Simply enter your event details and save.
           </DialogContentText>
           <TextField
+					className={classes.container} 
             autoFocus
             margin="dense"
             id="title"
-            label="Title"
-            type="text"
+						label="Title"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.title ? input.title : ''}
 						onChange={(event) => setInput((prev) => ({
@@ -388,11 +394,13 @@ const closeDialog = () => {
 						}))}
           />
 					<TextField
-            
+            className={classes.container} 
             margin="dense"
             id="description"
             label="Description"
-            type="text"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.description ? input.description : ''}
 						onChange={(event) => setInput((prev) => ({
@@ -406,6 +414,7 @@ const closeDialog = () => {
 								id="date"
 								label="End Date"
 								type="date"
+								variant="outlined"
 								value={input.to ? input.to : ''}
 								onChange={(event) => setInput((prev) => ({
 								...prev,
@@ -443,11 +452,14 @@ const closeDialog = () => {
             Simply edit your event details and save.
           </DialogContentText>
           <TextField
+					className={classes.container} 
             autoFocus
             margin="dense"
             id="title"
             label="Title"
-            type="text"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.title ? input.title : ''}
 						onChange={(event) => setInput((prev) => ({
@@ -456,11 +468,13 @@ const closeDialog = () => {
 						}))}
           />
 					<TextField
-            
+            className={classes.container} 
             margin="dense"
             id="description"
             label="Description"
-            type="text"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.description ? input.description : ''}
 						onChange={(event) => setInput((prev) => ({
@@ -474,6 +488,8 @@ const closeDialog = () => {
 								id="start_date"
 								label="Start Date"
 								type="date"
+								variant="outlined"
+								autoComplete="off"
 								value={input.from ? input.from : e.details.from}
 								onChange={(event) => setInput((prev) => ({
 								...prev,
@@ -492,6 +508,8 @@ const closeDialog = () => {
 								id="end_date"
 								label="End Date"
 								type="date"
+								variant="outlined"
+								autoComplete="off"
 								value={input.to ? input.to : e.details.to}
 								onChange={(event) => setInput((prev) => ({
 								...prev,

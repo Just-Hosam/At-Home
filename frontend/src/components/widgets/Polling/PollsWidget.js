@@ -8,46 +8,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-
-import { makeStyles } from '@material-ui/core/styles';
-
 import useSocket from "../../../hooks/useSocket";
 
-const useStyles = makeStyles(theme => ({
-
-	loaderIcon:{
-		color:'black',
-	},
-  	
-		pieIcon: {
-			
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-				color: "turquoise",
-		 },
-		},
-
-		deleteIcon: {
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-       color: "red",
-		},
-	}
-
-}));
-
 const PollsWidgetItem = (props) => {
+
+	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
   const {
 		sendSocketMessage,
 		broadcast,
   } = useSocket();
-
-	
-const classes = useStyles();
-	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
 	//set initial state
 	const [mode, setMode] = useState('LOAD')
@@ -55,7 +25,7 @@ const classes = useStyles();
 		
 		poll: {},
 		options: [],
-		hasVoted: true,
+		hasVoted: false,
 		picked: null
   });
 
@@ -71,12 +41,11 @@ const classes = useStyles();
 				...prev,
         poll: all[0].data,
 				options: all[1].data,
-				hasVoted:false
 			}));
 			
 			setMode('OPTIONS');
 
-			console.log(broadcast)
+	
     });
   }, [broadcast.polls]);
 
@@ -112,23 +81,24 @@ const createPoll = input => {
 		}
 	}
 
-
 		axios.post(`/dashboards/${dash_id}/polls`, {input})
 		.then((res) => {
     return axios.post(`/dashboards/${dash_id}/polls/options`, {input});
   })
   .then((final) => {
-   
+	
+	
 		setState((prev) => ({
 				...prev,
         poll: {},
 				options: [],
-				hasVoted:false
+				hasVoted: false
 			}));
 			
 		setMode('OPTIONS');
-
 		renderWidget();
+		sendSocketMessage(`polls`); //<--------SEND WEBSOCKET MSG
+	
   }).catch(err => console.log(err));
 };
 
@@ -145,12 +115,13 @@ const castVote = (index, choice) => {
 
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
-		renderWidget();
+	
 		setState((prev) => ({
-        ...prev,
+				...prev,
 				hasVoted: true,
 				picked: choice
 			}));
+		renderWidget();
 	
 	sendSocketMessage(`polls`); //<--------SEND WEBSOCKET MSG
 
@@ -172,7 +143,6 @@ const cancelDelete = () => {
 //delete the entire poll
 const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
-	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
 			axios.delete(`/dashboards/${dash_id}/polls/options`)
@@ -186,6 +156,7 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 			}));
 			
 			setMode('INIT');
+			sendSocketMessage(`polls`); // <--- SEND WEBSOCKET MSG
 
     }).catch(err => console.log(err));
 }
@@ -204,28 +175,29 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
  
 //CONDITIONAL UI RENDERING
 
-const loader = <div className='polls-loader'><CircularProgress className={classes.loaderIcon} disableShrink /></div>
+const loader = <div className='polls-loader'><CircularProgress className='poll-loader-icon' disableShrink /></div>
 
 const pollIcons = !state.options || state.options.length < 1 ? null : 
 <div className='poll-icons'>
 		
 <PieChartIcon
-			className={classes.pieIcon}
+			className='poll-pie-icon'
 			onClick={showPie}
 		/>
 <DeleteIcon
-		className={classes.deleteIcon}
+		className='poll-delete-icon'
 		onClick={openConfirmDelete}
 />
 </div>
 
 const initial = 
 <div className='add-poll-container'>
-<h1>Create New Poll</h1>
+
 <AddCircleIcon 
 className='add-poll-icon'
 style={{ fontSize: 80 }}
 onClick={() => createMode()}/>
+<p>Create a new voting poll</p>
 </div>
 
 const create = <CreatePoll
