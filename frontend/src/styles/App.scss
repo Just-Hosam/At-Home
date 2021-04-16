@@ -6,6 +6,9 @@
 @import './Recipes';
 @import './Calendar.scss';
 @import './Login';
+@import './Register';
+@import './Navbar';
+@import './Settings';
 
 :root {
 	--text-color: rgb(59, 59, 59);
@@ -18,9 +21,24 @@
 }
 
 body {
+	margin: 0;
+	padding: 0;
 	font-family: 'Roboto', 'sans-serif';
 	background: var(--background-color);
 	display: flex;
 	justify-content: center;
+	align-items: center;
+}
+#root {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.App {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 }
