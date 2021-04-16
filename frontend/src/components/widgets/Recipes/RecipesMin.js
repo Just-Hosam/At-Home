@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+import { useCookies } from 'react-cookie';
+
 import RecipesListItem from './RecipesListItem';
 import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
 export default function RecipesMin(props) {
-	const dashboardId = 1; // TODO: needs useContext
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = useContext(cookies.dashboardId);
 
 	const [recipes, setRecipes] = useState([]);
 

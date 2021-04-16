@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { useCookies } from 'react-cookie';
 
 import RecipeShow from './RecipeShow';
 import RecipeEdit from './RecipeEdit';
 import RecipeSend from './RecipeSend';
 
 export default function RecipeMax(props) {
-	const dashboardId = 1;
-	const initialView = 'SHOW';
+	const [cookies, setCookie] = useCookies(['userID']);
+	const dashboardId = useContext(cookies.dashboardId);
 
-	const [view, setView] = useState(initialView);
+	const [view, setView] = useState('SHOW');
 
 	const handleEdit = (newView) => setView(newView);
 

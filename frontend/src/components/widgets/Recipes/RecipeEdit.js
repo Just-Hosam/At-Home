@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+// import { stateContext } from '../../../context/StateProvider';
+import { useCookies } from 'react-cookie';
 
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,7 +12,8 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 export default function RecipeEdit(props) {
-	const dashboardId = props.dashboardId;
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = useContext(cookies.dashboardId);
 	const recipeId = props.recipeId;
 
 	const [ingredients, setIngredients] = useState([]);
