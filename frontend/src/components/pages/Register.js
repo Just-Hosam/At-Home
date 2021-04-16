@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 export default function Register(props) {
-	const [cookies, setCookie] = useCookies(['userID']);
+	const [, setCookie] = useCookies(['userID']);
 	const [userDetails, setUserDetails] = useState({
 		email: '',
 		password: '',
@@ -22,6 +22,7 @@ export default function Register(props) {
 		event.preventDefault();
 		axios.post(`/users/`, { inputUser: userDetails }).then((res) => {
 			setCookie('userData', res.data, { path: '/' });
+			props.handlePage('GRID');
 		});
 	};
 

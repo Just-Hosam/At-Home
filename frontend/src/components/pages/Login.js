@@ -17,6 +17,7 @@ export default function Login(props) {
 		event.preventDefault();
 		axios.post(`/login`, { inputUser: userDetails }).then((res) => {
 			setCookie('userData', res.data, { path: '/' });
+			props.handlePage('GRID');
 		});
 	};
 
