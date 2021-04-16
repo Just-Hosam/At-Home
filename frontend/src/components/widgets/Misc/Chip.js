@@ -21,19 +21,33 @@ export default function SmallChips(props) {
 
   const handleDelete = () => {
     console.info('You clicked the delete icon.');
+    /* axios
+      .delete(`/dashboards/${dashboardId}/photos/${staging.id}`)
+      .then(() => {
+        axios
+          .get(`/dashboards/${dashboardId}/photos/`)
+          .then((res) => {
+            props.handleState(res.data);
+            setPhotos(res.data);
+          })
+          .then(() => {
+            setStaging({});
+          });
+      })
+      .catch((err) => console.log("DELETE CHIP ERROR", err)); */
   };
 
-  const handleClick = () => {
-    console.info('You clicked the Chip.');
-  };
+  // const handleClick = () => {
+  //   console.info('You clicked the Chip.');
+  // };
 
   return (
     <div className={classes.root}>
       <Chip
-        size="small"
+        // size="small"
         avatar={<Avatar alt={props.name} src="PH" />}
         label={props.name}
-        onClick={handleClick}
+        // onClick={handleClick}
         onDelete={handleDelete}
       />
     </div>
