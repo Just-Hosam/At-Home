@@ -81,26 +81,34 @@ export default function Chores() {
   // form input
   const [assigned, setAssigned] = useState({});
 
+	const updateChore = (dashboardId, chore) => {
+		axios
+			.patch(`/dashboards/${dashboardId}/chores/${chore.id}`, chore)
+			.then(() => {})
+			.catch((err) => console.log('ERROR UPDATING CHORE', err));
+	};
+
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
     setChoresList((prev) => {
-			console.log(`prev`, prev)
-			const prevMap = prev.map((elem) => {
+      console.log(`prev`, prev);
+      const prevMap = prev.map((elem) => {
         if (elem.id === choreId) {
-					const newElem = { ...elem, name: eTarget }
-					console.log(`newElem`, newElem);
-					setAssigned(newElem);
+          const newElem = { ...elem, name: eTarget };
+          console.log(`newElem`, newElem);
+          setAssigned(newElem);
+					updateChore(dashboardId, newElem);
           return newElem;
         }
         return elem;
       });
-			console.log(`prevMap`, prevMap);
-      return prevMap; 
+      console.log(`prevMap`, prevMap);
+      return prevMap;
     });
     // setAssigned(eTarget);
   };
-	console.log(`choresList`, choresList)
-	console.log(`assigned`, assigned)
+	console.log(`assigned`, assigned);
+  console.log(`choresList`, choresList);
 
   return (
     <div className={classes.root}>
@@ -130,9 +138,9 @@ export default function Chores() {
                 >
                   {dashboardUsers.map((user) => {
                     return (
-                      <MenuItem
-                        value={`${user.first_name} ${user.last_name}`}
-                      >{`${user.first_name} ${user.last_name}`}</MenuItem>
+                      <MenuItem value={`${user.first_name} ${user.last_name}`}>
+                        {`${user.first_name} ${user.last_name}`}
+                      </MenuItem>
                     );
                   })}
                 </Select>

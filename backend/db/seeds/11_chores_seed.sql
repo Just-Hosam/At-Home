@@ -1,6 +1,6 @@
 INSERT INTO chores (dashboard_id, text, name) VALUES
-(1, 'put away clean dishes', 'Sam'),
-(1, 'vacuum upper floor', 'Sam'),
+(1, 'put away clean dishes', default),
+(1, 'vacuum upper floor', default),
 (1, 'scrub toilets', default),
 (1, 'empty dishwasher', default),
 (1, 'eat your wheaties', default),
