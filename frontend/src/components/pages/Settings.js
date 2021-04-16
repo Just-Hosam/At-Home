@@ -9,7 +9,7 @@ import Appearance from './SettingPages/Appearance';
 
 export default function Settings() {
 	// const [cookies, setCookie] = useCookies(['userID']);
-	const [settingsPage, setSettingsPage] = useState('DASHBOARDS');
+	const [settingsPage, setSettingsPage] = useState('PROFILE');
 
 	return (
 		<div id="settings-page">
