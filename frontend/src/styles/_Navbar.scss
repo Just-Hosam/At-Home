@@ -1,0 +1,48 @@
+@import './variables';
+
+#navbar {
+	// border: 1px solid red;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	background-color: transparent;
+	height: 60px;
+
+	h1 {
+		margin-left: 15px;
+		color: var(--accent-color);
+		cursor: pointer;
+	}
+
+	.navbtn {
+		background-color: var(--accent-color-alt);
+		color: var(--card-color);
+		margin-left: 5px;
+		width: 100px;
+	}
+
+	#navloginreg {
+		margin-right: 15px;
+	}
+
+	#nav-user-details {
+		display: flex;
+		align-items: center;
+		margin-right: 15px;
+		padding: 0;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+
+			p {
+				color: var(--text-color);
+				margin: 0;
+				font-size: 1.1rem;
+			}
+		}
+	}
+}

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+// import { stateContext } from '../../../context/StateProvider';
+import { useCookies } from 'react-cookie';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -6,10 +9,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import axios from 'axios';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 
 export default function RecipeShow(props) {
-	const dashboardId = props.dashboardId;
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 	const recipeId = props.recipeId;
 
 	const [recipe, setRecipe] = useState({
