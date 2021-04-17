@@ -52,7 +52,7 @@ export default function RecipeShow(props) {
 			<IconButton
 				className="recipe-show-back"
 				aria-label="back"
-				onClick={() => props.handleView('')}
+				onClick={() => props.handleClose()}
 			>
 				<ArrowBackIcon />
 			</IconButton>

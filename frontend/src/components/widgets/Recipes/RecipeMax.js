@@ -24,6 +24,7 @@ export default function RecipeMax(props) {
 					handleEdit={handleEdit}
 					recipeId={props.recipeId}
 					handleView={props.handleView}
+					handleClose={props.handleClose}
 				/>
 			)}
 			{view === 'EDIT' && (
