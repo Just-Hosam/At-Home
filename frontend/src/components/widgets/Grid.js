@@ -21,13 +21,13 @@ return <div className="grid-wrapper">
 
 	<div id='recipes-grid-widget' className="widget3"><RecipesMin/></div>
 
-	<div id='gallery-grid-widget' className="widget4"><GalleryModal/></div>
-
+  <div id='gallery-grid-widget' className="widget4"><GalleryModal/></div>
+	
 	<div id='chores-grid-widget' className="widget5">Chores</div>
 	
 	<div id='polls-grid-widget' className="widget6"><PollWidget/></div>
 
-</div>
+	</div>
 
 </div>
 

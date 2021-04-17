@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:8080"; // <--- change for production
 
+ 
 export default function useSocket() {
-
+  
   const [socketConn, setSocket] = useState(null);
 
   const [broadcast, setBroadcast] = useState({
@@ -15,15 +15,19 @@ export default function useSocket() {
     chores: false
   });
 
+ 
+
   useEffect(() => {
+
+    const ENDPOINT = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api-dot-dashboard-310905.wl.r.appspot.com:8080';
 
     const socket = socketIOClient(ENDPOINT);
     setSocket(socket);
 
     socket.on("message", widget => {
-     
+
         if(widget){
-          
+          console.log('Websocket Widget: ', widget);
           setBroadcast((prev) => ({
             ...prev,
             [widget]: Date.now(),
@@ -34,13 +38,13 @@ export default function useSocket() {
         }
 
     });
-   
+
   }, []);
 
 
   const sendSocketMessage = widget => {
   
-    const socket = socketConn;  
+    const socket = socketConn; 
     socket.emit('input', widget);
     
   }

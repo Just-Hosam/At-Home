@@ -2,17 +2,21 @@
 require('dotenv').config();
 
 // Web server config
-const PORT = process.env.PORT || 8080;
-const ENV = process.env.ENV || 'development';
+const PORT = 8080;
+const ENV = process.env.NODE_ENV || 'development';
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+app.enable('trust proxy');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 
 //web sockets
-const environment = ENV !== 'production' ? 'http://localhost:3030' : 'https://dash.io';
+const cors = require('cors');
+app.use(cors());
+const environment = ENV !== 'production' ? 'http://localhost:3030' : 'https://dashboard-310905.wl.r.appspot.com';    // < -- frontend conn.
+
 const server = require('http').createServer(app);
 const io = require('socket.io')(server,{
 	cors: {
@@ -24,8 +28,8 @@ const io = require('socket.io')(server,{
 //create a socket.io connection
 io.on('connection', socket => {
 
- 	 const message = 'message';
-	
+		const message = 'message';
+		
 	 //listen for changes
 	 socket.on('input', input => {
 		 socket.broadcast.emit(message, input);
@@ -90,7 +94,7 @@ app.use(
 
 // Main routes
 app.get('/', (req, res) => {
-	res.send('Hello World');
+	res.send(`Final_Project listening on port ${PORT} :ENV ${ENV} : ${JSON.stringify(process.env)}`);
 });
 
 server.listen(PORT, () => {

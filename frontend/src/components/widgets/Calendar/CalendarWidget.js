@@ -9,7 +9,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 
 import useSocket from "../../../hooks/useSocket";
 
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 
   textField: {
-    // marginTop: theme.spacing(1),
 		width: '50%',
 		marginTop: '15px',	
 	},
@@ -46,9 +44,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
 
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
@@ -186,12 +181,6 @@ const editEvent = editedEvent => {
 //delete event
 const deleteEvent = () => {
 
-	const confirmation = window.confirm("Are you sure you want to delete this event?\nThis action cannot be undone.");
-
-	if(!confirmation) {
-		return closeDialog();
-	}
-
 	axios.delete(`/dashboards/${dash_id}/events/${e.details.id}`)	
   .then((res) => {
 	
@@ -211,6 +200,7 @@ const deleteEvent = () => {
 //DIALOG
 
 const handleClickOpen = event => {
+	console.log(event)
 	setOpen({
 		inputDialog: true
 	});
@@ -228,7 +218,7 @@ const parseIncomingDate = event => {
 	const hour = Math.floor(event.hour)
 	const hourStr = hour < 10 ? `0${hour}` : hour;
 	const parsedDate = `${event.year}-${monthStr}-${day}T${hourStr}:00:00+00:00`;
-
+	
 	return parsedDate;
 
 };
@@ -245,7 +235,7 @@ const saveEvent = () => {
 
 	const newEvent = {
 		id: id,
-		color: '#06aff5',
+		color: 'rgb(128, 118, 251)',
 		from: input.from,
 		to: to,
 		title: input.title,
@@ -271,9 +261,6 @@ const openEdit = () => {
 
 const saveEdit = () => {
 	
-	if(!input) {
-		return alert("Missing Required Field");
-	}
 
 	let from = input.from ? input.from : e.details.from;
 	let to = input.to ? input.to : e.details.to;
@@ -540,7 +527,6 @@ const closeDialog = () => {
 			<Dialog
 				className={classes.dialogBackground}
         open={open.viewDialog ? open.viewDialog : false}
-        TransitionComponent={Transition}
 				keepMounted
 				onClose={closeDialog}
         aria-labelledby="alert-dialog-slide-title"

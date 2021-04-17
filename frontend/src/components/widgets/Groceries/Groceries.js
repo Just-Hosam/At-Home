@@ -39,7 +39,7 @@ export default function Groceries() {
 			})
 			.catch((err) => console.log('I"M THE PATCH MONSTER', err));
 	};
-
+	
 	const addGrocery = (inputGrocery) => {
 		axios
 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery })

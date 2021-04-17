@@ -1,20 +1,18 @@
 @import './variables';
 
 .grid-wrapper{
-  position: fixed;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 3%;
-  left: 0;
   width: 100%;
   height: 100%;
   background-color:whitesmoke;
 }
 
 .grid-stage{
-  width: 95%;
-  height: 85%;
+  width: 100%;
+  height: 42%;
   padding: 10px;
   background-color: transparent;
 }
@@ -43,7 +41,7 @@
 //WIDGET SPECIFIC STYLING <------------------------------------------------------
 
 #calendar-grid-widget{
-padding: 5px 20px 5px 5px;
+padding: 5px 25px 5px 5px;
 }
 
 #groceries-grid-widget{
