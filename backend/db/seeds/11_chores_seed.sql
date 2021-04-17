@@ -1,0 +1,17 @@
+INSERT INTO chores (dashboard_id, text, name) VALUES
+(1, 'put away clean dishes', default),
+(1, 'vacuum upper floor', default),
+(1, 'scrub toilets', default),
+(1, 'empty dishwasher', default),
+(1, 'eat your wheaties', default),
+(1, 'Fix Pi-Car', default),
+(2, 'put away clean dishes', default),
+(2, 'vacuum upper floor', default),
+(2, 'scrub toilets', default),
+(2, 'empty dishwasher', default),
+(2, 'eat your wheaties', default),
+(3, 'put away clean dishes', default),
+(3, 'vacuum upper floor', default),
+(3, 'scrub toilets', default),
+(3, 'empty dishwasher', default),
+(3, 'eat your wheaties', default);
