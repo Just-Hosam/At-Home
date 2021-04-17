@@ -45,7 +45,6 @@ export default function RecipeFinal() {
 	return (
 		<div>
 			<RecipeMin handleView={handleView} handleOpen={handleOpen} />
-			{/* <button onClick={handleOpen}>hi</button> */}
 			<Modal
 				className={classes.modal}
 				open={open}
