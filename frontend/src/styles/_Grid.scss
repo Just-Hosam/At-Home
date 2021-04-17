@@ -1,28 +1,15 @@
 @import './variables';
 
 #grid-wrapper {
-	// display: flex;
-	// justify-content: center;
-	// align-items: center;
 	width: 96vw;
 	height: 86vh;
-
 	padding: 0 20px 20px 20px;
 	display: grid;
 	grid-template-columns: 40% 25% auto;
 	grid-template-rows: 55% auto;
 	grid-gap: 10px;
 	background-color: var(--background-color);
-	// overflow: hidden;
 
-	// border: 1px solid red;
-
-	> div {
-		@include card-layout;
-		overflow: auto;
-
-		// border: 1px solid blue;
-	}
 	> div::-webkit-scrollbar {
 		width: 4px;
 		height: 4px;
@@ -36,51 +23,4 @@
 		background: rgba(129, 129, 129, 0.562);
 		border-radius: 100px;
 	}
-}
-
-// .grid-stage {
-// 	// border: 1px solid blue;
-// 	width: 100%;
-// }
-
-// .grid-container {
-// 	// width: 100%;
-// 	display: grid;
-// 	grid-template-columns: 33% 33% 33%;
-// 	grid-template-rows: 300px 300px;
-// 	// justify-content: space-between;
-// 	// align-content: space-evenly;
-// }
-
-// .grid-container > div {
-// 	@include card-layout;
-// 	// cursor: pointer;
-// 	// background-color: rgba(255, 255, 255, 0.8);
-// 	overflow: auto;
-// }
-
-//WIDGET SPECIFIC STYLING <------------------------------------------------------
-
-#calendar-grid-widget {
-	padding: 5px 25px 5px 5px;
-}
-
-// #groceries-grid-widget {
-// 	padding: 0px;
-// }
-
-#recipes-grid-widget {
-	padding: 0px;
-}
-
-#gallery-grid-widget {
-	padding: 0px;
-}
-
-#chores-grid-widget {
-	padding: 0px;
-}
-
-#polls-grid-widget {
-	padding: 0px;
 }
