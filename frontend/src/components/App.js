@@ -16,7 +16,7 @@ import Grid from './widgets/Grid';
 // import PollWidget from './widgets/Polling/PollsWidget';
 // import CalendarWidget from './widgets/Calendar/CalendarWidget'
 
-// import Photos from './widgets/Photos';
+import Chores from './widgets/Chores/Chores';
 // import Gallery from './widgets/Gallery';
 
 // import RecipesMin from './widgets/Recipes/RecipesMin';
@@ -45,12 +45,12 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<Navbar handlePage={handlePage} />
+			{/* <Navbar handlePage={handlePage} />
 			{page === 'GRID' && <Grid />}
 			{page === 'SETTINGS' && <Settings />}
 			{page === 'LOGIN' && <Login handlePage={handlePage} />}
-			{page === 'REGISTER' && <Register handlePage={handlePage} />}
-
+			{page === 'REGISTER' && <Register handlePage={handlePage} />} */}
+			<Chores />
 			{/* <StateProvider>
 				{modalView === '' && <RecipesMin handleView={handleView} />}
 				{modalView === 'RECIPE_SHOW' && (

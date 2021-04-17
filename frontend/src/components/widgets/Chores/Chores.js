@@ -17,14 +17,6 @@ import Select from "@material-ui/core/Select";
 import Chip from "../Misc/Chip";
 import ListHeader from "../Misc/ListHeader";
 
-const usersOnDashDummy = [
-  { user_id: 1, first_name: "King", last_name: "Andy" },
-  { user_id: 2, first_name: "Darth", last_name: "Vader" },
-  { user_id: 3, first_name: "Kylo", last_name: "Ren" },
-  { user_id: 4, first_name: "Bobba", last_name: "Fett" },
-  { user_id: 5, first_name: "Din", last_name: "Djarin" },
-];
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "500px",
@@ -47,43 +39,44 @@ export default function Chores() {
       .get(`/dashboards/${dashboardId}/chores/`)
       .then((res) => {
         setChoresList(res.data);
-        setDashboardUsers(usersOnDashDummy);
-        // setAssigned((prev) => {
-        //   return res.data.map((elem) => elem.name);
-        // });
-        // axios
-        // .get(`/dashboards/${dashboardId}/users`)
-        // .then((res) => {
-        // setDashboardUsers(res.data);
-        // })
+
+        axios.get(`/dashboards/${dashboardId}/users`).then((res) => {
+          setDashboardUsers(res.data);
+        });
       })
       .catch((err) => console.log("CHORES COMPONENT ERROR", err));
   }, []);
 
   const handleToggle = (value) => () => {
-		value.done = !value.done;
-		axios
-			.patch(`/dashboards/${dashboardId}/chores/${value.id}`, value)
-			.then((res) => {
-				setChoresList((prev) => {
-					return prev.map((elem) => {
-						if (elem.id === value.id) return res.data
-						return elem
-					});
-				})
-			})
-			.catch((err) => console.log("handleToggle ERROR", err));
+    value.done = !value.done;
+    console.log(value)
+    axios
+      .patch(`/dashboards/${dashboardId}/chores/${value.id}`, value)
+      .then((res) => {
+        setChoresList((prev) => {
+          return prev.map((elem) => {
+            if (elem.id === value.id) return res.data;
+            return elem;
+          });
+        });
+      })
+      .catch((err) => console.log("handleToggle ERROR", err));
   };
 
   // form input
   // const [assigned, setAssigned] = useState({});
 
-	const updateChore = (dashboardId, chore) => {
-		axios
-			.patch(`/dashboards/${dashboardId}/chores/${chore.id}`, chore)
-			.then(() => {})
-			.catch((err) => console.log('ERROR UPDATING CHORE', err));
-	};
+  const updateChore = (dashboardId, chore) => {
+    axios
+      .patch(`/dashboards/${dashboardId}/chores/${chore.id}`, chore)
+      .then(() => {})
+      .catch((err) => console.log("ERROR UPDATING CHORE", err));
+  };
+
+  const clearChip = (chip) => {
+    console.log('chip', chip)
+    //setChoresList();
+  };
 
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
@@ -92,7 +85,7 @@ export default function Chores() {
         if (elem.id === choreId) {
           const newElem = { ...elem, name: eTarget };
           // setAssigned(newElem);
-					updateChore(dashboardId, newElem);
+          updateChore(dashboardId, newElem);
           return newElem;
         }
         return elem;
@@ -145,7 +138,11 @@ export default function Chores() {
               );
             }
             secondarySwitcher = (
-              <Chip name={String(value.name.split(" ").splice(0, 1))} />
+              <Chip 
+                name={String(value.name.split(" ").splice(0, 1))}
+                chipValue={value}
+                clearChip={clearChip}
+              />
             );
           }
 
@@ -169,10 +166,10 @@ export default function Chores() {
                 </div>
                 <div>
                   <ListItemSecondaryAction>
-										<div style={{display: 'flex', alignItems: 'center'}}>
-											{secondarySwitcher}
-											{secondaryElement}
-										</div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      {secondarySwitcher}
+                      {secondaryElement}
+                    </div>
                   </ListItemSecondaryAction>
                 </div>
               </ListItem>
