@@ -9,6 +9,15 @@
 @import './Register';
 @import './Navbar';
 @import './Settings';
+@import './Gallery';
+
+// --text-color: rgb(59, 59, 59);
+// --text-color-alt: rgba(65, 65, 65, 0.932);
+// --accent-color: rgb(96, 83, 247);
+// --accent-color-alt: rgb(128, 118, 251);
+// --card-color: #fff;
+// --background-color: #fdfdfd;
+// --error-color: rgb(253, 72, 72);
 
 :root {
 	--text-color: rgb(59, 59, 59);
@@ -19,7 +28,7 @@
 	--background-color: #fdfdfd;
 	--error-color: rgb(253, 72, 72);
 
-	font-size: 14px;
+	font-size: 13px;
 }
 
 body {
@@ -31,6 +40,7 @@ body {
 	justify-content: center;
 	align-items: center;
 }
+
 #root {
 	width: 100%;
 	display: flex;
