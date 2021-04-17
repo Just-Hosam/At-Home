@@ -22,17 +22,17 @@ router.get('/:userId', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	const userObj = req.body.userObj;
+	const inputUser = req.body.inputUser;
 
-	addUser(userObj)
+	addUser(inputUser)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at users POST route "/"', err));
 });
 
 router.patch('/:userId', (req, res) => {
-	const userObj = req.body.userObj;
+	const inputUser = req.body.inputUser;
 
-	updateUser(userObj)
+	updateUser(inputUser)
 		.then((data) => res.json(data))
 		.catch((err) => console.log('Error at users PATCH route "/:userId"', err));
 });

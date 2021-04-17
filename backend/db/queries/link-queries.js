@@ -5,7 +5,7 @@ const getDashboardsPerUser = (userId) => {
   SELECT dashboards.id, dashboards.name
   FROM links
   JOIN dashboards ON dashboard_id = dashboards.id
-  WHERE users.id = $1`;
+  WHERE user_id = $1`;
 	const values = [userId];
 
 	return db
@@ -97,7 +97,7 @@ const toggleAdmin = (userId, userStatus, dashboardId) => {
   SET admin = $1
   WHERE user_id = $2
   AND dashboard_id = $3;`;
-	const values = [userId, userStatus, dashboardId];
+	const values = [!userStatus, userId, dashboardId];
 
 	return db
 		.query(text, values)
