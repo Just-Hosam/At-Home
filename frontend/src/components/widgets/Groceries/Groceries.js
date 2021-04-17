@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useCookies } from 'react-cookie';
+
 import Grocery from './Grocery';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -7,7 +9,8 @@ import Button from '@material-ui/core/Button';
 const axios = require('axios');
 
 export default function Groceries() {
-	const dashboardId = 1; // TODO: needs useContext
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 
 	const [groceries, setGroceries] = useState([]);
 	const [input, setInput] = useState('');
