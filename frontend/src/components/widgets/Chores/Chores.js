@@ -105,7 +105,6 @@ export default function Chores() {
   return (
     <div className={classes.root}>
       <ListHeader key="TODO" size="h4" title="TODO" />
-      <Divider variant="middle" />
       <AddChore choresList={choresList} setChoresList={setChoresList} />
       <List className={null}>
         {choresList.map((value) => {
