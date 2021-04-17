@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import DoneIcon from "@material-ui/icons/Done";
-import Divider from "@material-ui/core/Divider";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Chip from "../Misc/Chip";
-import ListHeader from "../Misc/ListHeader";
-import AddChore from "./AddChore";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
+import Divider from '@material-ui/core/Divider';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Chip from '../Misc/Chip';
+import ListHeader from '../Misc/ListHeader';
+import AddChore from './AddChore';
+import ProgressBar from '../Misc/ProgressBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "500px",
+    width: '500px',
     backgroundColor: theme.palette.background.paper,
   },
   formControl: {
@@ -33,24 +34,29 @@ export default function Chores() {
   const dashboardId = 1;
   const classes = useStyles();
   const [choresList, setChoresList] = useState([]);
+  const [doneList, setDoneList] = useState([]);
   const [dashboardUsers, setDashboardUsers] = useState([]);
+  const [progress, setProgress] = useState({
+    total: 0,
+    current: 0,
+  });
 
   useEffect(() => {
     axios
       .get(`/dashboards/${dashboardId}/chores/`)
       .then((res) => {
         setChoresList(res.data);
-
+        setProgress({ ...progress, total: res.data.length });
+        setDoneList(res.data.filter((elem) => elem.done));
         axios.get(`/dashboards/${dashboardId}/users`).then((res) => {
           setDashboardUsers(res.data);
         });
       })
-      .catch((err) => console.log("CHORES COMPONENT ERROR", err));
+      .catch((err) => console.log('CHORES COMPONENT ERROR', err));
   }, []);
 
   const handleToggle = (value) => () => {
     value.done = !value.done;
-    console.log(value)
     axios
       .patch(`/dashboards/${dashboardId}/chores/${value.id}`, value)
       .then((res) => {
@@ -61,38 +67,36 @@ export default function Chores() {
           });
         });
       })
-      .catch((err) => console.log("handleToggle ERROR", err));
+      .then(() => {
+        setDoneList(choresList.filter((elem) => elem.done));
+      })
+      .catch((err) => console.log('handleToggle ERROR', err));
   };
-
-  // form input
-  // const [assigned, setAssigned] = useState({});
 
   const updateChore = (dashboardId, chore) => {
     axios
       .patch(`/dashboards/${dashboardId}/chores/${chore.id}`, chore)
       .then(() => {})
-      .catch((err) => console.log("ERROR UPDATING CHORE", err));
+      .catch((err) => console.log('ERROR UPDATING CHORE', err));
   };
 
   const clearChip = (chip) => {
-    console.log('choresList', choresList)
     setChoresList((prev) => {
       return prev.map((elem) => {
         if (elem.id === chip.id) {
-          return {...elem, name: 'none'}
+          return { ...elem, name: 'none' };
         }
         return elem;
       });
     });
   };
-  console.log(`choresList`, choresList)
+
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
     setChoresList((prev) => {
       const prevMap = prev.map((elem) => {
         if (elem.id === choreId) {
           const newElem = { ...elem, name: eTarget };
-          // setAssigned(newElem);
           updateChore(dashboardId, newElem);
           return newElem;
         }
@@ -106,6 +110,7 @@ export default function Chores() {
     <div className={classes.root}>
       <ListHeader key="TODO" size="h4" title="TODO" />
       <AddChore choresList={choresList} setChoresList={setChoresList} />
+      <ProgressBar choresList={choresList} doneList={doneList} />
       <List className={null}>
         {choresList.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
@@ -116,7 +121,7 @@ export default function Chores() {
           let secondarySwitcher;
           let secondaryElement;
 
-          if (value.name === "none") {
+          if (value.name === 'none') {
             secondarySwitcher = (
               <FormControl size="small" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Users</InputLabel>
@@ -136,7 +141,6 @@ export default function Chores() {
                   })}
                 </Select>
               </FormControl>
-              
             );
             if (value.done) {
               secondaryElement = (
@@ -154,8 +158,8 @@ export default function Chores() {
               );
             }
             secondarySwitcher = (
-              <Chip 
-                name={String(value.name.split(" ").splice(0, 1))}
+              <Chip
+                name={String(value.name.split(' ').splice(0, 1))}
                 chipValue={value}
                 clearChip={clearChip}
               />
@@ -167,14 +171,14 @@ export default function Chores() {
               <ListItem
                 key={value.id}
                 role={undefined}
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                   <ListItemIcon>
                     <Checkbox
                       // edge="start"
                       checked={value.done}
-                      inputProps={{ "aria-labelledby": labelId }}
+                      inputProps={{ 'aria-labelledby': labelId }}
                       onClick={handleToggle(value)}
                     />
                   </ListItemIcon>
@@ -182,7 +186,7 @@ export default function Chores() {
                 </div>
                 <div>
                   <ListItemSecondaryAction>
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                       {secondarySwitcher}
                       {secondaryElement}
                     </div>

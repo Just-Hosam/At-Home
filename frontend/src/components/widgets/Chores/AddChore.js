@@ -12,6 +12,7 @@ export default function AddChore(props) {
       .post(`/dashboards/${dashboardId}/chores/`, { text: input })
       .then((res) => {
         props.setChoresList([...props.choresList, res.data]);
+        // props.set
         setInput("");
       })
       .catch((err) => console.log("ERROR AT addNewChore", err));
