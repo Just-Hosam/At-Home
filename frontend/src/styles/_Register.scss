@@ -1,0 +1,49 @@
+@import './variables';
+
+#register-page {
+	@include card-layout;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	min-width: 300px;
+	min-height: 400px;
+	max-width: 500px;
+
+	header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+
+		h2 {
+			margin: 0;
+			font-size: 2.5rem;
+			color: var(--accent-color);
+		}
+
+		p {
+			font-size: 1rem;
+
+			span {
+				color: var(--accent-color-alt);
+			}
+		}
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.login-textfield {
+			margin-bottom: 10px;
+		}
+
+		.submission {
+			background-color: var(--accent-color-alt);
+			color: var(--card-color);
+		}
+	}
+}

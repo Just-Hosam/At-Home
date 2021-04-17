@@ -24,11 +24,27 @@ const getUser = (userId) => {
 		.catch((err) => console.log(`Error at users queries 'getUser'`, err));
 };
 
+const checkUserByEmail = (userEmail, userPassword) => {
+	const text = `
+	SELECT *
+	FROM users
+	WHERE email = $1
+	AND password = $2;`;
+	const values = [userEmail, userPassword];
+
+	return db
+		.query(text, values)
+		.then((res) => res.rows[0])
+		.catch((err) =>
+			console.log(`Error at users queries 'checkUserByEmail'`, err)
+		);
+};
+
 const addUser = (userObj) => {
 	const text = `
 	INSERT INTO users (first_name, last_name, email, password)
 	VALUES ($1, $2, $3, $4)
-	RETURNING *:`;
+	RETURNING *;`;
 	const values = [
 		userObj.firstName,
 		userObj.lastName,
@@ -49,8 +65,8 @@ const updateUser = (userObj) => {
 	WHERE id = $5
 	RETURNING *`;
 	const values = [
-		userObj.firstName,
-		userObj.lastName,
+		userObj.first_name,
+		userObj.last_name,
 		userObj.email,
 		userObj.password,
 		userObj.id,
@@ -67,4 +83,5 @@ module.exports = {
 	getUser,
 	addUser,
 	updateUser,
+	checkUserByEmail,
 };

@@ -9,7 +9,7 @@ import CalendarWidget from './Calendar/CalendarWidget';
 const Grid = () => {
 return <div className="grid-wrapper">
 
-<Dropdown/>
+
 	
 <div className='grid-stage'>
 
@@ -19,7 +19,7 @@ return <div className="grid-wrapper">
 	
 	<div id='groceries-grid-widget' className="widget2"><Groceries/></div> 
 
-	<div id='recipes-grid-widget' className="widget3"><RecipesMin/></div>
+	{/* <div id='recipes-grid-widget' className="widget3"><RecipesMin/></div> */}
 
   <div id='gallery-grid-widget' className="widget4"><GalleryModal/></div>
 	

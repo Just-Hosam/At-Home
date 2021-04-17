@@ -38,6 +38,7 @@ export default function Gallery(props) {
       .get(`/dashboards/${dashboardId}/photos/`)
       .then((res) => setTileData(res.data))
       .catch((err) => console.log("PHOTOS COMPONENT ERROR", err));
+
   }, [props.childState, broadcast.photo]); // <-- listen for websocket
 
   const loadImage = (targetImg) => {
