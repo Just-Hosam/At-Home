@@ -16,8 +16,14 @@ export default function Login(props) {
 	const submitUser = (event, userDetails) => {
 		event.preventDefault();
 		axios.post(`/login`, { inputUser: userDetails }).then((res) => {
-			setCookie('userData', res.data, { path: '/' });
-			props.handlePage('GRID');
+			const userData = res.data;
+			axios.get(`/users/${userData.id}/dashboards`).then((dashRes) => {
+				setCookie('userData', userData, { path: '/' });
+				if (!cookies.dashboardId) {
+					setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
+				}
+				props.handlePage('GRID');
+			});
 		});
 	};
 

@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import parsePollingData from "./parsePollingData";
-import PieChart from "./PieChart";
-import CreatePoll from "./CreatePoll";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import parsePollingData from './parsePollingData';
+import PieChart from './PieChart';
+import CreatePoll from './CreatePoll';
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,279 +11,261 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
-
-const useStyles = makeStyles(theme => ({
-
-	loaderIcon:{
-		color:'black',
+const useStyles = makeStyles((theme) => ({
+	loaderIcon: {
+		color: 'black',
 	},
-  	
-		pieIcon: {
-			
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-				color: "turquoise",
-		 },
-		},
 
-		deleteIcon: {
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-       color: "red",
+	pieIcon: {
+		color: 'grey',
+		'&:hover': {
+			cursor: 'pointer',
+			color: 'turquoise',
 		},
-	}
+	},
 
+	deleteIcon: {
+		color: 'grey',
+		'&:hover': {
+			cursor: 'pointer',
+			color: 'red',
+		},
+	},
 }));
 
 const PollsWidgetItem = (props) => {
-const classes = useStyles();
+	const classes = useStyles();
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
 	//set initial state
-	const [mode, setMode] = useState('LOAD')
-  const [state, setState] = useState({
-		
+	const [mode, setMode] = useState('LOAD');
+	const [state, setState] = useState({
 		poll: {},
 		options: [],
 		hasVoted: true,
-		picked: null
-  });
+		picked: null,
+	});
 
-  //fetch polling data on inital render
-  useEffect(() => {
-    Promise.all([
+	//fetch polling data on inital render
+	useEffect(() => {
+		Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
-		
-      setState((prev) => ({
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		]).then((all) => {
+			setState((prev) => ({
 				...prev,
-        poll: all[0].data,
+				poll: all[0].data,
 				options: all[1].data,
-				hasVoted:false
+				hasVoted: false,
 			}));
-			
+
 			setMode('OPTIONS');
-     
-    });
-  }, []);
+		});
+	}, []);
 
-
-
-const renderWidget = () => {
-
-	Promise.all([
+	const renderWidget = () => {
+		Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		])
+			.then((all) => {
+				setState((prev) => ({
+					...prev,
+					poll: all[0].data,
+					options: all[1].data,
+				}));
+			})
+			.catch((err) => console.log(err));
+	};
 
-      setState((prev) => ({
-        ...prev,
-        poll: all[0].data,
-				options: all[1].data,
-      }));
-     
-    }).catch(err => console.log(err));
-};
-
-//create a new poll
-const createPoll = input => {
-
-	if (!input){
-		return alert("Invalid Input")
-	}
-
-	for (const item in input){
-
-		if(!input[item] || input[item] === ''){
-			return alert("Missing Require Field")
+	//create a new poll
+	const createPoll = (input) => {
+		if (!input) {
+			return alert('Invalid Input');
 		}
-	}
 
+		for (const item in input) {
+			if (!input[item] || input[item] === '') {
+				return alert('Missing Require Field');
+			}
+		}
 
-		axios.post(`/dashboards/${dash_id}/polls`, {input})
-		.then((res) => {
-    return axios.post(`/dashboards/${dash_id}/polls/options`, {input});
-  })
-  .then((final) => {
-   
-		setState((prev) => ({
-				...prev,
-        poll: {},
-				options: [],
-				hasVoted:false
-			}));
-			
+		axios
+			.post(`/dashboards/${dash_id}/polls`, { input })
+			.then((res) => {
+				return axios.post(`/dashboards/${dash_id}/polls/options`, { input });
+			})
+			.then((final) => {
+				setState((prev) => ({
+					...prev,
+					poll: {},
+					options: [],
+					hasVoted: false,
+				}));
+
+				setMode('OPTIONS');
+
+				renderWidget();
+			})
+			.catch((err) => console.log(err));
+	};
+
+	const createMode = () => {
+		setMode('CREATE');
+	};
+
+	//vote on the poll
+	const castVote = (index, choice) => {
+		if (state.hasVoted) {
+			return;
+		}
+
+		axios
+			.post(`/dashboards/${dash_id}/polls/${index}`)
+			.then((res) => {
+				setState((prev) => ({
+					...prev,
+					hasVoted: true,
+					picked: choice,
+				}));
+
+				renderWidget();
+			})
+			.catch((err) => console.log(err));
+	};
+
+	//shows the confirm delete mode
+	const openConfirmDelete = () => {
+		setMode('DELETE');
+	};
+
+	const cancelDelete = () => {
 		setMode('OPTIONS');
+	};
 
-		renderWidget();
-  }).catch(err => console.log(err));
-};
+	//delete the entire poll
+	const deletePoll = (admin) => {
+		// <-------- ADD ADMIN PROTECTION
 
-const createMode = () => {
-	
-	setMode('CREATE');
-}
-
-
-//vote on the poll
-const castVote = (index, choice) => {
-
-	if(state.hasVoted){return};
-
-	axios.post(`/dashboards/${dash_id}/polls/${index}`)
-	.then((res => {
-
-		setState((prev) => ({
-        ...prev,
-				hasVoted: true,
-				picked: choice
-			}));
-	
-	
-	renderWidget();
-	})
-	).catch(err => console.log(err));
-}
-
-//shows the confirm delete mode
-const openConfirmDelete = () => {
-
-	setMode('DELETE');
-}
-
-const cancelDelete = () => {
-
-	setMode('OPTIONS');
-}
-
-//delete the entire poll
-const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
-
-	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
-			axios.delete(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
+			axios.delete(`/dashboards/${dash_id}/polls/options`),
+		])
+			.then((all) => {
+				setState((prev) => ({
+					...prev,
+					poll: {},
+					options: [],
+					hasVoted: false,
+				}));
 
-      setState((prev) => ({
-				...prev,
-        poll: {},
-				options: [],
-				hasVoted: false
-			}));
-			
-			setMode('INIT');
+				setMode('INIT');
+			})
+			.catch((err) => console.log(err));
+	};
 
-    }).catch(err => console.log(err));
-}
-
-
-//shows the pie chart
-  const showPie = () => {
-	
-		if(mode === 'OPTIONS'){
-			setMode('PIE')
+	//shows the pie chart
+	const showPie = () => {
+		if (mode === 'OPTIONS') {
+			setMode('PIE');
 		} else {
-			setMode('OPTIONS')
+			setMode('OPTIONS');
 		}
-  };
+	};
 
- 
-//CONDITIONAL UI RENDERING
+	//CONDITIONAL UI RENDERING
 
-const loader = <div className='polls-loader'><CircularProgress className={classes.loaderIcon} disableShrink /></div>
+	const loader = (
+		<div className="polls-loader">
+			<CircularProgress className={classes.loaderIcon} disableShrink />
+		</div>
+	);
 
-const pollIcons = !state.options || state.options.length < 1 ? null : 
-<div className='poll-icons'>
-		
-<PieChartIcon
-			className={classes.pieIcon}
-			onClick={showPie}
-		/>
-<DeleteIcon
-		className={classes.deleteIcon}
-		onClick={openConfirmDelete}
-/>
-</div>
+	const pollIcons =
+		!state.options || state.options.length < 1 ? null : (
+			<div className="poll-icons">
+				<PieChartIcon className={classes.pieIcon} onClick={showPie} />
+				<DeleteIcon
+					className={classes.deleteIcon}
+					onClick={openConfirmDelete}
+				/>
+			</div>
+		);
 
-const initial = 
-<div className='add-poll-container'>
-<h1>Create New Poll</h1>
-<AddCircleIcon 
-className='add-poll-icon'
-style={{ fontSize: 80 }}
-onClick={() => createMode()}/>
-</div>
+	const initial = (
+		<div className="add-poll-container">
+			<h1>Create New Poll</h1>
+			<AddCircleIcon
+				className="add-poll-icon"
+				style={{ fontSize: 80 }}
+				onClick={() => createMode()}
+			/>
+		</div>
+	);
 
-const create = <CreatePoll
-createPoll={createPoll}/>;
+	const create = <CreatePoll createPoll={createPoll} />;
 
-const pollingData = parsePollingData(state, castVote);
-const op = 	pollingData.options ? pollingData.options : initial;
+	const pollingData = parsePollingData(state, castVote);
+	const op = pollingData.options ? pollingData.options : initial;
 
-const pie =
-<div className='pie-chart'>
-<PieChart
-title={state.poll}
-options={state.options}
-/>
-</div>
+	const pie = (
+		<div className="pie-chart">
+			<PieChart title={state.poll} options={state.options} />
+		</div>
+	);
 
+	const confirmDelete = (
+		<div className="poll-delete">
+			<p>
+				Are you sure you want to delete this poll? This action cannot be undone.
+			</p>
+			<button onClick={() => cancelDelete()}>Cancel</button>
+			<button id="poll-delete-btn" onClick={() => deletePoll()}>
+				Delete
+			</button>
+		</div>
+	);
 
-const confirmDelete =
-<div className='poll-delete'>
-<p>Are you sure you want to delete this poll?  This action cannot be undone.</p>
-<button onClick={() => cancelDelete()}>Cancel</button>
-<button id='poll-delete-btn' onClick={() => deletePoll()}>Delete</button>
-</div>
+	const determineMode = (mode) => {
+		switch (mode) {
+			case 'LOAD':
+				return loader;
+			case 'OPTIONS':
+				return op;
+			case 'INIT':
+				return initial;
+			case 'CREATE':
+				return create;
+			case 'PIE':
+				return pie;
+			case 'DELETE':
+				return confirmDelete;
+			default:
+				console.log('error... MODE not found');
+				return loader;
+		}
+	};
 
-const determineMode = mode => {
-
-	switch(mode) {
-		case 'LOAD':
-			return loader;
-		case 'OPTIONS':
-			return op;
-		case 'INIT':
-			return initial;
-		case 'CREATE':
-			return create;
-		case 'PIE':
-			return pie;
-		case 'DELETE':
-			return confirmDelete;
-		default:
-			console.log('error... MODE not found');
-			return loader;
-			
-	}
-}
-
-const core = determineMode(mode);
+	const core = determineMode(mode);
 
 	return (
-		<section className="polls">
+		<div className="polls">
+			{pollIcons && mode !== 'DELETE' ? pollIcons : null}
 
-		{pollIcons && mode !== 'DELETE' ? pollIcons : null}
+			<div className="header-wrapper">
+				<header className="header">
+					<h1>
+						{pollingData.options && mode === 'OPTIONS'
+							? pollingData.title
+							: null}
+					</h1>
+				</header>
+			</div>
 
-		<div className='header-wrapper'>
-		<header className='header'>
-		<h1>{pollingData.options && mode === 'OPTIONS' ? pollingData.title : null}</h1>
-		</header>
+			<div>
+				<h3>{core}</h3>
+			</div>
 		</div>
-
-		<div>
-			<h3>
-			{core}
-			</h3>
-		</div>
-
-		</section>
 	);
 };
 

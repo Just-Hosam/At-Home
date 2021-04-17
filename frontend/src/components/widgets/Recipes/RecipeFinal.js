@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 
+import RecipeMin from './RecipesMin';
+import RecipeMax from './RecipeMax';
+import RecipeAdd from './RecipeAdd';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
-
-import Gallery from './Gallery';
-import Photos from './Photos';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		'& > *': {
-			margin: theme.spacing(1),
-		},
-	},
 	modal: {
 		display: 'flex',
 		alignItems: 'center',
@@ -21,38 +16,36 @@ const useStyles = makeStyles((theme) => ({
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
-		border: '2px solid #000',
+		borderRadius: 10,
 		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
+		outline: 'none',
 	},
 }));
 
-export default function GalleryModal() {
+export default function RecipeFinal() {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
-	const [image, setImage] = useState(0);
-	const [childState, setChildState] = useState([]);
+	const [open, setOpen] = useState(false);
 
-	const handleOpen = (i) => {
+	const handleOpen = () => {
 		setOpen(true);
-		setImage(i);
 	};
 
 	const handleClose = () => {
 		setOpen(false);
-		setImage(0);
 	};
 
-	const handleState = (childData) => {
-		setChildState([...childData]);
+	const [modalView, setModalView] = useState('');
+	const [itemId, setItemId] = useState(0);
+
+	const handleView = (newView, id) => {
+		setModalView(newView);
+		setItemId(id);
 	};
 
 	return (
-		<div id="gallery-widget">
-			<Gallery onClick={(e) => handleOpen(e)} childState={childState} />
+		<div>
+			<RecipeMin handleView={handleView} handleOpen={handleOpen} />
 			<Modal
-				aria-labelledby="transition-modal-title"
-				aria-describedby="transition-modal-description"
 				className={classes.modal}
 				open={open}
 				onClose={handleClose}
@@ -64,7 +57,16 @@ export default function GalleryModal() {
 			>
 				<Fade in={open}>
 					<div className={classes.paper}>
-						<Photos imgIndex={image} handleState={handleState} />
+						{modalView === 'RECIPE_SHOW' && (
+							<RecipeMax
+								recipeId={itemId}
+								handleClose={handleClose}
+								handleView={handleView}
+							/>
+						)}
+						{modalView === 'RECIPE_ADD' && (
+							<RecipeAdd handleClose={handleClose} handleView={handleView} />
+						)}
 					</div>
 				</Fade>
 			</Modal>
