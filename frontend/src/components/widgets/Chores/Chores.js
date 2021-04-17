@@ -74,10 +74,17 @@ export default function Chores() {
   };
 
   const clearChip = (chip) => {
-    console.log('chip', chip)
-    //setChoresList();
+    console.log('choresList', choresList)
+    setChoresList((prev) => {
+      return prev.map((elem) => {
+        if (elem.id === chip.id) {
+          return {...elem, name: 'none'}
+        }
+        return elem;
+      });
+    });
   };
-
+  console.log(`choresList`, choresList)
   const handleChange = (event, choreId) => {
     const eTarget = event.target.value;
     setChoresList((prev) => {
@@ -98,6 +105,7 @@ export default function Chores() {
     <div className={classes.root}>
       <ListHeader key="TODO" size="h4" title="TODO" />
       <Divider variant="middle" />
+      {/* <AddChore /> */}
       <List className={null}>
         {choresList.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
@@ -128,7 +136,15 @@ export default function Chores() {
                   })}
                 </Select>
               </FormControl>
+              
             );
+            if (value.done) {
+              secondaryElement = (
+                <IconButton edge="end" aria-label="done">
+                  <DoneIcon />
+                </IconButton>
+              );
+            }
           } else {
             if (value.done) {
               secondaryElement = (
