@@ -16,6 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "../Misc/Chip";
 import ListHeader from "../Misc/ListHeader";
+import AddChore from "./AddChore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -105,7 +106,7 @@ export default function Chores() {
     <div className={classes.root}>
       <ListHeader key="TODO" size="h4" title="TODO" />
       <Divider variant="middle" />
-      {/* <AddChore /> */}
+      <AddChore choresList={choresList} setChoresList={setChoresList} />
       <List className={null}>
         {choresList.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;

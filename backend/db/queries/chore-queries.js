@@ -28,12 +28,12 @@ const getChore = (dashboardId, choreId) => {
     .catch((err) => console.log('Error at chores queries "getChore"', err));
 };
 
-const addChore = (dashboardId, choreText, assignedName) => {
+const addChore = (dashboardId, choreText) => {
   const text = `
-  INSERT INTO chores (dashboard_id, text, name)
-	VALUES ($1, $2, $3)
+  INSERT INTO chores (dashboard_id, text)
+	VALUES ($1, $2)
 	RETURNING *;`;
-  const values = [dashboardId, choreText, assignedName];
+  const values = [dashboardId, choreText];
 
   return db
     .query(text, values)
