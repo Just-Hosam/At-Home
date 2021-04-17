@@ -4,7 +4,7 @@ import PollWidget from './Polling/PollsWidget';
 import RecipesMin from './Recipes/RecipesMin';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 import GalleryModal from './Photos/GalleryModal';
-// import Photos from './Photos';
+import Chores from './Chores/Chores';
 // import Gallery from './Gallery';
 import CalendarWidget from './Calendar/CalendarWidget';
 
@@ -25,7 +25,7 @@ return <div className="grid-wrapper">
 
 	<div id='gallery-grid-widget' className="widget4"><GalleryModal/></div>
 
-	<div id='chores-grid-widget' className="widget5">Chores</div>
+	<div id='chores-grid-widget' className="widget5"><Chores/></div>
 	
 	<div id='polls-grid-widget' className="widget6"><PollWidget/></div>
 
