@@ -31,9 +31,9 @@ router.patch('/:userId', (req, res) => {
 
 router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
-	const userId = req.body.userId;
+	const userEmail = req.body.userEmail;
 
-	createLink(userId, dashboardId)
+	createLink(userEmail, dashboardId)
 		.then((data) => res.json(data))
 		.catch((err) =>
 			console.log('Error at dashbooards-users POST route "/"', err)
