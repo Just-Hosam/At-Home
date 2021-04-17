@@ -34,8 +34,13 @@ app.use(
 // override for put, patch and delete methods
 app.use(methodOverride('_method'));
 
+// queries
+const { checkUserByEmail } = require('./db/queries/user-queries');
+
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
+const usersDashboardsRouter = require('./routes/users-dashboards.js');
+const dashboardsUsersRouter = require('./routes/dashboards-users.js');
 const groceriesRouter = require('./routes/groceries.js');
 const photosRouter = require('./routes/photos.js');
 const choresRouter = require('./routes/chores.js');
@@ -47,6 +52,8 @@ const ingredientsRouter = require('./routes/ingredients.js');
 
 // Mount all resource routes
 app.use('/users', usersRouter);
+app.use('/users/:userId/dashboards', usersDashboardsRouter);
+app.use('/dashboards/:dashboardId/users', dashboardsUsersRouter);
 app.use('/dashboards/:dashboardId/groceries', groceriesRouter);
 app.use('/dashboards/:dashboardId/photos', photosRouter);
 app.use('/dashboards/:dashboardId/chores', choresRouter);
@@ -62,6 +69,15 @@ app.use(
 // Main routes
 app.get('/', (req, res) => {
 	res.send('Hello World');
+});
+
+app.post('/login', (req, res) => {
+	const inputEmail = req.body.inputUser.email;
+	const inputPassword = req.body.inputUser.password;
+
+	checkUserByEmail(inputEmail, inputPassword)
+		.then((data) => res.json(data))
+		.catch((err) => console.log('Email/password is incorrect', err));
 });
 
 app.listen(PORT, () => {

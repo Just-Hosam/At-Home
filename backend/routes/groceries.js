@@ -5,6 +5,7 @@ const {
 	addGrocery,
 	toggleGrocery,
 	getGrocery,
+	addGroceries,
 } = require('../db/queries/grocery-queries');
 
 router.get('/', (req, res) => {
@@ -31,9 +32,13 @@ router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 	const grocery = req.body.inputGrocery;
 
-	addGrocery(dashboardId, grocery)
-		.then((data) => res.json(data))
-		.catch((err) => console.log('Error at groceries POST route "/"', err));
+	if (Array.isArray(grocery)) {
+		addGroceries(dashboardId, grocery).then((data) => res.json(data));
+	} else {
+		addGrocery(dashboardId, grocery)
+			.then((data) => res.json(data))
+			.catch((err) => console.log('Error at groceries POST route "/"', err));
+	}
 });
 
 router.patch('/:groceryId', (req, res) => {

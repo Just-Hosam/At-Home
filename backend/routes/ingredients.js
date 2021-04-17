@@ -3,7 +3,14 @@ const router = express.Router({ mergeParams: true });
 const {
 	deleteIngredient,
 	addIngredient,
+	getIngredients,
 } = require('../db/queries/ingredients-queries');
+
+router.get('/', (req, res) => {
+	const recipeId = req.params.recipeId;
+
+	getIngredients(recipeId).then((data) => res.json(data));
+});
 
 router.post('/', (req, res) => {
 	const recipeId = req.params.recipeId;

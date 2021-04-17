@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { useCookies } from 'react-cookie';
 
 import RecipeShow from './RecipeShow';
 import RecipeEdit from './RecipeEdit';
-import RecipeAdd from './RecipeAdd';
+import RecipeSend from './RecipeSend';
 
-export default function RecipeMax() {
-	const dashboardId = 1;
+export default function RecipeMax(props) {
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 
 	const [view, setView] = useState('SHOW');
 
-	const handleView = (newView) => setView(newView);
+	const handleEdit = (newView) => setView(newView);
 
 	return (
 		<div>
+			{view === 'LOADING' && <CircularProgress />}
 			{view === 'SHOW' && (
-				<RecipeShow dashboardId={dashboardId} handleView={handleView} />
+				<RecipeShow
+					dashboardId={dashboardId}
+					handleEdit={handleEdit}
+					recipeId={props.recipeId}
+					handleView={props.handleView}
+				/>
 			)}
 			{view === 'EDIT' && (
-				<RecipeEdit dashboardId={dashboardId} handleView={handleView} />
+				<RecipeEdit
+					dashboardId={dashboardId}
+					handleEdit={handleEdit}
+					recipeId={props.recipeId}
+					handleView={props.handleView}
+				/>
 			)}
-			{view === 'ADD' && (
-				<RecipeAdd dashboardId={dashboardId} handleView={handleView} />
+			{view === 'SEND' && (
+				<RecipeSend
+					dashboardId={dashboardId}
+					handleEdit={handleEdit}
+					recipeId={props.recipeId}
+					handleView={props.handleView}
+				/>
 			)}
 		</div>
 	);

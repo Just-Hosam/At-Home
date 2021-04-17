@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+// import { stateContext } from '../../../context/StateProvider';
+import { useCookies } from 'react-cookie';
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import axios from 'axios';
 
 export default function RecipeShow(props) {
-	const dashboardId = props.dashboardId; // TODO: needs useContext
-	const recipeId = 1;
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
+	const recipeId = props.recipeId;
 
 	const [recipe, setRecipe] = useState({
 		id: 0,
@@ -25,7 +34,13 @@ export default function RecipeShow(props) {
 				setIngredients(res.data.ingredients);
 			})
 			.catch((err) => console.log('Error getting recipe', err));
-	}, [dashboardId]);
+	}, [dashboardId, recipeId]);
+
+	const handleDelete = () => {
+		axios
+			.delete(`/dashboards/${dashboardId}/recipes/${recipeId}`)
+			.then(() => props.handleView(''));
+	};
 
 	const ingredientsList = ingredients.map((elem) => {
 		const ingStr = '- ' + elem.measurement + ' of ' + elem.item;
@@ -33,26 +48,55 @@ export default function RecipeShow(props) {
 	});
 
 	return (
-		<div id="recipes-max">
+		<div id="recipes-show">
+			<IconButton
+				className="recipe-show-back"
+				aria-label="back"
+				onClick={() => props.handleView('')}
+			>
+				<ArrowBackIcon />
+			</IconButton>
 			<div id="recipe-image">
 				<img src={recipe.img_url} alt={recipe.title} />
 			</div>
-			<div id="recipe-time">
-				<i className="far fa-clock"></i>
-				<span>{recipe.time}</span>
-			</div>
 			<div id="recipe-header">
-				<h2>{recipe.title}</h2>
+				<div id="recipe-title">
+					<h2>{recipe.title}</h2>
+					<i className="far fa-clock"></i>
+					<span>{recipe.time}</span>
+				</div>
 				<div>
-					<i
-						className="fas fa-pen"
-						onClick={() => props.handleView('EDIT')}
-					></i>
-					<i className="fas fa-trash"></i>
+					<IconButton
+						className="recipe-show-iconbtn"
+						aria-label="edit"
+						onClick={() => props.handleEdit('EDIT')}
+					>
+						<EditIcon />
+					</IconButton>
+					<IconButton
+						className="recipe-show-iconbtn"
+						aria-label="delete"
+						onClick={() => {
+							handleDelete();
+							props.handleView('LOADING');
+						}}
+					>
+						<DeleteIcon />
+					</IconButton>
 				</div>
 			</div>
 			<div id="recipe-ingredients">
-				<h3>Ingredients:</h3>
+				<div id="recipe-ing-header">
+					<h3>Ingredients:</h3>
+
+					<IconButton
+						className="recipe-send-btn"
+						aria-label="send"
+						onClick={() => props.handleEdit('SEND')}
+					>
+						<i className="fas fa-paper-plane"></i>
+					</IconButton>
+				</div>
 				<ul>{ingredientsList}</ul>
 			</div>
 			<div id="recipe-directions">

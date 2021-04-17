@@ -4,7 +4,7 @@ const CreatePoll = (props) => {
 
 const [input, setInput] = useState({
 	title: '',
-	description: '',
+	description: 'placeholder',
 	option1: '',
 	option2: '',
 	option3: '',
@@ -13,7 +13,7 @@ const [input, setInput] = useState({
 	return (
 		
 		<section className='create-poll'>
-	
+
 		<form id="poll-input" onSubmit={(event) => event.preventDefault()}>			
 				<input
 					type="text"
@@ -24,15 +24,7 @@ const [input, setInput] = useState({
 					title: event.target.value
 					}))}
 				/>
-				<input
-					type="text"
-					placeholder="description"
-					value={input.description ? input.description : ''}
-					onChange={(event) => setInput((prev) => ({
-					...prev,
-					description: event.target.value
-					}))}
-				/>
+				
 				<input
 					type="text"
 					placeholder='option 1'
@@ -62,7 +54,7 @@ const [input, setInput] = useState({
 				/>
 
 			</form>
-		<button onClick={() => props.createPoll(input)}>Post</button>
+		<button onClick={() => props.createPoll(input)}>Create</button>
 		</section>
 
 	);

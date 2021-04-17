@@ -2,10 +2,8 @@ import Options from './Options';
 
 export default function parsePollingData(state, castVote){
 
-
 let data = {}
-
-if(state.options[0]) {
+if(state.options && state.options[0]) {
 
 data.title = state.poll.title;
 data.description = state.poll.description;

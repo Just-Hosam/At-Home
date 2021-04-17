@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
+import { useCookies } from 'react-cookie';
+
 import RecipesListItem from './RecipesListItem';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
-export default function RecipesMin() {
-	const dashboardId = 1; // TODO: needs useContext
+export default function RecipesMin(props) {
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 
 	const [recipes, setRecipes] = useState([]);
 
@@ -23,13 +27,21 @@ export default function RecipesMin() {
 			title={recipe.title}
 			time={recipe.time}
 			img_url={recipe.img_url}
+			handleView={props.handleView}
 		/>
 	));
 
 	return (
 		<div id="widget-recipes">
-			<h2>Recipes</h2>
+			<h2>RECIPES</h2>
 			<ul>{recipeList}</ul>
+			<Button
+				id="add-recipe-btn"
+				variant="contained"
+				onClick={() => props.handleView('RECIPE_ADD')}
+			>
+				Add Recipe
+			</Button>
 		</div>
 	);
 }

@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+
+// import { stateContext } from '../../../context/StateProvider';
+import { useCookies } from 'react-cookie';
+
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
 export default function RecipeEdit(props) {
-	const dashboardId = props.dashboardId; // TODO: needs useContext
-	const recipeId = 1;
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
+	const recipeId = props.recipeId;
 
 	const [ingredients, setIngredients] = useState([]);
 	const [recipe, setRecipe] = useState({
@@ -25,28 +35,37 @@ export default function RecipeEdit(props) {
 				setIngredients(res.data.ingredients);
 			})
 			.catch((err) => console.log('Error getting recipe', err));
-	}, [dashboardId]);
+	}, [dashboardId, recipeId]);
 
 	const ingredientsList = ingredients.map((elem) => {
 		return (
 			<li key={elem.id}>
-				<input
-					type="text"
+				<TextField
+					className="recipes-add-textfield"
+					label="Measurement"
+					variant="outlined"
+					size="small"
 					value={elem.measurement}
 					onChange={(event) => {
 						updateIngredient('measurement', event.target.value, elem.id);
 					}}
 				/>
-				<input
-					type="text"
+				<TextField
+					className="recipes-add-textfield recipes-add-item"
+					label="Item"
+					variant="outlined"
+					size="small"
 					value={elem.item}
 					onChange={(event) => {
 						updateIngredient('item', event.target.value, elem.id);
 					}}
 				/>
-				<button onClick={() => deleteIngredient(elem.id)}>
-					<i className="fas fa-trash"></i>
-				</button>
+				<IconButton
+					className="recipes-add-deletebtn"
+					onClick={() => deleteIngredient(elem.id)}
+				>
+					<DeleteIcon />
+				</IconButton>
 			</li>
 		);
 	});
@@ -95,7 +114,7 @@ export default function RecipeEdit(props) {
 	const submitState = (dashboardId, recipe) => {
 		axios
 			.patch(`/dashboards/${dashboardId}/recipes/${recipe.id}`, recipe)
-			.then(() => {}) // transition to full recipe.
+			.then(() => props.handleEdit('SHOW'))
 			.catch((err) => console.log('hi', err));
 	};
 
@@ -110,79 +129,110 @@ export default function RecipeEdit(props) {
 				});
 				const newEmptyFields = (
 					<li key={newIng.id}>
-						<input
-							type="text"
+						<TextField
+							className="recipes-add-textfield"
+							label="Measurement"
+							variant="outlined"
+							size="small"
 							value={newIng.measurement}
 							onChange={(event) => {
 								updateIngredient('measurement', event.target.value, newIng.id);
 							}}
 						/>
-						<input
-							type="text"
+						<TextField
+							className="recipes-add-textfield recipes-add-item"
+							label="Item"
+							variant="outlined"
+							size="small"
 							value={newIng.item}
 							onChange={(event) => {
 								updateIngredient('item', event.target.value, newIng.id);
 							}}
 						/>
-						<button onClick={() => deleteIngredient(newIng.id)}>
-							<i className="fas fa-trash"></i>
-						</button>
+						<IconButton
+							className="recipes-add-deletebtn"
+							onClick={() => deleteIngredient(newIng.id)}
+						>
+							<DeleteIcon />
+						</IconButton>
 					</li>
 				);
 				ingredientsList.push(newEmptyFields);
 			});
 	};
-	
 
 	return (
-		<div>
-			<h3>Edit:</h3>
+		<div id="recipes-add">
+			<h2>Edit Recipe</h2>
 			<form onSubmit={(event) => event.preventDefault()}>
-				<div>
-					<label>Title:</label>
-					<input
-						type="text"
+				<div id="recipes-add-header">
+					<TextField
+						className="recipes-add-textfield"
+						fullWidth
+						label="Title"
+						variant="outlined"
+						size="small"
 						value={recipe.title}
 						onChange={(event) => updateRecipe('title', event.target.value)}
 					/>
+					<div id="recipes-add-time">
+						<TextField
+							className="recipes-add-textfield"
+							label="Time"
+							variant="outlined"
+							size="small"
+							value={recipe.time}
+							onChange={(event) => updateRecipe('time', event.target.value)}
+						/>
+					</div>
 				</div>
-				<div>
-					<label>Time:</label>
-					<input
-						type="text"
-						value={recipe.time}
-						onChange={(event) => updateRecipe('time', event.target.value)}
-					/>
-				</div>
-				<div>
-					<label>URL:</label>
-					<input
-						type="url"
-						value={recipe.img_url}
-						onChange={(event) => updateRecipe('img_url', event.target.value)}
-					/>
-				</div>
-				<div>
+				<TextField
+					className="recipes-add-textfield"
+					fullWidth
+					label="Image"
+					variant="outlined"
+					size="small"
+					value={recipe.img_url}
+					onChange={(event) => updateRecipe('img_url', event.target.value)}
+				/>
+				<h3>Ingredients:</h3>
+				<div id="recipes-add-ing">
 					<ul>{ingredientsList}</ul>
-					<button onClick={addIngredient}>add ingredient</button>
+					<div className="recipes-add-addcont">
+						<IconButton className="recipes-add-addbtn" onClick={addIngredient}>
+							<AddCircleIcon fontSize="large" />
+						</IconButton>
+					</div>
 				</div>
-				<div>
-					<label>Directions:</label>
-					<input
-						type="text"
-						value={recipe.directions}
-						onChange={(event) => updateRecipe('directions', event.target.value)}
-					/>
+				<TextField
+					className="recipes-add-textfield recipes-add-multi"
+					fullWidth
+					label="Directions"
+					variant="outlined"
+					rows={4}
+					multiline
+					value={recipe.directions}
+					onChange={(event) => updateRecipe('directions', event.target.value)}
+				/>
+				<div id="recipes-add-finalbtns">
+					<Button
+						className="finalbtns"
+						variant="contained"
+						onClick={() => props.handleEdit('SHOW')}
+					>
+						Cancel
+					</Button>
+					<Button
+						className="finalbtns submission"
+						variant="contained"
+						onClick={() => {
+							submitState(dashboardId, recipe);
+							props.handleEdit('LOADING');
+						}}
+					>
+						Submit
+					</Button>
 				</div>
-				<button onClick={() => props.handleView('SHOW')}>Cancel</button>
-				<button
-					onClick={() => {
-						submitState(dashboardId, recipe);
-						props.handleView('SHOW');
-					}}
-				>
-					Submit
-				</button>
 			</form>
 		</div>
 	);
