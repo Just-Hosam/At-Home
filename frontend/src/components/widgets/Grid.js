@@ -3,11 +3,12 @@ import PollWidget from './Polling/PollsWidget';
 import RecipeFinal from './Recipes/RecipeFinal';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 import GalleryModal from './Photos/GalleryModal';
-// import Photos from './Photos';
-// import Gallery from './Gallery';
 import CalendarWidget from './Calendar/CalendarWidget';
 
 const Grid = () => {
+
+
+
 	return (
 		<div id="grid-wrapper">
 			<CalendarWidget />
@@ -19,5 +20,6 @@ const Grid = () => {
 		</div>
 	);
 };
+
 
 export default Grid;

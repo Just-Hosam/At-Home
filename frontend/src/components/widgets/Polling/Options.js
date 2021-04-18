@@ -1,3 +1,4 @@
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 const Options = (props) => {
 
 
@@ -11,7 +12,7 @@ const Options = (props) => {
 		
 		<div className='vote'>
 		{props.votes}
-		<button className={props.hasVoted ? 'post-vote' : 'pre-vote'} disabled={props.hasVoted}>Vote</button>
+		<ThumbUpAltIcon className={props.hasVoted ? 'post-vote' : 'pre-vote'} disabled={props.hasVoted}></ThumbUpAltIcon>
 		</div>
 		</div>
 

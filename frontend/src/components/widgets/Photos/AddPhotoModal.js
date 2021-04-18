@@ -9,6 +9,7 @@ import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 import SaveIcon from "@material-ui/icons/Save";
 
+import useSocket from "../../../hooks/useSocket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,11 @@ export default function AddPhotoModal(props) {
     text: "",
   });
 
+  //websocket connection
+	const {
+		sendSocketMessage,
+	} = useSocket();
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -54,6 +60,7 @@ export default function AddPhotoModal(props) {
         props.addNewImg(res.data);
         setInput({ img_url: "", text: "" });
         setOpen(false);
+        sendSocketMessage('photo'); // <--- send websocket msg
       })
       .catch((err) => console.log("PHOTO SUBMIT ERROR", err));
   };

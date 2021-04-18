@@ -36,7 +36,6 @@ router.patch('/edit', (req, res) => {
 	const values = [
 	req.body.editedEvent.id, 
 	req.params.dashboardId, 
-	
 	req.body.editedEvent.title, 
 	req.body.editedEvent.description,
 	req.body.editedEvent.from, 
