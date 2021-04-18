@@ -6,6 +6,10 @@
 	height: 200px;
 	justify-content: center;
 	align-items: center;
+	
+	.poll-loader-icon{
+		color:var(--accent-color-alt);
+	}
 }
 
 .polls {
@@ -21,7 +25,10 @@
 	h1 {
 		display: block;
 		margin: auto;
+		margin-top: -5px;
 		width: 75%;
+	  font-size: 1.5rem;
+		color: var(--accent-color);
 	}
 }
 
@@ -31,6 +38,23 @@
 	justify-content: space-between;
 	align-items: center;
 	margin: 5px 10px 0px 10px;
+
+	.poll-pie-icon{
+		color: lightgray;
+
+		&:hover{
+			color:var(--accent-color-alt);
+		}
+	}
+
+	.poll-delete-icon{
+		color: lightgray;
+
+		&:hover{
+			color:var(--error-color);
+		}
+	}
+
 }
 
 .options {
@@ -42,6 +66,7 @@
 	width: 95%;
 }
 
+
 .pre-vote-option {
 	display: flex;
 	flex-direction: row;
@@ -50,11 +75,33 @@
 	width: 95%;
 	padding: 10px 10px;
 	border-radius: 5px;
+	font-size: 1.3rem;
+	color: var(--text-color-alt);
 
-	&:hover {
-		cursor: pointer;
-		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+&:hover{
+	cursor: pointer;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	.pre-vote{
+		background-color: var(--accent-color);
 	}
+}
+}
+
+.post-vote-option{
+
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	align-items:center;
+	width:95%;
+	padding:8px 8px;
+	border-radius: 5px;
+	font-size: 1.3rem;
+	
+&:hover{
+	cursor: text;
+	box-shadow: none;
+}
 }
 
 .post-vote-option {
@@ -70,11 +117,13 @@
 		cursor: text;
 		box-shadow: none;
 	}
+
 }
 
 .picked {
 	border-radius: 5px;
-	background-color: turquoise;
+	color: white;
+	background-color: var(--accent-color-alt);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -84,6 +133,7 @@
 	justify-content: space-between;
 	align-items: center;
 }
+
 
 .pre-vote {
 	cursor: pointer;
@@ -110,6 +160,7 @@
 	border-radius: 5px;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
 		rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
 }
 
 .add-poll-container {
@@ -117,26 +168,57 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 160px;
+	margin-top: 70px;
 	cursor: pointer;
-	color: grey;
+	color:var(--accent-color-alt);
 	font-size: large;
 
 	h1 {
 		color: black;
 	}
 
-	.add-poll-icon {
-		&:hover {
-			color: $primary-color;
+	.add-poll-icon{
+		&:hover{
+			color:var(--accent-color);
 		}
-	}
+}
 }
 
 .pie-chart {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
+
+	margin-left: 40px;
+}
+
+		
+.create-poll{
+
+	h1{
+		font-size: 2rem;
+		margin-bottom: 10px;
+	}
+
+	button{
+	
+		width: 85%;
+		margin-top: 10px;
+		padding: 15px;
+		border-radius: 5px;
+		color:white;
+		background-color: var(--accent-color-alt);
+		font-size: 1.2rem;
+&:hover{
+	background-color: var(--accent-color);
+}
+
+	}
+
+}
+
+.create-poll-input{
+	width: 85%;
 	margin-top: -20px;
 }
 
@@ -170,24 +252,32 @@
 	label {
 		display: block;
 	}
+	
 }
 
 .poll-delete {
 	p {
 		line-height: 1.4;
-		color: rgb(255, 60, 60);
+		color: var(--error-color);
 		padding: 20px;
 	}
 	button {
 		padding: 10px;
 		margin: 10px;
-		color: grey;
-		background-color: lightgray;
-		border-radius: 5px;
-	}
-
-	#poll-delete-btn {
 		color: white;
-		background-color: rgb(255, 60, 60);
+		background-color: var(--accent-color-alt);
+		border-radius: 5px;
+
+		&:hover{
+			background-color: var(--accent-color);
+		}
 	}
 }
+
+	#poll-delete-btn{
+		color:white;
+		background-color: var(--error-color);
+		&:hover{
+			background-color: red;
+		}
+	}

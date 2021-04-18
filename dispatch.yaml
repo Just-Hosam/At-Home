@@ -1,0 +1,11 @@
+dispatch:
+    - url: '*/dashboards/*'
+      service: api
+    - url: '*/users/*'
+      service: api
+
+  
+    
+
+
+      
