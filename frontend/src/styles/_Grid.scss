@@ -1,0 +1,27 @@
+// save the day please
+@import './variables';
+
+#grid-wrapper {
+	width: 96vw;
+	height: 86vh;
+	padding: 0 20px 20px 20px;
+	display: grid;
+	grid-template-columns: 40% 25% auto;
+	grid-template-rows: 55% auto;
+	grid-gap: 10px;
+	background-color: var(--background-color);
+
+	> div::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+
+	> div::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	> div::-webkit-scrollbar-thumb {
+		background: rgba(129, 129, 129, 0.562);
+		border-radius: 100px;
+	}
+}
