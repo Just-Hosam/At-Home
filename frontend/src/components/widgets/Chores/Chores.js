@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Chores() {
+export default function Chores(props) {
   const dashboardId = 1;
   const classes = useStyles();
   const [choresList, setChoresList] = useState([]);

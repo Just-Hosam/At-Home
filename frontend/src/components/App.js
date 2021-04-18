@@ -16,7 +16,9 @@ import Grid from './widgets/Grid';
 // import PollWidget from './widgets/Polling/PollsWidget';
 // import CalendarWidget from './widgets/Calendar/CalendarWidget'
 
-import Chores from './widgets/Chores/Chores';
+import Chore from './widgets/Chores/Chore';
+// import Chores from './widgets/Chores/Chores';
+// import AddChores from './widgets/Chores/DoneChores';
 // import Gallery from './widgets/Gallery';
 
 // import RecipesMin from './widgets/Recipes/RecipesMin';
@@ -50,7 +52,7 @@ const App = () => {
 			{page === 'SETTINGS' && <Settings />}
 			{page === 'LOGIN' && <Login handlePage={handlePage} />}
 			{page === 'REGISTER' && <Register handlePage={handlePage} />} */}
-			<Chores />
+			<Chore />
 			{/* <StateProvider>
 				{modalView === '' && <RecipesMin handleView={handleView} />}
 				{modalView === 'RECIPE_SHOW' && (
