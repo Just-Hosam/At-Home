@@ -1,4 +1,3 @@
-// save the day please
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -12,7 +11,6 @@ const App = () => {
 	const [cookies] = useCookies(null);
 	const initialPage = cookies.userData ? 'GRID' : 'LOGIN';
 	const [page, setPage] = useState(initialPage);
-	// const [page, setPage] = useState('SETTINGS');
 
 	const handlePage = (page) => setPage(page);
 
