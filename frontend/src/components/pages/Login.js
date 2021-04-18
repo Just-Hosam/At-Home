@@ -19,9 +19,10 @@ export default function Login(props) {
 			const userData = res.data;
 			axios.get(`/users/${userData.id}/dashboards`).then((dashRes) => {
 				setCookie('userData', userData, { path: '/' });
-				if (!cookies.dashboardId) {
-					setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
-				}
+				setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
+				// if (!cookies.dashboardId) {
+				// 	console.log('THERE IS NO COOKIE');
+				// }
 				props.handlePage('GRID');
 			});
 		});
