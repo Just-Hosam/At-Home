@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import parsePollingData from "./parsePollingData";
-import PieChart from "./PieChart";
-import CreatePoll from "./CreatePoll";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import parsePollingData from './parsePollingData';
+import PieChart from './PieChart';
+import CreatePoll from './CreatePoll';
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,9 +21,9 @@ const PollsWidgetItem = (props) => {
   } = useSocket();
 
 	//set initial state
-	const [mode, setMode] = useState('LOAD')
-  const [state, setState] = useState({
-		
+	const [mode, setMode] = useState('LOAD');
+
+	const [state, setState] = useState({
 		poll: {},
 		options: [],
 		hasVoted: false,
@@ -35,12 +35,11 @@ const PollsWidgetItem = (props) => {
 		
     Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
-		
-      setState((prev) => ({
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		]).then((all) => {
+			setState((prev) => ({
 				...prev,
-        poll: all[0].data,
+				poll: all[0].data,
 				options: all[1].data,
 			}));
 			
@@ -52,35 +51,24 @@ const PollsWidgetItem = (props) => {
 
 
 
-const renderWidget = () => {
-
-	Promise.all([
+	const renderWidget = () => {
+		Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		])
+			.then((all) => {
+				setState((prev) => ({
+					...prev,
+					poll: all[0].data,
+					options: all[1].data,
+				}));
+			})
+			.catch((err) => console.log(err));
+	};
 
-      setState((prev) => ({
-        ...prev,
-        poll: all[0].data,
-				options: all[1].data,
-      }));
-     
-    }).catch(err => console.log(err));
-};
-
-//create a new poll
-const createPoll = input => {
-
-	if (!input){
-		return alert("Invalid Input")
-	}
-
-	for (const item in input){
-
-		if(!input[item] || input[item] === ''){
-			return alert("Missing Require Field")
-		}
-	}
+	//create a new poll
+	const createPoll = (input) => {
+	
 
 		axios.post(`/dashboards/${dash_id}/polls`, {input})
 		.then((res) => {
@@ -157,21 +145,16 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 			
 			setMode('INIT');
 			sendSocketMessage(`polls`); // <-- send websocket msg
-
-    }).catch(err => console.log(err));
-}
-
+})};
 
 //shows the pie chart
-  const showPie = () => {
-	
-		if(mode === 'OPTIONS'){
-			setMode('PIE')
-		} else {
-			setMode('OPTIONS')
-		}
-  };
-
+const showPie = () => {
+	if (mode === 'OPTIONS') {
+		setMode('PIE');
+	} else {
+		setMode('OPTIONS');
+	}
+};
  
 //CONDITIONAL UI RENDERING
 
@@ -246,24 +229,26 @@ const determineMode = mode => {
 
 const core = determineMode(mode);
 
+	
+
 	return (
-		<section className="polls">
+		<div className="polls">
+			{pollIcons && mode !== 'DELETE' ? pollIcons : null}
 
-		{pollIcons && mode !== 'DELETE' ? pollIcons : null}
+			<div className="header-wrapper">
+				<header className="header">
+					<h1>
+						{pollingData.options && mode === 'OPTIONS'
+							? pollingData.title
+							: null}
+					</h1>
+				</header>
+			</div>
 
-		<div className='header-wrapper'>
-		<header className='header'>
-		<h1>{pollingData.options && mode === 'OPTIONS' ? pollingData.title : null}</h1>
-		</header>
+			<div>
+				<h3>{core}</h3>
+			</div>
 		</div>
-
-		<div>
-			<h3>
-			{core}
-			</h3>
-		</div>
-
-		</section>
 	);
 };
 

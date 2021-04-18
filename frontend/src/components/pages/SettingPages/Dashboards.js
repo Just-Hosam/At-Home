@@ -7,10 +7,9 @@ import Button from '@material-ui/core/Button';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
-export default function Dashboards() {
+export default function Dashboards(props) {
 	const [cookies, setCookie] = useCookies(null);
 	const [dashboards, setDashboards] = useState([]);
-	// const [selectedDashboard, setSelectedDashboard] = useState(cookies.dashboardId)
 
 	useEffect(() => {
 		axios
@@ -21,10 +20,9 @@ export default function Dashboards() {
 			.catch((err) => console.log(err));
 	}, []);
 
-	// TODO: not complete (doesn't update cookie immediatly, needs reload)
-	// add selectedDashboard state and chagne on click
 	const selectDashboard = (dashboardId) => {
 		setCookie('dashboardId', dashboardId, { path: '/' });
+		props.handlePage('GRID');
 	};
 
 	const deleteDashboardLink = (dashboardId) => {
@@ -38,6 +36,7 @@ export default function Dashboards() {
 	};
 
 	const dashboardsList = dashboards.map((elem) => {
+		console.log(cookies.dashboardId, '===', elem.id);
 		return (
 			<li key={elem.id}>
 				<p>{elem.name}</p>
@@ -48,13 +47,24 @@ export default function Dashboards() {
 					>
 						<DeleteIcon />
 					</IconButton>
-					<Button
-						className="dashboards-btns"
-						variant="contained"
-						onClick={() => selectDashboard(elem.id)}
-					>
-						Select
-					</Button>
+					{elem.id == cookies.dashboardId && (
+						<Button
+							className="dashboards-btns selected"
+							variant="contained"
+							onClick={() => selectDashboard(elem.id)}
+						>
+							Selected
+						</Button>
+					)}
+					{elem.id != cookies.dashboardId && (
+						<Button
+							className="dashboards-btns"
+							variant="contained"
+							onClick={() => selectDashboard(elem.id)}
+						>
+							Select
+						</Button>
+					)}
 				</div>
 			</li>
 		);

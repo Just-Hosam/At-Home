@@ -1,6 +1,4 @@
-import React, { useState, useContext } from 'react';
-
-// import { stateContext } from '../../../context/StateProvider';
+import React, { useState } from 'react';
 
 import { useCookies } from 'react-cookie';
 
@@ -184,7 +182,7 @@ export default function RecipeAdd(props) {
 					<Button
 						className="finalbtns"
 						variant="contained"
-						onClick={() => props.handleView('')}
+						onClick={() => props.handleClose()}
 					>
 						Cancel
 					</Button>

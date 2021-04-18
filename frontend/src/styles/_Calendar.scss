@@ -1,3 +1,8 @@
 @import './variables';
 
+#calendar-widget {
+	@include card-layout;
+	overflow: auto;
+	padding: 10px;
+}
 

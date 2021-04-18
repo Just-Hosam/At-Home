@@ -38,6 +38,7 @@ const App = () => {
 
 	const handlePage = (page) => setPage(page);
 
+
 	// jwt token
 
 	// const dashboardId = 1;
@@ -50,7 +51,6 @@ const App = () => {
 	// };
 
 	
-
 	return (
 		<div className="App">
 
@@ -66,9 +66,10 @@ const App = () => {
 
 			<Navbar handlePage={handlePage} />
 			{page === 'GRID' && <Grid />}
-			{page === 'SETTINGS' && <Settings />}
+			{page === 'SETTINGS' && <Settings handlePage={handlePage} />}
 			{page === 'LOGIN' && <Login handlePage={handlePage} />}
 			{page === 'REGISTER' && <Register handlePage={handlePage} />}
+
 
 			{/* <StateProvider>
 				{modalView === '' && <RecipesMin handleView={handleView} />}

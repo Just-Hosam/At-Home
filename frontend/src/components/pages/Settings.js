@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 
-// import { useCookies } from 'react-cookie';
-
 import Profile from './SettingPages/Profile';
 import Dashboards from './SettingPages/Dashboards';
 import Users from './SettingPages/Users';
 import Appearance from './SettingPages/Appearance';
 
-export default function Settings() {
-	// const [cookies, setCookie] = useCookies(['userID']);
+export default function Settings(props) {
 	const [settingsPage, setSettingsPage] = useState('PROFILE');
 
 	return (
@@ -24,7 +21,9 @@ export default function Settings() {
 			</div>
 			<div id="settings-details">
 				{settingsPage === 'PROFILE' && <Profile />}
-				{settingsPage === 'DASHBOARDS' && <Dashboards />}
+				{settingsPage === 'DASHBOARDS' && (
+					<Dashboards handlePage={props.handlePage} />
+				)}
 				{settingsPage === 'USERS' && <Users />}
 				{settingsPage === 'APPEARANCE' && <Appearance />}
 			</div>

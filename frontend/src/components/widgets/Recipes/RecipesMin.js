@@ -20,6 +20,11 @@ export default function RecipesMin(props) {
 			.catch((err) => console.log('Error getting recipes', err));
 	}, []);
 
+	const handleAddButton = () => {
+		props.handleView('RECIPE_ADD');
+		props.handleOpen();
+	};
+
 	const recipeList = recipes.map((recipe) => (
 		<RecipesListItem
 			key={recipe.id}
@@ -28,6 +33,7 @@ export default function RecipesMin(props) {
 			time={recipe.time}
 			img_url={recipe.img_url}
 			handleView={props.handleView}
+			handleOpen={props.handleOpen}
 		/>
 	));
 
@@ -38,7 +44,7 @@ export default function RecipesMin(props) {
 			<Button
 				id="add-recipe-btn"
 				variant="contained"
-				onClick={() => props.handleView('RECIPE_ADD')}
+				onClick={() => handleAddButton()}
 			>
 				Add Recipe
 			</Button>

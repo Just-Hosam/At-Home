@@ -24,6 +24,19 @@ const getUser = (userId) => {
 		.catch((err) => console.log(`Error at users queries 'getUser'`, err));
 };
 
+const getUserByEmail = (userEmail) => {
+	const text = `
+	SELECT *
+	FROM users
+	WHERE email = $1;`;
+	const values = [userEmail];
+
+	return db
+		.query(text, values)
+		.then((res) => res.rows[0])
+		.catch((err) => console.log(`Error at users queries 'getUser'`, err));
+};
+
 const checkUserByEmail = (userEmail, userPassword) => {
 	const text = `
 	SELECT *
@@ -84,4 +97,5 @@ module.exports = {
 	addUser,
 	updateUser,
 	checkUserByEmail,
+	getUserByEmail,
 };

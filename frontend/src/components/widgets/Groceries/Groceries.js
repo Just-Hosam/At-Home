@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useCookies } from 'react-cookie';
+
 import Grocery from './Grocery';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -9,7 +11,8 @@ import useSocket from "../../../hooks/useSocket";
 const axios = require('axios');
 
 export default function Groceries() {
-	const dashboardId = 1; // TODO: needs useContext
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
 
 	//websocket connection
 	const {
