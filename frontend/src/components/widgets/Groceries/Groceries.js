@@ -5,8 +5,13 @@ import { useCookies } from 'react-cookie';
 import Grocery from './Grocery';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import useSocket from '../../../hooks/useSocket';
 
-import useSocket from "../../../hooks/useSocket";
+const AnyList = require('anylist');
+const any = new AnyList({
+	email: 'lhl.final.project.test@gmail.com',
+	password: 'Temppass123',
+});
 
 const axios = require('axios');
 
@@ -15,20 +20,26 @@ export default function Groceries() {
 	const dashboardId = cookies.dashboardId;
 
 	//websocket connection
-	const {
-		sendSocketMessage,
-		broadcast,
-	} = useSocket();
-	
+	const { sendSocketMessage, broadcast } = useSocket();
+
 	const [groceries, setGroceries] = useState([]);
 	const [input, setInput] = useState('');
 
 	useEffect(() => {
+		any.login().then(async () => {
+			await any.getLists();
+		});
 		axios
 			.get(`/dashboards/${dashboardId}/groceries/`)
 			.then((res) => setGroceries(res.data))
 			.catch((err) => console.log('I AM A COMPONENT ERROR', err));
 	}, [broadcast.groceries]); // <-- listen for websocket
+
+	any.on('lists-update', (lists) => {
+		const lastElemIndex = lists[0].items.length - 1;
+		console.log(lists[0].items[lastElemIndex]._name);
+		setGroceries((prev) => [lists[0].items[lastElemIndex]._name, ...prev]);
+	});
 
 	const toggleGrocery = (dashboardId, groceryId) => {
 		axios
@@ -42,7 +53,7 @@ export default function Groceries() {
 			})
 			.catch((err) => console.log('I"M THE PATCH MONSTER', err));
 	};
-	
+
 	const addGrocery = (inputGrocery) => {
 		axios
 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery })
