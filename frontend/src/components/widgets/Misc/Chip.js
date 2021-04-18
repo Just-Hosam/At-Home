@@ -45,7 +45,7 @@ export default function SmallChip(props) {
     <div className={classes.root}>
       <Chip
         // size="small"
-        avatar={<Avatar alt={props.name} src="PH" />}
+        avatar={<Avatar alt={props.name}>{props.name[0]}</Avatar>}
         label={props.name}
         // onClick={handleClick}
         onDelete={handleDelete}

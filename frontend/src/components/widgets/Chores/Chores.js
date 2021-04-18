@@ -14,6 +14,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,7 +107,9 @@ export default function Chores(props) {
   let trophy = null;
 
   if (parentDone.length === parentChores.length) {
-    trophy = <i class="fas fa-trophy fa-3x" style={{color: 'rgb(96, 83, 247)'}}></i>;
+    trophy = <i className="fas fa-trophy fa-3x" style={{color: 'rgb(96, 83, 247)'}}></i>;
+  } else {
+    trophy = null;
   }
 
   return (
@@ -131,7 +134,6 @@ export default function Chores(props) {
               <FormControl size="small" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">Users</InputLabel>
                 <Select
-                  key={value.id}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   defaultValue=""
@@ -159,9 +161,8 @@ export default function Chores(props) {
 
           if (!value.done) {
             primaryElement = (
-              <>
+              <div>
                 <ListItem
-                  key={value.id}
                   role={undefined}
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
@@ -169,7 +170,7 @@ export default function Chores(props) {
                     <ListItemIcon>
                       {value.name !== 'none' ? 
                       <Checkbox
-                        // edge="start"
+                        edge="start"
                         checked={value.done}
                         inputProps={{ 'aria-labelledby': labelId }}
                         onClick={handleToggle(value)}
@@ -187,14 +188,16 @@ export default function Chores(props) {
                   </div>
                 </ListItem>
                 <Divider />
-              </>
+              </div>
             );
+          } else {
+            primaryElement = null;
           }
 
           return (
-          <>
-            {primaryElement}
-          </>
+            <div key={`list-c${value.id}`}>
+              {primaryElement}
+            </div>
           );
         })}
       </List>

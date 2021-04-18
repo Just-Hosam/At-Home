@@ -92,14 +92,13 @@ export default function DoneChores(props) {
             primaryElement = (
               <>
                 <ListItem
-                  key={value.id}
                   role={undefined}
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
                       <ClearIcon
-                        // edge="start"
+                        edge="start"
                         checked={value.done}
                         // inputProps={{ 'aria-labelledby': labelId }}
                         onClick={handleToggle(value)}
@@ -120,7 +119,11 @@ export default function DoneChores(props) {
             );
           }
 
-          return <>{primaryElement}</>;
+          return (
+            <div key={value.id}>
+              {primaryElement}
+            </div>
+          );
         })}
       </List>
     </div>
