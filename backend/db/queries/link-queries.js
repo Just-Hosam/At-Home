@@ -1,4 +1,5 @@
 const db = require('../../lib/db.js');
+const { getUserByEmail } = require('./user-queries');
 
 const getDashboardsPerUser = (userId) => {
 	const text = `
@@ -33,17 +34,19 @@ const getUsersPerDashboard = (dashboardId) => {
 		);
 };
 
-const createLink = (userId, dashboardId) => {
-	const text = `
-  INSERT INTO links (user_id, dashboard_id, admin)
-  VALUES ($1, $2, false)
-  RETURNING *;`;
-	const values = [userId, dashboardId];
+const createLink = (userEmail, dashboardId) => {
+	return getUserByEmail(userEmail).then((userRes) => {
+		const text = `
+		INSERT INTO links (user_id, dashboard_id, admin)
+		VALUES ($1, $2, false)
+		RETURNING *;`;
+		const values = [userRes.id, dashboardId];
 
-	return db
-		.query(text, values)
-		.then((res) => res.rows[0])
-		.catch((err) => console.log(`Error at links queries 'createLink'`, err));
+		return db
+			.query(text, values)
+			.then(() => userRes)
+			.catch((err) => console.log(`Error at links queries 'createLink'`, err));
+	});
 };
 
 const createFirstLink = (userId, dashboardId) => {

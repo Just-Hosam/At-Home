@@ -1,26 +1,20 @@
 import Groceries from './Groceries/Groceries';
-import Dropdown from './Dropdown/Dropdown';
 import PollWidget from './Polling/PollsWidget';
-import RecipesMin from './Recipes/RecipesMin';
+import RecipeFinal from './Recipes/RecipeFinal';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 import GalleryModal from './Photos/GalleryModal';
+<<<<<<< HEAD
 import Chores from './Chores/Chores';
 // import Gallery from './Gallery';
+=======
+>>>>>>> main
 import CalendarWidget from './Calendar/CalendarWidget';
 
 const Grid = () => {
-return <div className="grid-wrapper">
 
-<Dropdown/>
-	
-<div className='grid-stage'>
 
-<div className="grid-container">
-	
-	<div id='calendar-grid-widget' className="widget1"><CalendarWidget/></div>
-	
-	<div id='groceries-grid-widget' className="widget2"><Groceries/></div> 
 
+<<<<<<< HEAD
 	<div id='recipes-grid-widget' className="widget3"><RecipesMin/></div>
 
 	<div id='gallery-grid-widget' className="widget4"><GalleryModal/></div>
@@ -44,6 +38,19 @@ return <div className="grid-wrapper">
 
 
 	
+=======
+	return (
+		<div id="grid-wrapper">
+			<CalendarWidget />
+			<Groceries />
+			<RecipeFinal />
+			<GalleryModal />
+			<PollWidget />
+			<div id="chores-grid-widget">Chores</div>
+		</div>
+	);
+};
+>>>>>>> main
 
 
 export default Grid;

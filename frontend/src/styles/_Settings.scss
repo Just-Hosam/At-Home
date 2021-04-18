@@ -85,6 +85,10 @@
 				color: var(--card-color);
 			}
 
+			.selected {
+				background-color: rgb(87, 148, 87);
+			}
+
 			.dashboards-deletebtn {
 				padding: 5px;
 				margin-right: 5px;
@@ -92,6 +96,19 @@
 		}
 
 		#settings-users {
+			#add-user-form {
+				margin-bottom: 15px;
+
+				.MuiFormControl-root {
+					margin: 0;
+					margin-bottom: 5px;
+				}
+
+				.add-btn {
+					background-color: var(--accent-color-alt);
+					color: var(--card-color);
+				}
+			}
 			#users-user-details {
 				margin: 10px 0;
 				color: var(--text-color);

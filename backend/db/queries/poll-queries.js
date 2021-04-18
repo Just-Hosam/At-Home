@@ -57,10 +57,11 @@ const addVote = values => {
 	const text = `
 	UPDATE options  
 	SET votes = votes + 1 
-	WHERE options.id = $1 AND poll_id = $2;`;
+	WHERE options.id = $1 
+	AND poll_id = $2;`;
 
 	return db.query(text,values)
-	.then((res) => res)
+	.then((res) => res.rows)
 	.catch((err) =>
 	console.log('Error at polls queries "addVote"', err));
 };

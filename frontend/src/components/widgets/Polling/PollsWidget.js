@@ -1,126 +1,92 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import parsePollingData from "./parsePollingData";
-import PieChart from "./PieChart";
-import CreatePoll from "./CreatePoll";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import parsePollingData from './parsePollingData';
+import PieChart from './PieChart';
+import CreatePoll from './CreatePoll';
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-
-const useStyles = makeStyles(theme => ({
-
-	loaderIcon:{
-		color:'black',
-	},
-  	
-		pieIcon: {
-			
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-				color: "turquoise",
-		 },
-		},
-
-		deleteIcon: {
-			color: 'grey',
-			'&:hover': {
-				cursor: 'pointer',
-       color: "red",
-		},
-	}
-
-}));
+import useSocket from "../../../hooks/useSocket";
 
 const PollsWidgetItem = (props) => {
-const classes = useStyles();
+
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
+	//websocket connection
+  const {
+		sendSocketMessage,
+		broadcast,
+  } = useSocket();
+
 	//set initial state
-	const [mode, setMode] = useState('LOAD')
-  const [state, setState] = useState({
-		
+	const [mode, setMode] = useState('LOAD');
+
+	const [state, setState] = useState({
 		poll: {},
 		options: [],
-		hasVoted: true,
+		hasVoted: false,
 		picked: null
   });
 
-  //fetch polling data on inital render
+	//fetch polling data on inital render
   useEffect(() => {
+		
     Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
-		
-      setState((prev) => ({
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		]).then((all) => {
+			setState((prev) => ({
 				...prev,
-        poll: all[0].data,
+				poll: all[0].data,
 				options: all[1].data,
-				hasVoted:false
 			}));
 			
 			setMode('OPTIONS');
-     
+
+	
     });
-  }, []);
+  }, [broadcast.polls]); // <-- listen for websocket
 
 
 
-const renderWidget = () => {
-
-	Promise.all([
+	const renderWidget = () => {
+		Promise.all([
 			axios.get(`/dashboards/${dash_id}/polls`),
-			axios.get(`/dashboards/${dash_id}/polls/options`)
-    ]).then((all) => {
+			axios.get(`/dashboards/${dash_id}/polls/options`),
+		])
+			.then((all) => {
+				setState((prev) => ({
+					...prev,
+					poll: all[0].data,
+					options: all[1].data,
+				}));
+			})
+			.catch((err) => console.log(err));
+	};
 
-      setState((prev) => ({
-        ...prev,
-        poll: all[0].data,
-				options: all[1].data,
-      }));
-     
-    }).catch(err => console.log(err));
-};
-
-//create a new poll
-const createPoll = input => {
-
-	if (!input){
-		return alert("Invalid Input")
-	}
-
-	for (const item in input){
-
-		if(!input[item] || input[item] === ''){
-			return alert("Missing Require Field")
-		}
-	}
-
+	//create a new poll
+	const createPoll = (input) => {
+	
 
 		axios.post(`/dashboards/${dash_id}/polls`, {input})
 		.then((res) => {
     return axios.post(`/dashboards/${dash_id}/polls/options`, {input});
   })
   .then((final) => {
-   
+	
 		setState((prev) => ({
 				...prev,
         poll: {},
 				options: [],
-				hasVoted:false
+				hasVoted: false
 			}));
 			
 		setMode('OPTIONS');
-
 		renderWidget();
+		sendSocketMessage(`polls`); // <-- send websocket msg
+	
   }).catch(err => console.log(err));
 };
 
@@ -137,15 +103,16 @@ const castVote = (index, choice) => {
 
 	axios.post(`/dashboards/${dash_id}/polls/${index}`)
 	.then((res => {
-
+	
 		setState((prev) => ({
-        ...prev,
+				...prev,
 				hasVoted: true,
 				picked: choice
 			}));
+		renderWidget();
 	
-	
-	renderWidget();
+	sendSocketMessage(`polls`); // <-- send websocket msg
+
 	})
 	).catch(err => console.log(err));
 }
@@ -164,7 +131,6 @@ const cancelDelete = () => {
 //delete the entire poll
 const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 
-	
 		Promise.all([
 			axios.delete(`/dashboards/${dash_id}/polls`),
 			axios.delete(`/dashboards/${dash_id}/polls/options`)
@@ -178,46 +144,43 @@ const deletePoll = admin => {  // <-------- ADD ADMIN PROTECTION
 			}));
 			
 			setMode('INIT');
-
-    }).catch(err => console.log(err));
-}
-
+			sendSocketMessage(`polls`); // <-- send websocket msg
+})};
 
 //shows the pie chart
-  const showPie = () => {
-	
-		if(mode === 'OPTIONS'){
-			setMode('PIE')
-		} else {
-			setMode('OPTIONS')
-		}
-  };
-
+const showPie = () => {
+	if (mode === 'OPTIONS') {
+		setMode('PIE');
+	} else {
+		setMode('OPTIONS');
+	}
+};
  
 //CONDITIONAL UI RENDERING
 
-const loader = <div className='polls-loader'><CircularProgress className={classes.loaderIcon} disableShrink /></div>
+const loader = <div className='polls-loader'><CircularProgress className='poll-loader-icon' disableShrink /></div>
 
 const pollIcons = !state.options || state.options.length < 1 ? null : 
 <div className='poll-icons'>
 		
 <PieChartIcon
-			className={classes.pieIcon}
+			className='poll-pie-icon'
 			onClick={showPie}
 		/>
 <DeleteIcon
-		className={classes.deleteIcon}
+		className='poll-delete-icon'
 		onClick={openConfirmDelete}
 />
 </div>
 
 const initial = 
 <div className='add-poll-container'>
-<h1>Create New Poll</h1>
+
 <AddCircleIcon 
 className='add-poll-icon'
 style={{ fontSize: 80 }}
 onClick={() => createMode()}/>
+<p>Create a new voting poll</p>
 </div>
 
 const create = <CreatePoll
@@ -266,24 +229,26 @@ const determineMode = mode => {
 
 const core = determineMode(mode);
 
+	
+
 	return (
-		<section className="polls">
+		<div className="polls">
+			{pollIcons && mode !== 'DELETE' ? pollIcons : null}
 
-		{pollIcons && mode !== 'DELETE' ? pollIcons : null}
+			<div className="header-wrapper">
+				<header className="header">
+					<h1>
+						{pollingData.options && mode === 'OPTIONS'
+							? pollingData.title
+							: null}
+					</h1>
+				</header>
+			</div>
 
-		<div className='header-wrapper'>
-		<header className='header'>
-		<h1>{pollingData.options && mode === 'OPTIONS' ? pollingData.title : null}</h1>
-		</header>
+			<div>
+				<h3>{core}</h3>
+			</div>
 		</div>
-
-		<div>
-			<h3>
-			{core}
-			</h3>
-		</div>
-
-		</section>
 	);
 };
 

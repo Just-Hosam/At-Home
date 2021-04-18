@@ -1,0 +1,6 @@
+@import './variables';
+
+#gallery-widget {
+	overflow: auto;
+	@include card-layout;
+}
