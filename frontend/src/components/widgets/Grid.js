@@ -4,6 +4,7 @@ import RecipeFinal from './Recipes/RecipeFinal';
 // import RecipeMax from './widgets/Recipes/RecipeMax';
 import GalleryModal from './Photos/GalleryModal';
 import CalendarWidget from './Calendar/CalendarWidget';
+import Chore from './Chores/Chore';
 
 const Grid = () => {
 
@@ -16,7 +17,7 @@ const Grid = () => {
 			<RecipeFinal />
 			<GalleryModal />
 			<PollWidget />
-			<div id="chores-grid-widget">Chores</div>
+			<Chore />
 		</div>
 	);
 };

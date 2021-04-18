@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -16,25 +17,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SmallChips(props) {
+export default function SmallChip(props) {
   const classes = useStyles();
+  const dashboardId = 1;
+
+  const updateChip = (dashboardId, chip) => {
+    axios
+      .patch(`/dashboards/${dashboardId}/chores/${chip.id}`, chip)
+      .then((res) => {
+        // console.log('OFF TO MOONBASE DB:\n\t', res.data);
+        props.clearChip(res.data);
+      })
+      .catch((err) => console.log("ERROR UPDATING CHIP", err));
+  };
 
   const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-    /* axios
-      .delete(`/dashboards/${dashboardId}/photos/${staging.id}`)
-      .then(() => {
-        axios
-          .get(`/dashboards/${dashboardId}/photos/`)
-          .then((res) => {
-            props.handleState(res.data);
-            setPhotos(res.data);
-          })
-          .then(() => {
-            setStaging({});
-          });
-      })
-      .catch((err) => console.log("DELETE CHIP ERROR", err)); */
+    // console.log('OG PROPS:\n\t', props.chipValue);
+    const newChip = {...props.chipValue, name: 'none'};
+    updateChip(dashboardId, newChip);
   };
 
   // const handleClick = () => {
@@ -45,7 +45,7 @@ export default function SmallChips(props) {
     <div className={classes.root}>
       <Chip
         // size="small"
-        avatar={<Avatar alt={props.name} src="PH" />}
+        avatar={<Avatar alt={props.name}>{props.name[0]}</Avatar>}
         label={props.name}
         // onClick={handleClick}
         onDelete={handleDelete}
