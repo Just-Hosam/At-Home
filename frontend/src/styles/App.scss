@@ -46,14 +46,14 @@
 // --real-card-color: #2c303a;
 
 :root {
-	--text-color: rgb(177, 177, 177);
-	--text-color-alt: rgba(179, 179, 179, 0.932);
+	--text-color: #373a40;
+	--text-color-alt: #686d76f5;
 	--accent-color: rgb(96, 83, 247);
 	--accent-color-alt: rgb(128, 118, 251);
 	--card-color: #fff;
-	--background-color: #1f1f1f;
+	--background-color: #fafafa;
 	--error-color: rgb(255, 72, 72);
-	--real-card-color: #2c303a;
+	--real-card-color: #fff;
 
 	font-size: 13px;
 }
