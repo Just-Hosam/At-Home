@@ -2,7 +2,7 @@ const purpleTheme = () => {
 	document.documentElement.style.setProperty('--text-color', 'rgb(59, 59, 59)');
 	document.documentElement.style.setProperty(
 		'--text-color-alt',
-		'rgba(65, 65, 65, 0.932)'
+		'rgba(179, 179, 179, 0.932)'
 	);
 	document.documentElement.style.setProperty(
 		'--accent-color',
@@ -18,6 +18,7 @@ const purpleTheme = () => {
 		'--error-color',
 		'rgb(253, 72, 72)'
 	);
+	document.documentElement.style.setProperty('--real-card-color', '#fff');
 };
 
 module.exports = {

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import { useCookies } from 'react-cookie';
 
+import IconButton from '@material-ui/core/IconButton';
+import PaletteIcon from '@material-ui/icons/Palette';
+
 const { purpleTheme } = require('./Themes/purple');
 const { blackTheme } = require('./Themes/black');
 
@@ -19,18 +22,105 @@ export default function Appearance() {
 	if (theme === 'BLACK') blackTheme();
 
 	return (
-		<div id="appearance-settings">
-			<h3>hello world I am Appearance</h3>
+		<div id="settings-appearance">
+			<h3>Appearance</h3>
 			<ul>
-				<li id="purple-theme">
-					<button onClick={() => handleTheme('PURPLE')}>PURPLE</button>
-					<div className="color-box" style></div>
-					<div className="color-box"></div>
-					<div className="color-box"></div>
-					<div className="color-box"></div>
+				<li style={{ backgroundColor: '#fff' }}>
+					<IconButton
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(59, 59, 59)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgba(65, 65, 65, 0.932)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(128, 118, 251)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(96, 83, 247)' }}
+						></div>
+					</div>
 				</li>
-				<li>
-					<button onClick={() => handleTheme('BLACK')}>BLACK</button>
+				<li style={{ backgroundColor: '#fff' }}>
+					<IconButton
+						className="themes-btn"
+						onClick={() => handleTheme('BLACK')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
+				</li>
+				<li style={{ backgroundColor: '#2C303A' }}>
+					<IconButton
+						style={{ color: 'white' }}
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
+				</li>
+				<li style={{ backgroundColor: '#2C303A' }}>
+					<IconButton
+						style={{ color: 'white' }}
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
 				</li>
 			</ul>
 		</div>
