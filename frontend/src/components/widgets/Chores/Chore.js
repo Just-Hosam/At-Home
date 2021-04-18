@@ -12,13 +12,18 @@ export default function Chore() {
   const [progress, setProgress] = useState({
     total: 0,
     current: 0,
+    progress: 0,
   });
 
   return (
     <div>
       <ListHeader key="TODO" size="h4" title="TODO" />
       <AddChore choresList={choresList} setChoresList={setChoresList} />
-      <ProgressBar choresList={choresList} doneList={doneList} />
+      <ProgressBar
+        choreState={{ progress, setProgress }}
+        choresList={choresList}
+        doneList={doneList}
+      />
       <Chores
         choreState={{
           choresList,

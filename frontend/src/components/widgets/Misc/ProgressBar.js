@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
@@ -27,18 +27,21 @@ const useStyles = makeStyles({
 
 export default function ProgressBar(props) {
   const classes = useStyles();
-  const [progress, setProgress] = useState(0);
-
+  const parentProgress = { ...props.choreState.progress };
+  const setParentProgress = props.choreState.setProgress;
   const total = props.choresList.length;
   const complete = props.doneList.length;
 
   useEffect(() => {
-    setProgress((complete / total) * 100);
+    setParentProgress({
+      ...parentProgress,
+      progress: (complete / total) * 100,
+    });
   }, [total, complete]);
 
   return (
     <div className={classes.root}>
-      <LinearProgressWithLabel value={progress} />
+      <LinearProgressWithLabel value={parentProgress.progress} />
     </div>
   );
 }

@@ -65,8 +65,11 @@ export default function Chores(props) {
           });
         });
       })
-      .then(() => {
+      .then((res) => {
         setParentDone(parentChores.filter((elem) => elem.done));
+      })
+      .then(() => {
+        setParentProgress({ ...parentProgress, current: parentDone.length });
       })
       .catch((err) => console.log('handleToggle ERROR', err));
   };
@@ -74,7 +77,6 @@ export default function Chores(props) {
   const updateChore = (dashboardId, chore) => {
     axios
       .patch(`/dashboards/${dashboardId}/chores/${chore.id}`, chore)
-      .then(() => {})
       .catch((err) => console.log('ERROR UPDATING CHORE', err));
   };
 
@@ -107,16 +109,19 @@ export default function Chores(props) {
   let trophy = null;
 
   if (parentDone.length === parentChores.length) {
-    trophy = <i className="fas fa-trophy fa-3x" style={{color: 'rgb(96, 83, 247)'}}></i>;
+    trophy = (
+      <i
+        className="fas fa-trophy fa-3x"
+        style={{ color: 'rgb(96, 83, 247)' }}
+      ></i>
+    );
   } else {
     trophy = null;
   }
 
   return (
     <div className={classes.root}>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-        {trophy}
-      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>{trophy}</div>
       <List className={null}>
         {parentChores.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
@@ -168,13 +173,14 @@ export default function Chores(props) {
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
-                      {value.name !== 'none' ? 
-                      <Checkbox
-                        edge="start"
-                        checked={value.done}
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        onClick={handleToggle(value)}
-                      /> : null}
+                      {value.name !== 'none' ? (
+                        <Checkbox
+                          edge="start"
+                          checked={value.done}
+                          inputProps={{ 'aria-labelledby': labelId }}
+                          onClick={handleToggle(value)}
+                        />
+                      ) : null}
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={`${value.text}`} />
                   </div>
@@ -194,11 +200,7 @@ export default function Chores(props) {
             primaryElement = null;
           }
 
-          return (
-            <div key={`list-c${value.id}`}>
-              {primaryElement}
-            </div>
-          );
+          return <div key={`list-c${value.id}`}>{primaryElement}</div>;
         })}
       </List>
     </div>

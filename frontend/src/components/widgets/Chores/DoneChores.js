@@ -35,8 +35,6 @@ export default function DoneChores(props) {
   const parentProgress = { ...props.choreState.progress };
   const setParentProgress = props.choreState.setProgress;
 
-  // console.log(`props`, props.choreState)
-
   useEffect(() => {
     axios
       .get(`/dashboards/${dashboardId}/chores/`)
@@ -65,7 +63,8 @@ export default function DoneChores(props) {
         });
       })
       .then(() => {
-        setParentDone(parentChores.filter((elem) => elem.done));
+        const newDone = [...parentDone];
+        setParentDone(newDone.filter((elem) => elem.done));
       })
       .catch((err) => console.log('handleToggle ERROR', err));
   };
@@ -119,11 +118,7 @@ export default function DoneChores(props) {
             );
           }
 
-          return (
-            <div key={value.id}>
-              {primaryElement}
-            </div>
-          );
+          return <div key={value.id}>{primaryElement}</div>;
         })}
       </List>
     </div>
