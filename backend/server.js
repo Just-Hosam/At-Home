@@ -99,7 +99,7 @@ app.use(
 
 // Main routes
 app.get('/', (req, res) => {
-	res.send(`Final_Project listening on port ${PORT} :ENV ${ENV} : ${JSON.stringify(process.env)}`);
+	res.send('Hello world');
 });
 
 
