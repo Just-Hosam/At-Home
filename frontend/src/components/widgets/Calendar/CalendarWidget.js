@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-awesome-calendar';
 import axios from 'axios';
 
+import { useCookies } from 'react-cookie';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -52,7 +54,8 @@ const CalendarWidget = (props) => {
 	//modal styling
 	const classes = useStyles();
 
-	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
+	const [cookies] = useCookies(['userID']);
+	const dash_id = cookies.dashboardId;
 
 	const [e, setEvents] = useState({
 		events: [],
