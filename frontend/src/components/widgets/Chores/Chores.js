@@ -176,14 +176,13 @@ export default function Chores(props) {
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
-                      {value.name !== 'none' ? (
                         <Checkbox
                           edge="start"
+                          className="chore-checkbox"
                           checked={value.done}
                           inputProps={{ 'aria-labelledby': labelId }}
                           onClick={handleToggle(value)}
                         />
-                      ) : null}
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={`${value.text}`} />
                   </div>

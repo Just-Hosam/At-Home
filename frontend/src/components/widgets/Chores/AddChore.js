@@ -23,7 +23,7 @@ export default function AddChore(props) {
       onSubmit={(e) => e.preventDefault()}
     >
       <TextField
-        id="chores-text"
+        id="add-chore-input"
         label="Add Chore"
         variant="outlined"
         size="small"

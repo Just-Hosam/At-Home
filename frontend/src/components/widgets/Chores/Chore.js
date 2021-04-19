@@ -17,9 +17,12 @@ export default function Chore() {
 
   return (
     <div id="widget-chores">
-      <ListHeader key="TODO" size="h4" title="TODO" />
-      <AddChore choresList={choresList} setChoresList={setChoresList} />
+      <div id="chores-header">
+        <ListHeader key="TODO" size="h2" title="What to do?" />
+        <AddChore choresList={choresList} setChoresList={setChoresList} />
+      </div>
       <ProgressBar
+        
         choreState={{ progress, setProgress }}
         choresList={choresList}
         doneList={doneList}

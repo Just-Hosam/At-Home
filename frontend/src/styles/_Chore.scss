@@ -7,10 +7,6 @@
 	padding: 0 5px;
 	// border-bottom: 1px solid var(--text-color-alt);
 
-	.chore-check-icon {
-		padding: 3px;
-	}
-
 	.chore-selector {
 		margin: 8px;
 		min-width: 120px;
@@ -23,15 +19,16 @@
 
 .chore-completed {
 	text-decoration: line-through;
-	opacity: 40%;
+	color: var(--text-color-alt);
+	// opacity: 40%;
 
 	.chore-clear-icon {
-		padding: 6px;
-		// color: var(--accent-color);
+		padding: 0;
+		color: var(--text-color-icon);
 	}
 
 	.chore-check-icon {
 		padding: 6px;
-		color: var(--accent-color);
+		color: var(--text-color-icon);
 	}
 }
