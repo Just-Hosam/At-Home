@@ -19,7 +19,7 @@ export default function Login(props) {
 			const userData = res.data;
 			axios.get(`/users/${userData.id}/dashboards`).then((dashRes) => {
 				setCookie('userData', userData, { path: '/' });
-				if (!cookies.dashboardId) {
+				if (cookies.dashboardId === undefined) {
 					setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
 				}
 				props.handlePage('GRID');

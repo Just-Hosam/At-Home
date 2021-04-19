@@ -5,6 +5,7 @@ import PollWidget from './Polling/PollsWidget';
 import RecipeFinal from './Recipes/RecipeFinal';
 import GalleryModal from './Photos/GalleryModal';
 import CalendarWidget from './Calendar/CalendarWidget';
+import Chore from './Chores/Chore';
 
 const Grid = () => {
 	const [groceries, setGroceries] = useState([]);
@@ -16,7 +17,7 @@ const Grid = () => {
 			<RecipeFinal setGroceries={setGroceries} />
 			<GalleryModal />
 			<PollWidget />
-			<div id="chores-grid-widget">Chores</div>
+			<Chore />
 		</div>
 	);
 };

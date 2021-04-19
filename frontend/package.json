@@ -9,7 +9,9 @@
 		"@testing-library/jest-dom": "^5.11.10",
 		"@testing-library/react": "^11.2.6",
 		"@testing-library/user-event": "^12.8.3",
+		"anylist": "^0.1.3",
 		"axios": "^0.21.1",
+		"google-shopping-list": "^1.0.3",
 		"react": "^17.0.2",
 		"react-awesome-calendar": "^1.0.14",
 		"react-cookie": "^4.0.3",
@@ -45,5 +47,5 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy": "http://localhost:8080"
+	"proxy" : "http://localhost:8080"
 }

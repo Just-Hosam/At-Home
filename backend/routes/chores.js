@@ -30,9 +30,9 @@ router.get('/:choreId', (req, res) => {
 router.post('/', (req, res) => {
 	const dashboardId = req.params.dashboardId;
 	const choreText = req.body.text;
-	const assignedName = req.body.name;
+	// const assignedName = req.body.name;
 	
-	addChore(dashboardId, choreText, assignedName)
+	addChore(dashboardId, choreText)
 	.then((data) => res.json(data))
 	.catch((err) => console.log('Error at chores POST route "/"', err));
 });

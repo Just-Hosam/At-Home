@@ -1,67 +1,126 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useCookies } from 'react-cookie';
 
+import IconButton from '@material-ui/core/IconButton';
+import PaletteIcon from '@material-ui/icons/Palette';
+
+const { purpleTheme } = require('./Themes/purple');
+const { blackTheme } = require('./Themes/black');
+
 export default function Appearance() {
 	const [cookies, setCookie] = useCookies(['userID']);
+	const initialTheme = cookies.theme ? cookies.theme : 'PURPLE';
+	const [theme, setTheme] = useState(initialTheme);
 
-	const handleTheme = (theme) => {
-		setCookie('theme', theme, { path: '/' });
-		if (theme === 'PURPLE') {
-			document.documentElement.style.setProperty(
-				'--text-color',
-				'rgb(59, 59, 59)'
-			);
-			document.documentElement.style.setProperty(
-				'--text-color-alt',
-				'rgba(65, 65, 65, 0.932)'
-			);
-			document.documentElement.style.setProperty(
-				'--accent-color',
-				'rgb(96, 83, 247)'
-			);
-			document.documentElement.style.setProperty(
-				'--accent-color-alt',
-				'rgb(128, 118, 251)'
-			);
-			document.documentElement.style.setProperty('--card-color', '#fff');
-			document.documentElement.style.setProperty(
-				'--background-color',
-				'#fdfdfd'
-			);
-			document.documentElement.style.setProperty(
-				'--error-color',
-				'rgb(253, 72, 72)'
-			);
-		}
-		if (theme === 'BLACK') {
-			document.documentElement.style.setProperty('--text-color', 'white');
-			document.documentElement.style.setProperty('--text-color-alt', 'white');
-			document.documentElement.style.setProperty('--accent-color', 'green');
-			document.documentElement.style.setProperty(
-				'--accent-color-alt',
-				'limegreen'
-			);
-			document.documentElement.style.setProperty('--card-color', 'grey');
-			document.documentElement.style.setProperty(
-				'--background-color',
-				'darkgrey'
-			);
-			document.documentElement.style.setProperty(
-				'--error-color',
-				'rgb(253, 72, 72)'
-			);
-		}
+	const handleTheme = (newTheme) => {
+		setCookie('theme', newTheme, { path: '/' });
+		setTheme(newTheme);
 	};
+
+	if (theme === 'PURPLE') purpleTheme();
+	if (theme === 'BLACK') blackTheme();
+
 	return (
-		<div>
-			<h3>hello world I am Appearance</h3>
+		<div id="settings-appearance">
+			<h3>Appearance</h3>
 			<ul>
-				<li>
-					<button onClick={() => handleTheme('PURPLE')}>PURPLE</button>
+				<li style={{ backgroundColor: '#fff' }}>
+					<IconButton
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(59, 59, 59)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgba(65, 65, 65, 0.932)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(128, 118, 251)' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'rgb(96, 83, 247)' }}
+						></div>
+					</div>
 				</li>
-				<li>
-					<button onClick={() => handleTheme('BLACK')}>BLACK</button>
+				<li style={{ backgroundColor: '#fff' }}>
+					<IconButton
+						className="themes-btn"
+						onClick={() => handleTheme('BLACK')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
+				</li>
+				<li style={{ backgroundColor: '#2C303A' }}>
+					<IconButton
+						style={{ color: 'white' }}
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
+				</li>
+				<li style={{ backgroundColor: '#2C303A' }}>
+					<IconButton
+						style={{ color: 'white' }}
+						className="themes-btn"
+						onClick={() => handleTheme('PURPLE')}
+					>
+						<PaletteIcon />
+					</IconButton>
+					<div className="color-palette">
+						<div className="color-box" style={{ backgroundColor: 'red' }}></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'blue' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'green' }}
+						></div>
+						<div
+							className="color-box"
+							style={{ backgroundColor: 'salmon' }}
+						></div>
+					</div>
 				</li>
 			</ul>
 		</div>

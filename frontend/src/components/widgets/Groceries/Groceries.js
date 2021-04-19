@@ -10,7 +10,7 @@ import useSocket from '../../../hooks/useSocket';
 
 const axios = require('axios');
 
-export default function Groceries(props) {
+function Groceries(props) {
 	const [cookies] = useCookies(['userID']);
 	const dashboardId = cookies.dashboardId;
 
@@ -27,7 +27,7 @@ export default function Groceries(props) {
 			.get(`/dashboards/${dashboardId}/groceries/`)
 			.then((res) => setGroceries(res.data))
 			.catch((err) => console.log('I AM A COMPONENT ERROR', err));
-	}, [broadcast.groceries]); // <-- listen for websocket
+	}, [broadcast.groceries]);
 
 	const toggleGrocery = (dashboardId, groceryId) => {
 		axios
@@ -48,7 +48,7 @@ export default function Groceries(props) {
 			.then((res) => {
 				setGroceries([res.data, ...groceries]);
 				setInput('');
-				sendSocketMessage('groceries'); // <-- send websocket msg
+				sendSocketMessage('groceries');
 			})
 			.catch((err) => console.log('I"M THE POST MONSTER', err));
 	};
@@ -108,3 +108,5 @@ export default function Groceries(props) {
 		</div>
 	);
 }
+
+export default Groceries;

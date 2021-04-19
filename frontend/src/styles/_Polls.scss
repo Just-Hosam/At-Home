@@ -33,6 +33,7 @@
 }
 
 .poll-icons {
+	
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -40,6 +41,7 @@
 	margin: 5px 10px 0px 10px;
 
 	.poll-pie-icon{
+		cursor: pointer;
 		color: lightgray;
 
 		&:hover{
@@ -48,6 +50,7 @@
 	}
 
 	.poll-delete-icon{
+		cursor: pointer;
 		color: lightgray;
 
 		&:hover{
@@ -140,7 +143,7 @@
 	margin: 0px 5px;
 	border: none;
 	color: white;
-	background: $primary-color;
+	background: var(--accent-color-alt);
 	font-weight: bold;
 	padding: 5px;
 	border-radius: 5px;
@@ -154,7 +157,7 @@
 	margin: 0px 5px;
 	border: none;
 	color: white;
-	background: $primary-color;
+	background: var(--accent-color-alt);
 	font-weight: bold;
 	padding: 5px;
 	border-radius: 5px;
@@ -223,29 +226,19 @@
 }
 
 .create-poll {
-	input {
-		outline-color: lightgray;
-		display: block;
-		margin: 10px auto auto auto;
-		width: 80%;
-		padding: 10px;
-		border: none;
-		border-bottom: solid;
-		border-bottom-width: 1px;
-		border-bottom-color: lightgray;
-		font-size: 1rem;
+
+	.create-poll-input{
+		width: 95%;
 	}
 
 	button {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
+		
+		width: 95%;
 		padding: 15px;
 		color: white;
-		background-color: $primary-color;
+		background-color: var(--accent-color-alt);
 		&:hover {
-			background-color: $accent-color;
+			background-color: var(--accent-color);
 		}
 	}
 
