@@ -13,11 +13,11 @@ const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 
 //web sockets
+const server = require('http').createServer(app);
 const cors = require('cors');
 app.use(cors());
-const environment = ENV !== 'production' ? 'http://localhost:3030' : 'https://dashboard-310905.wl.r.appspot.com';    // < -- frontend conn.
-
-const server = require('http').createServer(app);
+if(ENV !== 'production'){
+const environment = 'http://localhost:3030'; // < -- frontend conn.
 const io = require('socket.io')(server,{
 	cors: {
     origin: environment, 
@@ -29,7 +29,7 @@ const io = require('socket.io')(server,{
 io.on('connection', socket => {
 
 		const message = 'message';
-		
+
 	 //listen for changes
 	 socket.on('input', input => {
 		 socket.broadcast.emit(message, input);
@@ -40,7 +40,7 @@ io.on('connection', socket => {
 	// io.emit(message, "A user has signed off the dashbaord");		
   // });
 });
-
+}
 
 // PG database client/connection setup
 const db = require('./lib/db.js');
@@ -80,7 +80,7 @@ const pollsRouter = require('./routes/polls.js');
 const eventsRouter = require('./routes/events.js');
 const recipesRouter = require('./routes/recipes.js');
 const ingredientsRouter = require('./routes/ingredients.js');
-
+const emailRouter = require('./routes/send-mail.js');
 // Mount all resource routes
 app.use('/users', usersRouter);
 app.use('/users/:userId/dashboards', usersDashboardsRouter);
@@ -96,14 +96,14 @@ app.use(
 	'/dashboards/:dashboardId/recipes/:recipeId/ingredients',
 	ingredientsRouter
 );
+app.use('/dashboards/:dashboardId/send-mail', emailRouter);
+	
 
 // Main routes
 app.get('/', (req, res) => {
 	res.send('Hello world');
 });
 
-
-server.listen(PORT, () => {
 
 app.post('/login', (req, res) => {
 	const inputEmail = req.body.inputUser.email;
@@ -114,4 +114,7 @@ app.post('/login', (req, res) => {
 		.catch((err) => console.log('Email/password is incorrect', err));
 });
 
+
+server.listen(PORT, () => {
+console.log(`Listening on port ${PORT}`);
 });

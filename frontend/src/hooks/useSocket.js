@@ -16,10 +16,13 @@ export default function useSocket() {
   });
 
  
-
   useEffect(() => {
 
-    const ENDPOINT = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api-dot-dashboard-310905.wl.r.appspot.com:8080';
+    if(window.location.hostname !== 'localhost'){
+      return;
+    }
+
+    const ENDPOINT = 'http://localhost:8080';
 
     const socket = socketIOClient(ENDPOINT);
     setSocket(socket);
@@ -39,11 +42,17 @@ export default function useSocket() {
 
     });
 
+  
+
   }, []);
 
 
   const sendSocketMessage = widget => {
   
+  if(window.location.hostname !== 'localhost'){
+    return;
+  }
+
     const socket = socketConn; 
     socket.emit('input', widget);
     

@@ -15,10 +15,10 @@ const PollsWidgetItem = (props) => {
 	const dash_id = 1; // <-------- TEMP. DASHBOARD_ID FOR TESTING
 
 	//websocket connection
-  const {
-		sendSocketMessage,
-		broadcast,
-  } = useSocket();
+		const {
+			sendSocketMessage,
+			broadcast,
+		} = useSocket();
 
 	//set initial state
 	const [mode, setMode] = useState('LOAD');
