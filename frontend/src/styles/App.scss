@@ -22,10 +22,16 @@
 :root {
 	--text-color: rgb(59, 59, 59);
 	--text-color-alt: rgba(65, 65, 65, 0.932);
+	--text-color-button: #fff;
+	--text-color-icon: rgba(114, 114, 114, 0.932);
+
 	--accent-color: rgb(96, 83, 247);
 	--accent-color-alt: rgb(128, 118, 251);
+
+	// --card-color: rgb(90, 90, 90);
 	--card-color: #fff;
 	--background-color: #fdfdfd;
+
 	--error-color: rgb(253, 72, 72);
 
 	font-size: 13px;

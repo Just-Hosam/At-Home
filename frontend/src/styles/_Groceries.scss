@@ -10,26 +10,54 @@
 	color: var(--text-color);
 	overflow: auto;
 
+	form {
+		margin-bottom: 10px;
+	}
+
 	#groceries-text {
+		color: var(--text-color);
+		// temporary
+		width: 186px;
 	}
 
 	#groceries-btn {
-		height: 39px;
+		height: 35px;
 		margin-left: 5px;
 		background-color: var(--accent-color-alt);
-		color: var(--card-color);
+		color: var(--text-color-button);
 	}
 
-	h1 {
+	h2 {
+		font-size: 2rem;
 		margin: 0;
 		margin-bottom: 10px;
 		color: var(--accent-color);
 	}
 
+	#recipes-lists {
+		margin-left: 2px;
+		width: 100%;
+		overflow: auto;
+	}
+
+	#recipes-lists::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+
+	#recipes-lists::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	#recipes-lists::-webkit-scrollbar-thumb {
+		background: rgba(129, 129, 129, 0.562);
+		border-radius: 100px;
+	}
+
 	ul {
 		padding: 0;
 		margin: 0;
-		width: 100%;
+		width: 98%;
 		list-style: none;
 	}
 
@@ -41,7 +69,7 @@
 		margin: 5px;
 		margin-left: 10px;
 		align-self: start;
-		font-size: 0.9rem;
+		font-size: 1.1rem;
 		color: var(--accent-color);
 
 		i {

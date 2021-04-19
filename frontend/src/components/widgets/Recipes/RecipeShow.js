@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import { stateContext } from '../../../context/StateProvider';
 import { useCookies } from 'react-cookie';
@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
@@ -49,13 +49,6 @@ export default function RecipeShow(props) {
 
 	return (
 		<div id="recipes-show">
-			<IconButton
-				className="recipe-show-back"
-				aria-label="back"
-				onClick={() => props.handleClose()}
-			>
-				<ArrowBackIcon />
-			</IconButton>
 			<div id="recipe-image">
 				<img src={recipe.img_url} alt={recipe.title} />
 			</div>
@@ -102,6 +95,16 @@ export default function RecipeShow(props) {
 			<div id="recipe-directions">
 				<h3>Description:</h3>
 				<p>{recipe.directions}</p>
+			</div>
+			<div id="recipes-back-container">
+				<Button
+					id="recipes-back"
+					fullWidth
+					variant="contained"
+					onClick={() => props.handleClose()}
+				>
+					Back
+				</Button>
 			</div>
 		</div>
 	);
