@@ -1,0 +1,54 @@
+@import './variables';
+@import './Chore';
+
+#widget-chores {
+	@include card-layout;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--text-color);
+	overflow: auto;
+
+	#chores-text {
+	}
+
+	#chores-btn {
+		height: 39px;
+		margin-left: 5px;
+		background-color: var(--accent-color-alt);
+		color: var(--card-color);
+	}
+
+	h2 {
+		margin: 0;
+		margin-bottom: 10px;
+		font-size: 2rem;
+    font-weight: bold;
+		color: var(--accent-color);
+	}
+
+	ul {
+		padding: 0;
+		margin: 0;
+		width: 100%;
+		list-style: none;
+	}
+
+	#groceries-divider {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		margin: 5px;
+		margin-left: 10px;
+		align-self: start;
+		font-size: 0.9rem;
+		color: var(--accent-color);
+
+		i {
+			padding-left: 3px;
+			font-size: 0.73rem;
+		}
+	}
+}

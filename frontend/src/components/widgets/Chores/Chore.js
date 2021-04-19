@@ -16,7 +16,7 @@ export default function Chore() {
   });
 
   return (
-    <div>
+    <div id="widget-chores">
       <ListHeader key="TODO" size="h4" title="TODO" />
       <AddChore choresList={choresList} setChoresList={setChoresList} />
       <ProgressBar

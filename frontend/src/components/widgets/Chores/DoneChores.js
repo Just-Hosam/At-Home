@@ -14,7 +14,7 @@ import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '500px',
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
   formControl: {
