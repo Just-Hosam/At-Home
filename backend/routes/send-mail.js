@@ -7,8 +7,10 @@ router.post('/', async (req, res) => {
   const details = req.body.details;
   const subject = "@Home Dashboard Invite";
 
-  const invite = Math.floor(Math.random() * 1000000000000);
-  const params = `?i=${invite}&d=${details.id}`;
+  const recipient = process.env.HARDCODED_RECIPIENT;
+
+  const invite = Math.floor(Math.random() * 1000);
+  const params = `?e=${details.recipient}&i=${invite}&d=${details.id}`;
 
   const link = process.env.NODE_ENV !== 'production' ? 
   `http://localhost:3030${params}` : 
@@ -24,7 +26,7 @@ router.post('/', async (req, res) => {
   </div>`;
   
   try{
-    await nodemail.letter(details.name, details.recipient, subject, body);
+    await nodemail.letter(details.name, recipient, subject, body);
     res.sendStatus(200);
   } catch(err) {
     console.log('Failed to send invite: ', err);

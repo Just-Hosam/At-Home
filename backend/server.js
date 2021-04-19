@@ -32,7 +32,9 @@ io.on('connection', socket => {
 
 	 //listen for changes
 	 socket.on('input', input => {
-		 socket.broadcast.emit(message, input);
+		 console.log(input);
+		socket.broadcast.emit(message, input);
+		
 	 });
 
 	//disconnects socket with update message

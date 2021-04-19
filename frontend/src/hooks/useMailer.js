@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-
 export default function useMailer() {
 
   const [cookies] = useCookies(null);
@@ -12,6 +11,7 @@ export default function useMailer() {
   const details = {
             id: user.id,
             name: `${user.first_name} ${user.last_name}`,
+            email: user.email,
             recipient: recipient
           }
 

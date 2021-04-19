@@ -3,32 +3,38 @@ import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import urlParams from '../helpers/urlParams';
 
+
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
 import Navbar from './widgets/Navbar/Navbar';
 import Grid from './widgets/Grid';
+import axios from 'axios';
+import useSocket from "../hooks/useSocket";
 
 const App = () => {
 
-	const [cookies, , removeCookie] = useCookies(null);
+	//websocket connection
+	const {sendSocketMessage} = useSocket();
 
-	const initialPage = cookies.userData ? 'GRID' : 'LOGIN';
+	const [cookies, setCookie, removeCookie] = useCookies(null);
+
+	let initialPage = cookies.userData ? 'GRID' : 'LOGIN';
+
 	const [page, setPage] = useState(initialPage);
 
 	const handlePage = (page) => setPage(page);
 
-  
 	useEffect(() => {      
 
-	const invite = urlParams(); // <-- check url params for incoming invite
+	const invite = urlParams(); 
 	
 	if(invite){
-		cookies.dashboardId = invite;
-		removeCookie('userData', { path: '/' });
-		handlePage('LOGIN');
+		setCookie('dashboardId', invite.id, { path: '/' });
+	  sendSocketMessage(invite.email); // <-- call websocket update 
 	}
 }, []); 
+
 
 	return (
 		<div className="App">
