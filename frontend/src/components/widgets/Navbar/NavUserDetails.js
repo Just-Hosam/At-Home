@@ -9,8 +9,10 @@ export default function NavLoginReg(props) {
 	const [cookies, , removeCookie] = useCookies(null);
 
 	const logout = () => {
+	
 		removeCookie('userData', { path: '/' });
 		props.handlePage('LOGIN');
+		
 	};
 	return (
 		<div id="nav-user-details">

@@ -9,11 +9,19 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import axios from 'axios';
+import useMailer from '../../../hooks/useMailer';
+import useSocket from "../../../hooks/useSocket";
 
 export default function Dashboards() {
 	const [cookies] = useCookies(['userID']);
 	const [users, setUsers] = useState([]);
 	const [allUsers, setAllUsers] = useState([]);
+
+	const {sendInvite} = useMailer(); // <-- connect mailer
+
+	//websocket connection
+	const {broadcast} = useSocket();
+
 
 	useEffect(() => {
 		axios
@@ -103,11 +111,13 @@ export default function Dashboards() {
 		);
 	});
 
-	const submission = (event) => {
-		event.preventDefault();
+	useEffect(() => { // <-- updates ui when  user accepts invite
+
+	if(broadcast.invite) {  
+		
 		axios
 			.post(`/dashboards/${cookies.dashboardId}/users`, {
-				userEmail: event.target[0].value,
+				userEmail: broadcast.invite,
 			})
 			.then((res) => {
 				setUsers((prev) => {
@@ -117,12 +127,19 @@ export default function Dashboards() {
 					return prev.filter((elem) => elem.id !== res.data.id);
 				});
 			});
-	};
+	}
+
+	}, [broadcast.invite]); 
+
+	const sendInviteEmail = event => {
+	event.preventDefault();
+	sendInvite(event.target[0].value); // <-- send email invite
+	}
 
 	return (
 		<div id="settings-users">
 			<h3>Users</h3>
-			<form id="add-user-form" onSubmit={(e) => submission(e)}>
+			<form id="add-user-form" onSubmit={(e) => sendInviteEmail(e)}>
 				<Autocomplete
 					id="add-user-search"
 					freeSolo

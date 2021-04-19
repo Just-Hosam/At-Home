@@ -1,9 +1,12 @@
-dispatch:
+dispatch:  
     - url: '*/dashboards/*'
       service: api
     - url: '*/users/*'
       service: api
-
+    - url: '*/login'
+      service: api
+    - url: '*/db/*'
+      service: api
   
     
 

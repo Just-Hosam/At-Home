@@ -1,58 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-awesome-calendar';
 import axios from 'axios';
-
 import { useCookies } from 'react-cookie';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Slide from '@material-ui/core/Slide';
-
-const useStyles = makeStyles((theme) => ({
-	dialogBackground: {
-		background: 'black',
-	},
-
-	dialogPaper: {
-		width: '400px',
-	},
-
-	textField: {
-		marginTop: theme.spacing(1),
-		width: '50%',
-	},
-
-	dialogTitle: {
-		color: 'black',
-		fontSize: '2rem',
-	},
-
-	dialogBody: {
-		color: 'black',
-		fontSize: '1rem',
-	},
-
-	dialogFoot: {
-		color: 'grey',
-		fontSize: '0.7rem',
-	},
-}));
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
-});
 
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
 	//modal styling
-	const classes = useStyles();
 
 	const [cookies] = useCookies(['userID']);
 	const dash_id = cookies.dashboardId;
@@ -85,7 +46,7 @@ const CalendarWidget = (props) => {
 			const parsedEvents = e[0].data.map((event) => {
 				return {
 					id: event.id,
-					color: '#06aff5',
+					color: 'rgb(96, 83, 247)',
 					from: event.start_at,
 					to: event.end_at,
 					title: event.title,
@@ -106,7 +67,7 @@ const CalendarWidget = (props) => {
 			const parsedEvents = e[0].data.map((event) => {
 				return {
 					id: event.id,
-					color: '#06aff5',
+					color: 'rgb(96, 83, 247)',
 					from: event.start_at,
 					to: event.end_at,
 					title: event.title,
@@ -152,14 +113,7 @@ const CalendarWidget = (props) => {
 
 	//delete event
 	const deleteEvent = () => {
-		const confirmation = window.confirm(
-			'Are you sure you want to delete this event?\nThis action cannot be undone.'
-		);
-
-		if (!confirmation) {
-			return closeDialog();
-		}
-
+	
 		axios
 			.delete(`/dashboards/${dash_id}/events/${e.details.id}`)
 			.then((res) => {
@@ -205,7 +159,7 @@ const CalendarWidget = (props) => {
 
 		const newEvent = {
 			id: id,
-			color: '#06aff5',
+			color: 'rgb(96, 83, 247)',
 			from: input.from,
 			to: to,
 			title: input.title,
@@ -238,7 +192,7 @@ const CalendarWidget = (props) => {
 
 		const editedEvent = {
 			id: e.details.id,
-			color: '#06aff5',
+			color: 'rgb(96, 83, 247)',
 			from: from,
 			to: to,
 			title: input.title,
@@ -306,6 +260,7 @@ const CalendarWidget = (props) => {
 		<div id="calendar-widget">
 			<div className="calendar-class">
 				<Calendar
+					id='calendar-main'
 					events={e.events}
 					onClickEvent={(event) => openEventDialog(event)}
 					onClickTimeLine={(event) => handleClickOpen(event)}
@@ -314,21 +269,25 @@ const CalendarWidget = (props) => {
 
 			<Dialog
 				open={open.inputDialog ? open.inputDialog : false}
-				className={classes.dialogBackground}
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title">Create a new event</DialogTitle>
-				<DialogContent className={classes.dialogPaper}>
-					<DialogContentText>
+					<DialogContent className="calendar-dialog-head">
+					Create a new event
+					</DialogContent>
+				
+				<DialogContent className='calendar-dialog-wrapper'>
+					<DialogContentText id="calendar-dialog-body">
 						Simply enter your event details and save.
 					</DialogContentText>
 					<TextField
-						autoFocus
+			
 						margin="dense"
 						id="title"
 						label="Title"
 						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.title ? input.title : ''}
 						onChange={(event) =>
@@ -338,11 +297,14 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
+					<div className='content-divider'></div>
 					<TextField
 						margin="dense"
 						id="description"
 						label="Description"
 						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.description ? input.description : ''}
 						onChange={(event) =>
@@ -352,10 +314,11 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-
-					<form className={classes.container} noValidate>
+					<div className='content-bottom-divider'></div>
+					
+					<form noValidate>
 						<TextField
-							id="date"
+							id="date-picker"
 							label="End Date"
 							type="date"
 							value={input.to ? input.to : ''}
@@ -365,7 +328,7 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-							className={classes.textField}
+						
 							InputLabelProps={{
 								shrink: true,
 							}}
@@ -373,32 +336,36 @@ const CalendarWidget = (props) => {
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={closeDialog} color="primary">
+					<Button id='calendar-cancel-btn' onClick={closeDialog} >
 						Cancel
 					</Button>
-					<Button onClick={saveEvent} color="primary">
+					<Button id='calendar-save-btn' onClick={saveEvent} >
 						Save
-					</Button>
+					</Button >
 				</DialogActions>
 			</Dialog>
 
 			<Dialog
 				open={open.editDialog ? open.editDialog : false}
-				className={classes.dialogBackground}
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title">Edit event</DialogTitle>
-				<DialogContent className={classes.dialogPaper}>
-					<DialogContentText>
+					<DialogContent className='calendar-dialog-head' >
+						Edit event
+					</DialogContent>
+				<DialogContent className='calendar-dialog-wrapper'>
+					<DialogContentText id="calendar-dialog-body">
 						Simply edit your event details and save.
 					</DialogContentText>
+					
 					<TextField
 						autoFocus
 						margin="dense"
 						id="title"
 						label="Title"
 						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.title ? input.title : ''}
 						onChange={(event) =>
@@ -408,11 +375,15 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
+				
 					<TextField
+					className='calendar-inputs'
 						margin="dense"
 						id="description"
 						label="Description"
 						type="text"
+						variant="outlined"
+						autoComplete="off"
 						fullWidth
 						value={input.description ? input.description : ''}
 						onChange={(event) =>
@@ -422,8 +393,9 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-
-					<form className={classes.container} noValidate>
+					<div className='content-bottom-divider'></div>
+					
+					<form noValidate>
 						<TextField
 							id="start_date"
 							label="Start Date"
@@ -435,15 +407,17 @@ const CalendarWidget = (props) => {
 									from: event.target.value,
 								}))
 							}
-							className={classes.textField}
+						
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
-					</form>
 
-					<form className={classes.container} noValidate>
-						<TextField
+					</form>
+					<div className='content-bottom-divider'></div>
+					
+					<form>
+					<TextField
 							id="end_date"
 							label="End Date"
 							type="date"
@@ -454,60 +428,66 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-							className={classes.textField}
+							
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
 					</form>
+
+				
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={closeDialog} color="primary">
+					<Button id='calendar-cancel-btn' onClick={closeDialog} >
 						Cancel
 					</Button>
-					<Button onClick={saveEdit} color="primary">
+					<Button id='calendar-save-btn' onClick={saveEdit} >
 						Save
 					</Button>
 				</DialogActions>
 			</Dialog>
 
+
+
 			<Dialog
-				className={classes.dialogBackground}
+				className="alert-dialog-slide-background"
 				open={open.viewDialog ? open.viewDialog : false}
-				TransitionComponent={Transition}
 				keepMounted
 				onClose={closeDialog}
 				aria-labelledby="alert-dialog-slide-title"
 				aria-describedby="alert-dialog-slide-description"
 			>
-				<DialogTitle className={classes.dialogTitle}>
+				<div className='calendar-dialog-wrapper'>
+				<DialogContent 
+				className='calendar-dialog-head'>
 					{e.details ? e.details.title : ''}
-				</DialogTitle>
-				<DialogContent className={classes.dialogPaper}>
+				</DialogContent>
+
+				<DialogContent 	>
 					<DialogContentText
-						className={classes.dialogBody}
-						id="alert-dialog-slide-description"
+						id='calendar-dialog-body'
 					>
 						{e.details ? e.details.description : ''}
 					</DialogContentText>
 					<DialogContentText
-						className={classes.dialogFoot}
+						className='calendar-dialog-foot'
 						id="alert-dialog-slide-description"
 					>
 						{e.details ? `From: ${e.details.from}` : ''}
 					</DialogContentText>
 					<DialogContentText
-						className={classes.dialogFoot}
+			
 						id="alert-dialog-slide-description"
 					>
 						{e.details ? `To: ${e.details.to}` : ''}
 					</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={openEdit} color="primary">
+				</div>
+				<DialogActions >
+					<Button id='calendar-edit-btn' onClick={openEdit}>
 						Edit
 					</Button>
-					<Button onClick={deleteEvent} color="primary">
+					<Button id='calendar-delete-btn' onClick={deleteEvent}>
 						Delete
 					</Button>
 				</DialogActions>
