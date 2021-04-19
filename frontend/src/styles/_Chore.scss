@@ -21,11 +21,17 @@
 	}
 }
 
-.grocery-completed {
+.chore-completed {
 	text-decoration: line-through;
 	opacity: 40%;
 
-	.grocery-check-icon {
+	.chore-clear-icon {
+		padding: 6px;
+		// color: var(--accent-color);
+	}
+
+	.chore-check-icon {
+		padding: 6px;
 		color: var(--accent-color);
 	}
 }

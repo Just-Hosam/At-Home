@@ -13,14 +13,14 @@ import ClearIcon from '@material-ui/icons/Clear';
 import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
+  // root: {
+  //   width: '100%',
+  //   backgroundColor: theme.palette.background.paper,
+  // },
+  // formControl: {
+  //   margin: theme.spacing(1),
+  //   minWidth: 120,
+  // },
 }));
 
 export default function DoneChores(props) {
@@ -70,7 +70,7 @@ export default function DoneChores(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className="chore-item chore-completed">
       <List className={null}>
         {parentDone.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
@@ -83,7 +83,7 @@ export default function DoneChores(props) {
 
           if (value.done) {
             secondaryElement = (
-              <IconButton edge="end" aria-label="done">
+              <IconButton edge="end" aria-label="done" className="chore-check-icon">
                 <DoneIcon />
               </IconButton>
             );
@@ -99,6 +99,7 @@ export default function DoneChores(props) {
                       <ClearIcon
                         edge="start"
                         checked={value.done}
+                        className="chore-clear-icon"
                         // inputProps={{ 'aria-labelledby': labelId }}
                         onClick={handleToggle(value)}
                       />
