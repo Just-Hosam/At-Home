@@ -11,22 +11,49 @@
 @import './Settings';
 @import './Gallery';
 
+// light themes
+// --card-color: #fff;
+// --background-color: #fafafa;
+// --error-color: rgb(255, 72, 72);
+
+// texts
 // --text-color: rgb(59, 59, 59);
-// --text-color-alt: rgba(65, 65, 65, 0.932);
+// --text-color-alt: rgba(94, 94, 94, 0.932);
+
+// --text-color: #373a40;
+// --text-color-alt: #686d76f5;
+
+// purple theme
+// --accent-color: rgb(96, 83, 247);
+// --accent-color-alt: rgb(128, 118, 251);
+
+// blue theme
+// --accent-color: #1b8fee;
+// --accent-color-alt: #2fa2ff;
+
+// bordo theme
+// --accent-color: #8f4f4f;
+// --accent-color-alt: #b7657b;
+
+// dark theme?
+// --text-color: rgb(177, 177, 177);
+// --text-color-alt: rgba(179, 179, 179, 0.932);
 // --accent-color: rgb(96, 83, 247);
 // --accent-color-alt: rgb(128, 118, 251);
 // --card-color: #fff;
-// --background-color: #fdfdfd;
-// --error-color: rgb(253, 72, 72);
+// --background-color: #1f1f1f;
+// --error-color: rgb(255, 72, 72);
+// --real-card-color: #2c303a;
 
 :root {
-	--text-color: rgb(59, 59, 59);
-	--text-color-alt: rgba(65, 65, 65, 0.932);
+	--text-color: #373a40;
+	--text-color-alt: #686d76f5;
 	--accent-color: rgb(96, 83, 247);
 	--accent-color-alt: rgb(128, 118, 251);
 	--card-color: #fff;
-	--background-color: #fdfdfd;
-	--error-color: rgb(253, 72, 72);
+	--background-color: #fafafa;
+	--error-color: rgb(255, 72, 72);
+	--real-card-color: #fff;
 
 	font-size: 13px;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Chip from '../Misc/Chip';
 
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Chores(props) {
-  const dashboardId = 1;
+	const [cookies] = useCookies(['userID']);
+	const dashboardId = cookies.dashboardId;
   const classes = useStyles();
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
