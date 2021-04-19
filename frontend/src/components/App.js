@@ -1,4 +1,3 @@
-// save the day please
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import urlParams from '../helpers/urlParams';
@@ -14,40 +13,33 @@ import useSocket from "../hooks/useSocket";
 
 const App = () => {
 
-	//websocket connection
+  //websocket connection
 	const {sendSocketMessage} = useSocket();
-
 	const [cookies, setCookie, removeCookie] = useCookies(null);
+  const initialPage = cookies.userData ? 'GRID' : 'LOGIN';
+  const [page, setPage] = useState(initialPage);
+  const handlePage = (page) => setPage(page);
 
-	let initialPage = cookies.userData ? 'GRID' : 'LOGIN';
-
-	const [page, setPage] = useState(initialPage);
-
-	const handlePage = (page) => setPage(page);
-
+  
 	useEffect(() => {      
 
-	const invite = urlParams(); 
+	  const invite = urlParams(); 
 	
-	if(invite){
-		setCookie('dashboardId', invite.id, { path: '/' });
-	  sendSocketMessage(invite.email); // <-- call websocket update 
-	}
-}, []); 
+    if(invite){
+      setCookie('dashboardId', invite.id, { path: '/' });
+      sendSocketMessage(invite.email); // <-- call websocket update 
+	  }
+  }, []); 
 
-
-	return (
-		<div className="App">
-			
-			<Navbar handlePage={handlePage} />
-			{page === 'GRID' && <Grid />}
-			{page === 'SETTINGS' && <Settings handlePage={handlePage} />}
-			{page === 'LOGIN' && <Login handlePage={handlePage} />}
-			{page === 'REGISTER' && <Register handlePage={handlePage} />}
-		
-		</div>
-	
-	);
+  return (
+    <div className="App">
+      <Navbar handlePage={handlePage} />
+      {page === 'GRID' && <Grid />}
+      {page === 'SETTINGS' && <Settings handlePage={handlePage} />}
+      {page === 'LOGIN' && <Login handlePage={handlePage} />}
+      {page === 'REGISTER' && <Register handlePage={handlePage} />}
+    </div>
+  );
 };
 
 export default App;
