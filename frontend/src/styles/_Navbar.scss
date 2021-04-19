@@ -1,7 +1,6 @@
 @import './variables';
 
 #navbar {
-	// border: 1px solid red;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -17,7 +16,7 @@
 
 	.navbtn {
 		background-color: var(--accent-color-alt);
-		color: var(--card-color);
+		color: var(--text-color-button);
 		margin-left: 5px;
 		width: 100px;
 	}
@@ -43,6 +42,10 @@
 				margin: 0;
 				font-size: 1.1rem;
 			}
+		}
+
+		#navbar-settings {
+			color: var(--text-color-alt);
 		}
 	}
 }

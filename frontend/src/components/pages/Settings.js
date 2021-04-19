@@ -6,8 +6,8 @@ import Users from './SettingPages/Users';
 import Appearance from './SettingPages/Appearance';
 
 export default function Settings(props) {
-	const [settingsPage, setSettingsPage] = useState('PROFILE');
-	// const [settingsPage, setSettingsPage] = useState('APPEARANCE');
+	// const [settingsPage, setSettingsPage] = useState('PROFILE');
+	const [settingsPage, setSettingsPage] = useState('APPEARANCE');
 
 	return (
 		<div id="settings-page">
