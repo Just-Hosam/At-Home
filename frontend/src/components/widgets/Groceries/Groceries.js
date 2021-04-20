@@ -5,18 +5,21 @@ import { useCookies } from 'react-cookie';
 import Grocery from './Grocery';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 import useSocket from '../../../hooks/useSocket';
 
 const axios = require('axios');
 
-function Groceries() {
+function Groceries(props) {
 	const [cookies] = useCookies(['userID']);
 	const dashboardId = cookies.dashboardId;
 
 	//websocket connection
 	const { sendSocketMessage, broadcast } = useSocket();
 
-	const [groceries, setGroceries] = useState([]);
+	// const [groceries, setGroceries] = useState([]);
+	const groceries = props.groceries;
+	const setGroceries = props.setGroceries;
 	const [input, setInput] = useState('');
 
 	useEffect(() => {
@@ -76,7 +79,7 @@ function Groceries() {
 
 	return (
 		<div id="widget-groceries">
-			<h1>Groceries</h1>
+			<h2>Groceries</h2>
 			<form onSubmit={(event) => event.preventDefault()}>
 				<TextField
 					id="groceries-text"
@@ -95,11 +98,13 @@ function Groceries() {
 					<i className="fas fa-plus"></i>
 				</Button>
 			</form>
-			<ul>{unCheckedList.length > 0 && unCheckedComponents}</ul>
-			<p id="groceries-divider">
-				checked list <i className="fas fa-chevron-left"></i>
-			</p>
-			<ul>{checkedList.length > 0 && checkedComponents}</ul>
+			<div id="recipes-lists">
+				<ul>{unCheckedList.length > 0 && unCheckedComponents}</ul>
+				<p id="groceries-divider">
+					checked list <i className="fas fa-chevron-left"></i>
+				</p>
+				<ul>{checkedList.length > 0 && checkedComponents}</ul>
+			</div>
 		</div>
 	);
 }

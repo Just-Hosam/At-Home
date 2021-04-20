@@ -8,14 +8,16 @@
 
 	.grocery-check-icon {
 		padding: 3px;
+		color: var(--accent-color);
 	}
 }
 
 .grocery-completed {
 	text-decoration: line-through;
-	opacity: 40%;
+	color: var(--text-color-icon);
+	border-bottom: 1px solid var(--text-color-icon);
 
 	.grocery-check-icon {
-		color: var(--accent-color);
+		color: var(--text-color-icon);
 	}
 }

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
-// import { stateContext } from '../../../context/StateProvider';
 import { useCookies } from 'react-cookie';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -59,7 +58,11 @@ export default function RecipeSend(props) {
 	const sendToIngredients = (ingArr) => {
 		axios
 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery: ingArr })
-			.then(() => props.handleEdit('SHOW'));
+			.then((res) => {
+				props.setGroceries((prev) => [...res.data, ...prev]);
+				// props.handleEdit('SHOW');
+				props.handleClose();
+			});
 	};
 	return (
 		<div id="recipes-send">
