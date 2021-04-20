@@ -69,7 +69,12 @@ export default function AddPhotoModal(props) {
 
 	return (
 		<div>
-			<Fab color="primary" aria-label="add">
+			<Fab
+				id="gallery-add-btn"
+				onClick={(b) => handleOpen(b)}
+				color="primary"
+				aria-label="add"
+			>
 				<AddIcon />
 			</Fab>
 			<Button variant="contained" onClick={(b) => handleOpen(b)}>
