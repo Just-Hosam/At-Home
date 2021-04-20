@@ -19,6 +19,7 @@ export default function Login(props) {
 			const userData = res.data;
 			axios.get(`/users/${userData.id}/dashboards`).then((dashRes) => {
 				setCookie('userData', userData, { path: '/' });
+				// console.log(`cookies.dashboardId`, cookies.dashboardId) // <--- duct tape : In case of emergency, uncomment
 				if (cookies.dashboardId === undefined) {
 					setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
 				}

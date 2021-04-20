@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -12,20 +13,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ClearIcon from '@material-ui/icons/Clear';
 import DoneIcon from '@material-ui/icons/Done';
 
-const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: '100%',
-  //   backgroundColor: theme.palette.background.paper,
-  // },
-  // formControl: {
-  //   margin: theme.spacing(1),
-  //   minWidth: 120,
-  // },
-}));
+// const useStyles = makeStyles((theme) => ({
+// root: {
+//   width: '100%',
+//   backgroundColor: theme.palette.background.paper,
+// },
+// formControl: {
+//   margin: theme.spacing(1),
+//   minWidth: 120,
+// },
+// }));
 
 export default function DoneChores(props) {
-  const dashboardId = 1;
-  const classes = useStyles();
+  const [cookies] = useCookies(['userID']);
+  const dashboardId = cookies.dashboardId;
+  // const classes = useStyles();
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
   const parentChores = [...props.choreState.choresList];
@@ -83,7 +85,11 @@ export default function DoneChores(props) {
 
           if (value.done) {
             secondaryElement = (
-              <IconButton edge="end" aria-label="done" className="chore-check-icon">
+              <IconButton
+                edge="end"
+                aria-label="done"
+                className="chore-check-icon"
+              >
                 <DoneIcon />
               </IconButton>
             );

@@ -15,19 +15,13 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-// import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: '100%',
-  //   backgroundColor: theme.palette.background.paper,
-  // },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
 }));
-console.log(`useStyles`, useStyles);
 
 export default function Chores(props) {
   const [cookies] = useCookies(['userID']);

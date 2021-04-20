@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 export default function AddChore(props) {
-  const dashboardId = 1; // TODO: needs useContext
+  const [cookies] = useCookies(['userID']);
+  const dashboardId = cookies.dashboardId;
   const [input, setInput] = useState('');
 
   const addNewChore = (input) => {
