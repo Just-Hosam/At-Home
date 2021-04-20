@@ -27,31 +27,33 @@ export default function Chore() {
         choresList={choresList}
         doneList={doneList}
       />
-      <Chores
-        choreState={{
-          choresList,
-          setChoresList,
-          doneList,
-          setDoneList,
-          progress,
-          setProgress,
-          dashboardUsers,
-          setDashboardUsers,
-        }}
-      />
-      {/* <ListHeader key="TODO-done" size="h6" title="DONE!" /> */}
-      <DoneChores
-        choreState={{
-          choresList,
-          setChoresList,
-          doneList,
-          setDoneList,
-          progress,
-          setProgress,
-          dashboardUsers,
-          setDashboardUsers,
-        }}
-      />
+      <div id="testing">
+        <Chores
+          choreState={{
+            choresList,
+            setChoresList,
+            doneList,
+            setDoneList,
+            progress,
+            setProgress,
+            dashboardUsers,
+            setDashboardUsers,
+          }}
+        />
+        {/* <ListHeader key="TODO-done" size="h6" title="DONE!" /> */}
+        <DoneChores
+          choreState={{
+            choresList,
+            setChoresList,
+            doneList,
+            setDoneList,
+            progress,
+            setProgress,
+            dashboardUsers,
+            setDashboardUsers,
+          }}
+        />
+      </div>
     </div>
   );
 }
