@@ -17,9 +17,9 @@ const server = require('http').createServer(app);
 const cors = require('cors');
 app.use(cors());
 
-if(ENV !== 'production'){
+// if (ENV !== 'production') {
 const environment = 'http://localhost:3030'; // < -- frontend conn.
-const io = require('socket.io')(server,{
+const io = require('socket.io')(server, {
 	cors: {
 		origin: environment,
 		methods: ['GET', 'POST'],
@@ -31,17 +31,16 @@ io.on('connection', (socket) => {
 	const message = 'message';
 
 	//listen for changes
-  socket.on('input', (input) => {
-    socket.broadcast.emit(message, input);
-  });
-
+	socket.on('input', (input) => {
+		socket.broadcast.emit(message, input);
+	});
 
 	//disconnects socket with update message
 	// socket.on("disconnect", () => {
 	// io.emit(message, "A user has signed off the dashbaord");
 	// });
 });
-}
+// }
 
 // PG database client/connection setup
 const db = require('./lib/db.js');
@@ -69,6 +68,7 @@ app.use(methodOverride('_method'));
 // queries
 const { checkUserByEmail } = require('./db/queries/user-queries');
 const { addGrocery } = require('./db/queries/grocery-queries');
+const { addChore } = require('./db/queries/chore-queries');
 
 // Separated Routes for each Resource
 const usersRouter = require('./routes/users.js');
@@ -97,7 +97,6 @@ app.use(
 	ingredientsRouter
 );
 app.use('/dashboards/:dashboardId/send-mail', emailRouter);
-	
 
 // Main routes
 app.get('/', (req, res) => {
@@ -106,13 +105,25 @@ app.get('/', (req, res) => {
 
 app.post('/voice', (req, res) => {
 	const inputGrocery = req.body.inputGrocery;
+	const inputChore = req.body.text;
 
-	addGrocery(1, inputGrocery)
-		.then((data) => {
-			io.sockets.emit('message', 'groceries');
-			res.json(data);
-		})
-		.catch((err) => console.log('error at voice', err));
+	if (inputGrocery) {
+		addGrocery(1, inputGrocery)
+			.then((data) => {
+				io.sockets.emit('message', 'groceries');
+				res.json(data);
+			})
+			.catch((err) => console.log('error at voice', err));
+	}
+
+	if (inputChore) {
+		addChore(1, inputChore)
+			.then((data) => {
+				io.sockets.emit('message', 'chores');
+				res.json(data);
+			})
+			.catch((err) => console.log('error at voice', err));
+	}
 });
 
 app.post('/login', (req, res) => {
