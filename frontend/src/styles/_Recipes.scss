@@ -1,31 +1,62 @@
 @import './variables';
 
-#widget-recipes {
+#recipes-final {
 	@include card-layout;
-	padding: 10px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#widget-recipes {
+	padding: 0 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 400px;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
 
-	h2 {
-		margin: 0;
+	#recipes-min-header {
+		margin-top: 10px;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 10px;
 		margin-bottom: 10px;
-		font-size: 2rem;
-		color: var(--accent-color);
+
+		#recipes-empty {
+			width: 46px;
+		}
+
+		h2 {
+			margin: 0;
+			font-size: 2rem;
+			color: var(--accent-color);
+		}
+
+		#recipes-btn {
+			padding: 12px 0px;
+			background-color: var(--accent-color-alt);
+			color: var(--text-color-button);
+		}
 	}
 
 	ul {
 		width: 100%;
 		margin: 0px;
 		padding: 0;
+		margin-left: 3px;
+		margin-bottom: 5px;
 		list-style: none;
+		overflow: auto;
 
 		li {
+			// border: 1px solid green;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			// border: 1px solid red;
 			margin-top: 3px;
 			padding: 0px 5px;
 
@@ -34,6 +65,7 @@
 				align-items: center;
 
 				p {
+					color: var(--text-color);
 					font-size: 1.2rem;
 				}
 
@@ -65,19 +97,38 @@
 			}
 		}
 
-		// TODO: Change later
 		li:hover {
 			cursor: pointer;
 		}
 	}
 
-	#add-recipe-btn {
-		width: 100%;
-		background-color: var(--accent-color-alt);
-		color: var(--card-color);
-		margin-top: 10px;
-		text-transform: none;
+	ul::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
 	}
+
+	ul::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	ul::-webkit-scrollbar-thumb {
+		background: rgba(129, 129, 129, 0.562);
+		border-radius: 100px;
+	}
+}
+
+#widget-recipes::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+#widget-recipes::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+#widget-recipes::-webkit-scrollbar-thumb {
+	background: rgba(129, 129, 129, 0.562);
+	border-radius: 100px;
 }
 
 #recipes-show {
@@ -88,14 +139,16 @@
 	color: var(--text-color);
 	position: relative;
 
-	.recipe-show-back {
-		position: absolute;
-		top: 0px;
-		color: white;
+	#recipes-back-container {
+		padding: 10px;
+		#recipes-back {
+			background-color: var(--accent-color-alt);
+			color: var(--text-color-button);
+		}
 	}
 
 	#recipe-image {
-		height: 120px;
+		height: 150px;
 		width: 100%;
 		overflow: hidden;
 		border-radius: 10px 10px 0px 0px;
@@ -114,18 +167,21 @@
 		#recipe-title {
 			display: flex;
 			align-items: center;
-			font-size: 1.5rem;
 
 			h2 {
+				color: var(--text-color);
+				font-size: 2.2rem;
 				margin: 15px 0;
 			}
 
 			i {
+				color: var(--text-color-alt);
 				margin-left: 8px;
 				font-size: 1.1rem;
 			}
 
 			span {
+				color: var(--text-color-alt);
 				margin-left: 3px;
 				font-size: 1.1rem;
 			}
@@ -144,6 +200,8 @@
 			align-items: center;
 
 			h3 {
+				color: var(--text-color);
+				font-size: 1.3rem;
 				margin: 0;
 			}
 
@@ -159,12 +217,23 @@
 			list-style: none;
 
 			li {
+				color: var(--text-color);
 				width: 50%;
 			}
 		}
 	}
 	#recipe-directions {
 		padding: 0 10px;
+
+		h3 {
+			color: var(--text-color);
+			font-size: 1.3rem;
+			margin: 0;
+		}
+
+		p {
+			color: var(--text-color);
+		}
 	}
 }
 
@@ -177,6 +246,16 @@
 
 	.recipes-add-textfield {
 		margin-top: 7px;
+
+		> label {
+			color: var(--text-color-alt);
+		}
+
+		.MuiInputBase-root {
+			> input {
+				color: var(--text-color);
+			}
+		}
 	}
 
 	h2 {
@@ -196,6 +275,7 @@
 		margin: 10px 0 10px 5px;
 		color: var(--accent-color);
 	}
+
 	#recipes-add-ing {
 		ul {
 			padding: 0;
@@ -216,6 +296,7 @@
 				}
 
 				.recipes-add-deletebtn {
+					color: var(--text-color-alt);
 					padding: 5px;
 				}
 			}
@@ -238,24 +319,32 @@
 
 	.recipes-add-multi {
 		margin-top: 0;
+
+		> label {
+			color: var(--text-color-alt);
+		}
+
+		.MuiInputBase-input {
+			color: var(--text-color);
+		}
 	}
 
 	#recipes-add-finalbtns {
 		margin-top: 10px;
 		width: 100%;
-		// border: 1px solid red;
 		display: flex;
 		justify-content: space-between;
 
 		.finalbtns {
 			width: 49%;
+			// hmm??? what to do?
 			background-color: rgb(233, 233, 233);
 			color: var(--text-color);
 		}
 		.submission {
 			// border: 1px solid red;
 			background-color: var(--accent-color-alt);
-			color: var(--card-color);
+			color: var(--text-color-button);
 		}
 	}
 }
@@ -270,6 +359,7 @@
 
 		.recipes-send-back {
 			padding: 0;
+			color: var(--text-color-icon);
 		}
 
 		h2 {
@@ -291,12 +381,16 @@
 			.checkbox {
 				color: var(--accent-color-alt);
 			}
+
+			p {
+				color: var(--text-color);
+			}
 		}
 	}
 
 	.recipes-send-send {
 		margin-top: 10px;
 		background-color: var(--accent-color-alt);
-		color: var(--card-color);
+		color: var(--text-color-button);
 	}
 }

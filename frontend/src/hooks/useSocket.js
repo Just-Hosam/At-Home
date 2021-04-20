@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 import socketIOClient from "socket.io-client";
+import axios from 'axios';
 
  
 export default function useSocket() {
-  
+  const [cookies, setCookie] = useCookies(['userID']);
   const [socketConn, setSocket] = useState(null);
 
   const [broadcast, setBroadcast] = useState({
@@ -12,41 +14,66 @@ export default function useSocket() {
     groceries: false,
     recipes: false,
     calendar: false,
-    chores: false
+    chores: false,
+    invite: false
   });
 
  
-
   useEffect(() => {
 
-    const ENDPOINT = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'https://api-dot-dashboard-310905.wl.r.appspot.com:8080';
+    if(window.location.hostname !== 'localhost'){
+      return;
+    }
 
+    const ENDPOINT = 'http://localhost:8080';
     const socket = socketIOClient(ENDPOINT);
     setSocket(socket);
-
+   
     socket.on("message", widget => {
 
         if(widget){
-          console.log('Websocket Widget: ', widget);
-          setBroadcast((prev) => ({
+         
+          if(widget.includes('@')){
+           
+          return setBroadcast((prev) => ({
+            ...prev,
+            invite: widget,
+          }));
+        
+          } else  {
+
+         return setBroadcast((prev) => ({
             ...prev,
             [widget]: Date.now(),
           }));
 
-        } else {
-          console.log('Error => @ websocket broadcast')
-        }
+          }
+        } 
+
+        console.log('Error => @ websocket broadcast')
 
     });
 
   }, []);
 
 
+
   const sendSocketMessage = widget => {
   
-    const socket = socketConn; 
-    socket.emit('input', widget);
+  if(window.location.hostname !== 'localhost'){
+    return;
+  }
+
+    let socket = socketConn; 
     
+    if (!socket){
+    const API = 'http://localhost:8080';
+    socket = socketIOClient(API);
+    setSocket(socket);
+    socket.emit('input', widget);
+    } else {
+    socket.emit('input', widget);
+    } 
   }
 
 return {sendSocketMessage,broadcast}

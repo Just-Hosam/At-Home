@@ -25,14 +25,16 @@
 	h1 {
 		display: block;
 		margin: auto;
-		margin-top: -5px;
 		width: 75%;
-	  font-size: 1.5rem;
+		font-size: 1.4rem;
+		line-height: 1.4;
 		color: var(--accent-color);
+		
 	}
 }
 
 .poll-icons {
+	
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -40,6 +42,7 @@
 	margin: 5px 10px 0px 10px;
 
 	.poll-pie-icon{
+		cursor: pointer;
 		color: lightgray;
 
 		&:hover{
@@ -48,6 +51,7 @@
 	}
 
 	.poll-delete-icon{
+		cursor: pointer;
 		color: lightgray;
 
 		&:hover{
@@ -57,12 +61,19 @@
 
 }
 
+.optionWrapper{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
 .options {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin: 15px 10px;
+	margin: 10px 0px;
 	width: 95%;
 }
 
@@ -73,10 +84,11 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 95%;
-	padding: 10px 10px;
+	padding: 15px 10px;
 	border-radius: 5px;
 	font-size: 1.3rem;
-	color: var(--text-color-alt);
+	color: var(--text-color);
+
 
 &:hover{
 	cursor: pointer;
@@ -94,9 +106,10 @@
 	justify-content:space-between;
 	align-items:center;
 	width:95%;
-	padding:8px 8px;
+	padding:5px 10px;
 	border-radius: 5px;
 	font-size: 1.3rem;
+
 	
 &:hover{
 	cursor: text;
@@ -104,25 +117,12 @@
 }
 }
 
-.post-vote-option {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	width: 95%;
-	padding: 10px 10px;
-	border-radius: 5px;
 
-	&:hover {
-		cursor: text;
-		box-shadow: none;
-	}
-
-}
 
 .picked {
 	border-radius: 5px;
 	color: white;
+	padding:0px 10px;
 	background-color: var(--accent-color-alt);
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -132,6 +132,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+
 }
 
 
@@ -140,7 +141,7 @@
 	margin: 0px 5px;
 	border: none;
 	color: white;
-	background: $primary-color;
+	background: var(--accent-color-alt);
 	font-weight: bold;
 	padding: 5px;
 	border-radius: 5px;
@@ -154,7 +155,7 @@
 	margin: 0px 5px;
 	border: none;
 	color: white;
-	background: $primary-color;
+	background: var(--accent-color-alt);
 	font-weight: bold;
 	padding: 5px;
 	border-radius: 5px;
@@ -189,7 +190,6 @@
 	justify-content: center;
 	align-items: flex-start;
 
-	margin-left: 40px;
 }
 
 		
@@ -223,29 +223,19 @@
 }
 
 .create-poll {
-	input {
-		outline-color: lightgray;
-		display: block;
-		margin: 10px auto auto auto;
-		width: 80%;
-		padding: 10px;
-		border: none;
-		border-bottom: solid;
-		border-bottom-width: 1px;
-		border-bottom-color: lightgray;
-		font-size: 1rem;
+
+	.create-poll-input{
+		width: 95%;
 	}
 
 	button {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		padding: 15px;
+		
+		width: 95%;
+		padding: 10px;
 		color: white;
-		background-color: $primary-color;
+		background-color: var(--accent-color-alt);
 		&:hover {
-			background-color: $accent-color;
+			background-color: var(--accent-color);
 		}
 	}
 

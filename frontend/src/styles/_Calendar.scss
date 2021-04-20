@@ -3,6 +3,121 @@
 #calendar-widget {
 	@include card-layout;
 	overflow: auto;
-	padding: 10px;
+  padding: 10px;
+  color: var(--accent-color-alt);
+ 
 }
 
+
+
+.content-bottom-divider{
+  margin: 10px;
+}
+
+.calendar-dialog-wrapper{
+  width:400px
+}
+
+.calendar-dialog-head{
+  color:var(--accent-color);
+  font-weight: bold;
+  font-size: 2.2rem;
+}
+
+#calendar-dialog-body{
+  color:var(--text-color-alt);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.calendar-dialog-foot{
+  color:grey;
+  font-size: 2.5rem;
+}
+
+#calendar-save-btn{
+  color: white;
+  background-color: var(--accent-color-alt);
+  &:hover{
+    background-color: var(--accent-color);
+  }
+}
+
+#calendar-edit-btn{
+  color: white;
+  background-color: var(--accent-color-alt);
+  &:hover{
+    background-color: var(--accent-color);
+  }
+}
+
+#calendar-cancel-btn{
+  color: white;
+  background-color: lightgray;
+  &:hover{
+    background-color: grey
+  }
+}
+
+
+#calendar-delete-btn{
+  color: white;
+  background-color: var(--error-color);
+  &:hover{
+    background-color: red;
+  }
+}
+
+.modeWrapper{
+
+  .modeButton{
+    color:var(--text-color);
+    &:hover{
+      color: var(--accent-color-alt);
+    }
+  }
+
+  .modeButtonActive{
+    color: var(--accent-color);
+  }
+    
+  
+  }
+
+
+
+  .calendarHeaderButtons{
+
+    button{
+      color: var(--text-color); 
+      &:hover{
+        color: var(--accent-color-alt);
+      }
+    }
+  }
+
+  .calendarWrapper{
+
+    h1{
+      color:var(--accent-color);
+    }
+  }
+  
+
+  #dayHeader{
+    
+  .currentDay{
+  background-color: var(--accent-color-alt);
+  color: white;
+ }
+  }
+
+ .calendarDayOfWeek{
+   color:var(--text-color);
+   font-weight: bold;
+   padding-top:5px;
+ }
+
+ .weekRow{
+   color:var(--text-color);
+ }
