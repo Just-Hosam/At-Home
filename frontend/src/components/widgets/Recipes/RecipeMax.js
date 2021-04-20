@@ -41,6 +41,8 @@ export default function RecipeMax(props) {
 					handleEdit={handleEdit}
 					recipeId={props.recipeId}
 					handleView={props.handleView}
+					setGroceries={props.setGroceries}
+					handleClose={props.handleClose}
 				/>
 			)}
 		</div>

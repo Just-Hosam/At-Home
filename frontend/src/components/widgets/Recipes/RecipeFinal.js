@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function RecipeFinal() {
+export default function RecipeFinal(props) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 
@@ -43,7 +43,7 @@ export default function RecipeFinal() {
 	};
 
 	return (
-		<div>
+		<div id="recipes-final">
 			<RecipeMin handleView={handleView} handleOpen={handleOpen} />
 			<Modal
 				className={classes.modal}
@@ -62,6 +62,8 @@ export default function RecipeFinal() {
 								recipeId={itemId}
 								handleClose={handleClose}
 								handleView={handleView}
+								setGroceries={props.setGroceries}
+								handleClose={handleClose}
 							/>
 						)}
 						{modalView === 'RECIPE_ADD' && (

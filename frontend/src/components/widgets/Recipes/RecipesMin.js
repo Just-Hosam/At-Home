@@ -39,15 +39,18 @@ export default function RecipesMin(props) {
 
 	return (
 		<div id="widget-recipes">
-			<h2>RECIPES</h2>
+			<div id="recipes-min-header">
+				<div id="recipes-empty"></div>
+				<h2>Recipes</h2>
+				<Button
+					onClick={() => handleAddButton()}
+					id="recipes-btn"
+					variant="contained"
+				>
+					<i className="fas fa-plus"></i>
+				</Button>
+			</div>
 			<ul>{recipeList}</ul>
-			<Button
-				id="add-recipe-btn"
-				variant="contained"
-				onClick={() => handleAddButton()}
-			>
-				Add Recipe
-			</Button>
 		</div>
 	);
 }
