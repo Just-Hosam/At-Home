@@ -8,6 +8,8 @@ import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import SaveIcon from '@material-ui/icons/Save';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import useSocket from '../../../hooks/useSocket';
 import { useCookies } from 'react-cookie';
@@ -67,6 +69,9 @@ export default function AddPhotoModal(props) {
 
 	return (
 		<div>
+			<Fab color="primary" aria-label="add">
+				<AddIcon />
+			</Fab>
 			<Button variant="contained" onClick={(b) => handleOpen(b)}>
 				Add Photo
 			</Button>
