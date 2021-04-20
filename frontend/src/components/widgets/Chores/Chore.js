@@ -16,39 +16,44 @@ export default function Chore() {
   });
 
   return (
-    <div>
-      <ListHeader key="TODO" size="h4" title="TODO" />
-      <AddChore choresList={choresList} setChoresList={setChoresList} />
+    <div id="widget-chores">
+      <div id="chores-header">
+        <ListHeader key="TODO" size="h2" title="What to do?" />
+        <AddChore choresList={choresList} setChoresList={setChoresList} />
+      </div>
       <ProgressBar
+        
         choreState={{ progress, setProgress }}
         choresList={choresList}
         doneList={doneList}
       />
-      <Chores
-        choreState={{
-          choresList,
-          setChoresList,
-          doneList,
-          setDoneList,
-          progress,
-          setProgress,
-          dashboardUsers,
-          setDashboardUsers,
-        }}
-      />
-      {/* <ListHeader key="TODO-done" size="h6" title="DONE!" /> */}
-      <DoneChores
-        choreState={{
-          choresList,
-          setChoresList,
-          doneList,
-          setDoneList,
-          progress,
-          setProgress,
-          dashboardUsers,
-          setDashboardUsers,
-        }}
-      />
+      <div id="testing">
+        <Chores
+          choreState={{
+            choresList,
+            setChoresList,
+            doneList,
+            setDoneList,
+            progress,
+            setProgress,
+            dashboardUsers,
+            setDashboardUsers,
+          }}
+        />
+        {/* <ListHeader key="TODO-done" size="h6" title="DONE!" /> */}
+        <DoneChores
+          choreState={{
+            choresList,
+            setChoresList,
+            doneList,
+            setDoneList,
+            progress,
+            setProgress,
+            dashboardUsers,
+            setDashboardUsers,
+          }}
+        />
+      </div>
     </div>
   );
 }

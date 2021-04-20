@@ -5,6 +5,7 @@ const Options = (props) => {
 	return (
 		
 		<section className={props.picked} onClick={() => props.vote(props.id)}>
+		<div className='optionWrapper'>
 		<div className='options'>
 
 		<div className={props.opStyle}>
@@ -16,6 +17,7 @@ const Options = (props) => {
 		</div>
 		</div>
 
+		</div>
 		</div>
 		</section>
 

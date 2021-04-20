@@ -15,22 +15,23 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Zoom from '@material-ui/core/Zoom';
+// import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '500px',
-    backgroundColor: theme.palette.background.paper,
-  },
+  // root: {
+  //   width: '100%',
+  //   backgroundColor: theme.palette.background.paper,
+  // },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
 }));
+console.log(`useStyles`, useStyles);
 
 export default function Chores(props) {
-	const [cookies] = useCookies(['userID']);
-	const dashboardId = cookies.dashboardId;
+  const [cookies] = useCookies(['userID']);
+  const dashboardId = cookies.dashboardId;
   const classes = useStyles();
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
@@ -122,9 +123,9 @@ export default function Chores(props) {
   }
 
   return (
-    <div className={classes.root}>
+    <div className="chore-item">
       <div style={{ display: 'flex', justifyContent: 'center' }}>{trophy}</div>
-      <List className={null}>
+      <List>
         {parentChores.map((value) => {
           const labelId = `checkbox-list-label-${value.id}`;
           // Conditional rendering for ListIem
@@ -138,7 +139,7 @@ export default function Chores(props) {
 
           if (value.name === 'none') {
             secondarySwitcher = (
-              <FormControl size="small" className={classes.formControl}>
+              <FormControl size="small" className="chore-selector">
                 <InputLabel id="demo-simple-select-label">Users</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -175,14 +176,13 @@ export default function Chores(props) {
                 >
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
-                      {value.name !== 'none' ? (
                         <Checkbox
                           edge="start"
+                          className="chore-checkbox"
                           checked={value.done}
                           inputProps={{ 'aria-labelledby': labelId }}
                           onClick={handleToggle(value)}
                         />
-                      ) : null}
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={`${value.text}`} />
                   </div>
@@ -195,7 +195,7 @@ export default function Chores(props) {
                     </ListItemSecondaryAction>
                   </div>
                 </ListItem>
-                <Divider />
+                <Divider className="chore-divider" />
               </div>
             );
           } else {

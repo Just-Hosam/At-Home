@@ -5,7 +5,7 @@ import NavLoginReg from './NavLoginReg';
 import NavUserDetails from './NavUserDetails';
 
 export default function Navbar(props) {
-	const [cookies, setCookie, removeCookie] = useCookies(null);
+	const [cookies] = useCookies(null);
 
 	return (
 		<div id="navbar">
