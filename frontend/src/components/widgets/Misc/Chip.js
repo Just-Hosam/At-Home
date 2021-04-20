@@ -7,18 +7,18 @@ import Chip from '@material-ui/core/Chip';
 // import DoneIcon from '@material-ui/icons/Done';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(0.5),
-    },
-  },
+  // root: {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   flexWrap: 'wrap',
+  //   '& > *': {
+  //     margin: theme.spacing(0.5),
+  //   },
+  // },
 }));
 
 export default function SmallChip(props) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const dashboardId = 1;
 
   const updateChip = (dashboardId, chip) => {
@@ -42,7 +42,7 @@ export default function SmallChip(props) {
   // };
 
   return (
-    <div className={classes.root}>
+    <div className="chore-chip">
       <Chip
         // size="small"
         avatar={<Avatar alt={props.name}>{props.name[0]}</Avatar>}

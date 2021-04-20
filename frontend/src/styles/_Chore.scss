@@ -1,0 +1,34 @@
+.chore-item {
+	width: 98%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 5px;
+	// border-bottom: 1px solid var(--text-color-alt);
+
+	.chore-selector {
+		margin: 8px;
+		min-width: 120px;
+	}
+
+	.chore-divider {
+		margin: 3px;
+	}
+}
+
+.chore-completed {
+	text-decoration: line-through;
+	color: var(--text-color-alt);
+	// opacity: 40%;
+
+	.chore-clear-icon {
+		padding: 0;
+		color: var(--text-color-icon);
+	}
+
+	.chore-check-icon {
+		padding: 6px;
+		color: var(--text-color-icon);
+	}
+}
