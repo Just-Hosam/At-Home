@@ -17,7 +17,7 @@ const server = require('http').createServer(app);
 const cors = require('cors');
 app.use(cors());
 
-if(ENV !== 'production'){
+// if(ENV !== 'production'){
 const environment = 'http://localhost:3030'; // < -- frontend conn.
 const io = require('socket.io')(server,{
 	cors: {
@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 	// io.emit(message, "A user has signed off the dashbaord");
 	// });
 });
-}
+// }
 
 // PG database client/connection setup
 const db = require('./lib/db.js');
