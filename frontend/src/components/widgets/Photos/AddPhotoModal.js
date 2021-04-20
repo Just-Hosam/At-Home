@@ -68,7 +68,7 @@ export default function AddPhotoModal(props) {
 	};
 
 	return (
-		<div>
+		<div id="add-photo-modal">
 			<Fab
 				id="gallery-add-btn"
 				onClick={(b) => handleOpen(b)}
@@ -77,9 +77,6 @@ export default function AddPhotoModal(props) {
 			>
 				<AddIcon />
 			</Fab>
-			<Button variant="contained" onClick={(b) => handleOpen(b)}>
-				Add Photo
-			</Button>
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"

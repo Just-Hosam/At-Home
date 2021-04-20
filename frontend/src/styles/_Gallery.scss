@@ -3,12 +3,24 @@
 #gallery-widget {
 	overflow: auto;
 	@include card-layout;
+	position: relative;
 }
 
 #gallery-add-btn {
-	background-color: red;
+	background-color: var(--accent-color-alt);
+	// position: absolute;
+	width: 45px;
+	height: 45px;
 }
 
 #gallery-comp {
-	// background-color: blue;
+	// border: 1px solid blue;
+}
+
+#add-photo-modal {
+	// border: 1px solid red;
+	position: absolute;
+
+	top: 10px;
+	left: 10px;
 }
