@@ -11,6 +11,7 @@
 		padding: 20px;
 
 		h3 {
+			color: var(--text-color);
 			font-size: 1.5rem;
 			margin: 0;
 			margin-bottom: 15px;
@@ -24,6 +25,7 @@
 			margin: 0;
 
 			li {
+				color: var(--text-color);
 				width: 90%;
 				border-bottom: 1px solid var(--text-color-alt);
 				padding: 10px 5px;
@@ -44,6 +46,7 @@
 		margin-top: 13px;
 
 		h3 {
+			color: var(--text-color);
 			padding: 0;
 			margin: 0;
 			margin-bottom: 25px;
@@ -55,11 +58,21 @@
 
 			.profile-textfield {
 				margin-bottom: 10px;
+
+				> label {
+					color: var(--text-color-alt);
+				}
+
+				.MuiInputBase-root {
+					> input {
+						color: var(--text-color);
+					}
+				}
 			}
 
 			.submission {
 				background-color: var(--accent-color-alt);
-				color: var(--card-color);
+				color: var(--text-color-button);
 			}
 		}
 
@@ -70,6 +83,7 @@
 
 			li {
 				display: flex;
+				color: var(--text-color);
 				justify-content: space-between;
 				align-items: center;
 				border: 1px solid var(--text-color-alt);
@@ -82,14 +96,15 @@
 		#settings-dashboards {
 			.dashboards-btns {
 				background-color: var(--accent-color-alt);
-				color: var(--card-color);
+				color: var(--text-color-button);
 			}
 
 			.selected {
-				background-color: rgb(87, 148, 87);
+				background-color: rgb(76, 175, 76);
 			}
 
 			.dashboards-deletebtn {
+				color: var(--text-color-alt);
 				padding: 5px;
 				margin-right: 5px;
 			}
@@ -102,11 +117,21 @@
 				.MuiFormControl-root {
 					margin: 0;
 					margin-bottom: 5px;
+
+					> label {
+						color: var(--text-color-alt);
+					}
+
+					.MuiInputBase-root {
+						> input {
+							color: red;
+						}
+					}
 				}
 
 				.add-btn {
 					background-color: var(--accent-color-alt);
-					color: var(--card-color);
+					color: var(--text-color-button);
 				}
 			}
 			#users-user-details {
@@ -123,6 +148,7 @@
 				}
 			}
 			.deletebtn {
+				color: var(--text-color-alt);
 				padding: 5px;
 				font-style: italic;
 				margin-right: 5px;
@@ -133,9 +159,14 @@
 				width: 85px;
 			}
 
+			.peasant-btns {
+				color: var(--text-color);
+				background-color: #e0e0e0;
+			}
+
 			.admin-btns {
 				background-color: var(--accent-color-alt);
-				color: var(--card-color);
+				color: var(--text-color-button);
 			}
 		}
 

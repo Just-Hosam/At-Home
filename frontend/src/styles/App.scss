@@ -2,7 +2,6 @@
 @import './Grocery';
 @import './Groceries';
 @import './Polls.scss';
-@import './Dropdown.scss';
 @import './Recipes';
 @import './Calendar.scss';
 @import './Login';
@@ -54,12 +53,10 @@
 	--accent-color: rgb(96, 83, 247);
 	--accent-color-alt: rgb(128, 118, 251);
 
-	// --card-color: rgb(90, 90, 90);
+
 	--card-color: #fff;
-	--background-color: #fdfdfd;
-
 	--error-color: rgb(253, 72, 72);
-
+	--background-color: #fdfdfd;
 
 	font-size: 13px;
 }

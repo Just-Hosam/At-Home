@@ -9,10 +9,8 @@ export default function NavLoginReg(props) {
 	const [cookies, , removeCookie] = useCookies(null);
 
 	const logout = () => {
-	
 		removeCookie('userData', { path: '/' });
 		props.handlePage('LOGIN');
-		
 	};
 	return (
 		<div id="nav-user-details">
@@ -21,7 +19,10 @@ export default function NavLoginReg(props) {
 					{cookies.userData.first_name} {cookies.userData.last_name}
 				</p>
 			</div>
-			<IconButton onClick={() => props.handlePage('SETTINGS')}>
+			<IconButton
+				id="navbar-settings"
+				onClick={() => props.handlePage('SETTINGS')}
+			>
 				<SettingsIcon />
 			</IconButton>
 			<Button onClick={() => logout()} className="navbtn" variant="contained">
