@@ -1,5 +1,5 @@
 .chore-item {
-	width: 98%;
+	width: 97%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -19,11 +19,12 @@
 
 .chore-completed {
 	text-decoration: line-through;
-	color: var(--text-color-alt);
+	color: var(--text-color-icon);
 	// opacity: 40%;
 
 	.chore-clear-icon {
 		padding: 0;
+		margin-left: 9px;
 		color: var(--text-color-icon);
 	}
 

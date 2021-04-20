@@ -133,9 +133,10 @@ export default function Chores(props) {
 
           if (value.name === 'none') {
             secondarySwitcher = (
-              <FormControl size="small" className="chore-selector">
+              <FormControl size="small" className="chore-selector" variant="outlined">
                 <InputLabel id="demo-simple-select-label">Users</InputLabel>
                 <Select
+                  // variant="outlined"
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   defaultValue=""
@@ -171,7 +172,7 @@ export default function Chores(props) {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
                         <Checkbox
-                          edge="start"
+                          // edge="start"
                           className="chore-checkbox"
                           checked={value.done}
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -189,7 +190,7 @@ export default function Chores(props) {
                     </ListItemSecondaryAction>
                   </div>
                 </ListItem>
-                <Divider className="chore-divider" />
+                {/* <Divider className="chore-divider" /> */}
               </div>
             );
           } else {

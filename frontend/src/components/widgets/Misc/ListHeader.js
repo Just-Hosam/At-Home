@@ -7,7 +7,7 @@ export default function ListHeader(props) {
     <div>
       <Grid container>
         <Grid item xs>
-          <Typography variant={'h2'}>{props.title}</Typography>
+          <Typography variant={props.size}>{props.title}</Typography>
         </Grid>
       </Grid>
     </div>

@@ -7,14 +7,14 @@ import Box from '@material-ui/core/Box';
 function LinearProgressWithLabel(props) {
   return (
     <Box display="flex" alignItems="center" id="chores-progress-bar">
-      <Box width="100%" mr={1} ml={6}>
+      <Box width="100%" mr={1} ml={0}>
         <LinearProgress
           variant="determinate"
           {...props}
           style={{ height: '8px', borderRadius: '5px' }}
         />
       </Box>
-      <Box minWidth={37}>
+      <Box minWidth={25}>
         <Typography variant="body2">{`${Math.round(props.value)}%`}</Typography>
       </Box>
     </Box>

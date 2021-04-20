@@ -103,9 +103,10 @@ export default function DoneChores(props) {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
                       <ClearIcon
-                        edge="start"
+                        // edge="start"
                         checked={value.done}
                         className="chore-clear-icon"
+                        // style={{marginLeft: '10px'}}
                         // inputProps={{ 'aria-labelledby': labelId }}
                         onClick={handleToggle(value)}
                       />
@@ -120,7 +121,7 @@ export default function DoneChores(props) {
                     </ListItemSecondaryAction>
                   </div>
                 </ListItem>
-                <Divider />
+                {/* <Divider /> */}
               </>
             );
           }

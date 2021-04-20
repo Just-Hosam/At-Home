@@ -21,8 +21,8 @@
 
 	#chores-btn {
 		height: 35px;
-		margin-left: 0.5rem;
-		margin-right: 4rem;
+		margin-left: 5px;
+		margin-right: 10px;
 		background-color: var(--accent-color-alt);
 		color: var(--card-color);
 	}
@@ -34,8 +34,8 @@
 
 	h2 {
 		margin: 0;
-		margin-left: 4rem;
-		margin-right: 1rem;
+		margin-left: 10px;
+		margin-right: 0.5rem;
 		font-size: 2rem;
     font-weight: bold;
 		color: var(--accent-color);
@@ -82,16 +82,16 @@
 			background-color: var(--accent-color-alt);
 		}
 
-		.MuiChip-deleteable {
-			color: #fff;
+		// .MuiChip-deleteable {
+			// color: red;
 			// background-color: var(--accent-color);
-			background-color: white;
-		}
+			// background-color: red;
+		// }
 
 		.MuiChip-avatar {
 			// color: var(--accent-color);
 			// background-color: #fff;
-			color: #fff;
+			color: var(--text-color-button);
 			background-color: var(--accent-color);
 		}
 		
