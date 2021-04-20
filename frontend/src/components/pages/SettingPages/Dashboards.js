@@ -47,7 +47,7 @@ export default function Dashboards(props) {
 					>
 						<DeleteIcon />
 					</IconButton>
-					{elem.id == cookies.dashboardId && (
+					{elem.id === Number(cookies.dashboardId) && (
 						<Button
 							className="dashboards-btns selected"
 							variant="contained"
@@ -56,7 +56,7 @@ export default function Dashboards(props) {
 							Selected
 						</Button>
 					)}
-					{elem.id != cookies.dashboardId && (
+					{elem.id !== Number(cookies.dashboardId) && (
 						<Button
 							className="dashboards-btns"
 							variant="contained"
