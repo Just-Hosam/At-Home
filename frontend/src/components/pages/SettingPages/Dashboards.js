@@ -36,7 +36,6 @@ export default function Dashboards(props) {
 	};
 
 	const dashboardsList = dashboards.map((elem) => {
-		console.log(cookies.dashboardId, '===', elem.id);
 		return (
 			<li key={elem.id}>
 				<p>{elem.name}</p>

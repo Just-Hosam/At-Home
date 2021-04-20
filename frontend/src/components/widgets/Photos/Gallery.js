@@ -53,7 +53,11 @@ export default function Gallery(props) {
 		<div className={classes.root}>
 			<GridList cellHeight={180} className={classes.gridList}>
 				{tileData.map((tile) => (
-					<GridListTile key={tile.id} onClick={() => loadImage(tile)}>
+					<GridListTile
+						style={{ padding: 0 }}
+						key={tile.id}
+						onClick={() => loadImage(tile)}
+					>
 						<img src={tile.img_url} alt={tile.text} />
 						<GridListTileBar title={tile.text} />
 					</GridListTile>
