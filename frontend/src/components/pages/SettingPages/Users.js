@@ -18,9 +18,7 @@ export default function Dashboards() {
 	const [allUsers, setAllUsers] = useState([]);
 
 	const {sendInvite} = useMailer(); // <-- connect mailer
-
-	//websocket connection
-	const {broadcast} = useSocket();
+	const {broadcast} = useSocket(); // <-- connect websocket
 
 
 	useEffect(() => {

@@ -35,7 +35,7 @@ export default function useSocket() {
          
           if(widget.includes('@')){
            
-          return  setBroadcast((prev) => ({
+          return setBroadcast((prev) => ({
             ...prev,
             invite: widget,
           }));

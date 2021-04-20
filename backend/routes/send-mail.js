@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
 
   const recipient = process.env.HARDCODED_RECIPIENT;
 
-  const invite = Math.floor(Math.random() * 1000);
+  const invite = Math.floor(Math.random() * 10000);
   const params = `?e=${details.recipient}&i=${invite}&d=${details.id}`;
 
   const link = process.env.NODE_ENV !== 'production' ? 
