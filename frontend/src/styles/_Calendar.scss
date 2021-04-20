@@ -5,7 +5,7 @@
 	overflow: auto;
   padding: 10px;
   color: var(--accent-color-alt);
-  
+ 
 }
 
 
@@ -68,4 +68,56 @@
   }
 }
 
+.modeWrapper{
 
+  .modeButton{
+    color:var(--text-color);
+    &:hover{
+      color: var(--accent-color-alt);
+    }
+  }
+
+  .modeButtonActive{
+    color: var(--accent-color);
+  }
+    
+  
+  }
+
+
+
+  .calendarHeaderButtons{
+
+    button{
+      color: var(--text-color); 
+      &:hover{
+        color: var(--accent-color-alt);
+      }
+    }
+  }
+
+  .calendarWrapper{
+
+    h1{
+      color:var(--accent-color);
+    }
+  }
+  
+
+  #dayHeader{
+    
+  .currentDay{
+  background-color: var(--accent-color-alt);
+  color: white;
+ }
+  }
+
+ .calendarDayOfWeek{
+   color:var(--text-color);
+   font-weight: bold;
+   padding-top:5px;
+ }
+
+ .weekRow{
+   color:var(--text-color);
+ }

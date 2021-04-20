@@ -9,14 +9,17 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import useSocket from '../../../hooks/useSocket';
 
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
-	//modal styling
+
 
 	const [cookies] = useCookies(['userID']);
 	const dash_id = cookies.dashboardId;
+
+		//websocket connection
+	const { sendSocketMessage, broadcast } = useSocket();
 
 	const [e, setEvents] = useState({
 		events: [],
@@ -60,7 +63,7 @@ const CalendarWidget = (props) => {
 				details: {},
 			}));
 		});
-	}, []);
+	}, [broadcast.calendar]);
 
 	const renderWidget = () => {
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
@@ -93,6 +96,8 @@ const CalendarWidget = (props) => {
 				setOpen({
 					inputDialog: false,
 				});
+
+				sendSocketMessage('calendar'); // <-- send websocket msg
 			})
 			.catch((err) => console.log(err));
 	};
@@ -107,6 +112,8 @@ const CalendarWidget = (props) => {
 				setOpen({
 					inputDialog: false,
 				});
+
+				sendSocketMessage('calendar'); // <-- send websocket msg
 			})
 			.catch((err) => console.log(err));
 	};
@@ -122,6 +129,8 @@ const CalendarWidget = (props) => {
 				setOpen({
 					viewDialog: false,
 				});
+
+				sendSocketMessage('calendar'); // <-- send websocket msg
 			})
 			.catch((err) => console.log(err));
 	};
