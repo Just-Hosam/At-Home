@@ -145,6 +145,7 @@ const CalendarWidget = () => {
 
 				setOpen({
 					viewDialog: false,
+					showCreate: true
 				});
 
 				sendSocketMessage('calendar'); // <-- send websocket msg
@@ -327,7 +328,7 @@ const CalendarWidget = () => {
 					onClickTimeLine={(event) => handleClickOpen(event)}
 					
 				/>
-		{creteEventBtn}
+			{creteEventBtn}
 			</div>
 
 			<Dialog
@@ -379,28 +380,10 @@ const CalendarWidget = () => {
 							}))
 						}
 					/>
+
 					</form>
 					<div className='content-bottom-divider'></div>
 	
-
-					<form noValidate>
-						<TextField
-						  className='calendar-inputs'
-							id="date-picker"
-							label="End Date"
-							type="date"
-							value={input.to ? input.to : ''}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									to: event.target.value,
-								}))
-							}
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>
-					</form>
 				</DialogContent>
 
 				<DialogActions className='calendar-dialog-bottom'>
@@ -492,26 +475,7 @@ const CalendarWidget = () => {
 					</form>
 					<div className="content-bottom-divider"></div>
 
-					<form>
-
-					<TextField
-					className='calendar-inputs'
-							id="end-date"
-							label="End Date"
-							type="date"
-							value={input.to ? input.to : e.details.to}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									to: event.target.value,
-								}))
-							}
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>
-					</form>
-
+			
 				</DialogContent>
 				<DialogActions className='calendar-dialog-bottom'>
 					<Button id='calendar-cancel-btn' onClick={closeDialog} >

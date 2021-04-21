@@ -1,4 +1,4 @@
 INSERT INTO options (poll_id, choice, votes) VALUES
-(1, 'Beach day!', 4),
-(1, 'Midday movie!', 1),
-(1, 'BBQ in the park', 2);
+(1, 'Butter Chicken', 2),
+(1, 'Lasagna', 2),
+(1, 'Pad Thai', 2);
