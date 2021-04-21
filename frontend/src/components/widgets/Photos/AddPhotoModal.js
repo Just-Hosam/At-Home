@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
-		border: '2px solid #000',
+		borderRadius: 10,
 		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
+		outline: 'none',
 	},
 }));
 
@@ -68,13 +68,15 @@ export default function AddPhotoModal(props) {
 	};
 
 	return (
-		<div>
-			<Fab color="primary" aria-label="add">
+		<div id="add-photo-modal">
+			<Fab
+				id="gallery-add-btn"
+				onClick={(b) => handleOpen(b)}
+				color="primary"
+				aria-label="add"
+			>
 				<AddIcon />
 			</Fab>
-			<Button variant="contained" onClick={(b) => handleOpen(b)}>
-				Add Photo
-			</Button>
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"
@@ -91,35 +93,41 @@ export default function AddPhotoModal(props) {
 					<div className={classes.paper}>
 						<form
 							className={classes.root}
+							id="add-photo-form"
 							noValidate
 							autoComplete="off"
 							onSubmit={(e) => e.preventDefault()}
 						>
 							<TextField
+								fullWidth
 								id="standard-required"
+								variant="outlined"
+								size="small"
 								label="Image URL"
 								value={input.img_url}
 								onChange={(e) =>
 									setInput((prev) => ({ ...prev, img_url: e.target.value }))
 								}
 							/>
-							<br />
 							<TextField
+								fullWidth
 								id="standard-basic"
+								size="small"
+								variant="outlined"
 								label="Description"
 								value={input.text}
 								onChange={(e) =>
 									setInput((prev) => ({ ...prev, text: e.target.value }))
 								}
 							/>
-							<br />
 							<Button
+								id="add-photo-btn"
+								fullWidth
 								variant="contained"
-								startIcon={<SaveIcon />}
 								type="submit"
 								onClick={() => handleSubmit(input)}
 							>
-								Save
+								Add
 							</Button>
 						</form>
 					</div>

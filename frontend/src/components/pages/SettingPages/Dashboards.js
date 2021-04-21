@@ -18,7 +18,7 @@ export default function Dashboards(props) {
 				setDashboards(res.data);
 			})
 			.catch((err) => console.log(err));
-	}, []);
+	}, [cookies.userData.id]);
 
 	const selectDashboard = (dashboardId) => {
 		setCookie('dashboardId', dashboardId, { path: '/' });

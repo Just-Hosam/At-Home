@@ -12,14 +12,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import useSocket from '../../../hooks/useSocket';
 
 //COMPONENT STARTS
-const CalendarWidget = (props) => {
 
+const CalendarWidget = () => {
 
 	const [cookies] = useCookies(['userID']);
 	const dash_id = cookies.dashboardId;
 
-		//websocket connection
 	const { sendSocketMessage, broadcast } = useSocket();
+	
 
 	const [e, setEvents] = useState({
 		events: [],
@@ -40,22 +40,34 @@ const CalendarWidget = (props) => {
 		inputDialog: false,
 		editDialog: false,
 		viewDialog: false,
+		showCreate: false
 	});
 
-	//  fetch events data on inital render
+	const hideUnusedUi = () => {
+		const elements = document.getElementsByClassName('modeButton');
+		const hideMode = elements[elements.length -1];
+		hideMode.style.display = 'none';
+	}
+
 	useEffect(() => {
+
+		hideUnusedUi();
+			
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
 			// Necessary because of naming conflics between the calendar component and SQL, for example the object key 'from' is need for the calendar to render but cannot be used in a SQL query.
 			const parsedEvents = e[0].data.map((event) => {
+				const from = `${event.start_at.substr(0, 10)}T00:35:00+00:00`;
+				const to = `${event.end_at.substr(0, 10)}T00:35:00+00:00`;
 				return {
 					id: event.id,
-					color: 'rgb(96, 83, 247)',
-					from: event.start_at,
-					to: event.end_at,
+					color: 'transparent',
+					from: from,
+					to: to,
 					title: event.title,
 					description: event.description,
 				};
 			});
+		
 
 			setEvents((prev) => ({
 				...prev,
@@ -63,20 +75,25 @@ const CalendarWidget = (props) => {
 				details: {},
 			}));
 		});
-	}, [broadcast.calendar]);
+
+	}, [broadcast.calendar, dash_id]);
+
 
 	const renderWidget = () => {
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
 			const parsedEvents = e[0].data.map((event) => {
+				const from = `${event.start_at.substr(0, 10)}T00:35:00+00:00`;
+				const to = `${event.end_at.substr(0, 10)}T00:35:00+00:00`;
 				return {
 					id: event.id,
-					color: 'rgb(96, 83, 247)',
-					from: event.start_at,
-					to: event.end_at,
+					color: 'transparent',
+					from: from,
+					to: to,
 					title: event.title,
 					description: event.description,
 				};
 			});
+	
 
 			setEvents((prev) => ({
 				...prev,
@@ -88,6 +105,7 @@ const CalendarWidget = (props) => {
 
 	//create event
 	const createEvent = (newEvent) => {
+	
 		axios
 			.post(`/dashboards/${dash_id}/events`, { newEvent })
 			.then((res) => {
@@ -120,7 +138,6 @@ const CalendarWidget = (props) => {
 
 	//delete event
 	const deleteEvent = () => {
-	
 		axios
 			.delete(`/dashboards/${dash_id}/events/${e.details.id}`)
 			.then((res) => {
@@ -135,9 +152,10 @@ const CalendarWidget = (props) => {
 			.catch((err) => console.log(err));
 	};
 
-	//DIALOG
+
 
 	const handleClickOpen = (event) => {
+	
 		setOpen({
 			inputDialog: true,
 		});
@@ -151,9 +169,9 @@ const CalendarWidget = (props) => {
 		const month = event.month + 1;
 		const monthStr = month < 10 ? `0${month}` : month;
 		const day = event.day < 10 ? `0${event.day}` : event.day;
-		const hour = Math.floor(event.hour);
-		const hourStr = hour < 10 ? `0${hour}` : hour;
-		const parsedDate = `${event.year}-${monthStr}-${day}T${hourStr}:00:00+00:00`;
+		// const hour = Math.floor(event.hour);
+		// const hourStr = hour < 10 ? `0${hour}` : hour;
+		const parsedDate = `${event.year}-${monthStr}-${day}T00:35:00+00:00`;
 
 		return parsedDate;
 	};
@@ -164,11 +182,11 @@ const CalendarWidget = (props) => {
 		}
 
 		const id = e.events.length < 1 ? 1 : e.events.length + 1;
-		const to = input.to ? `${input.to}T00:00:00+00:00` : input.from;
+		const to = input.to ? `${input.to}T00:35:00+00:00` : input.from;
 
 		const newEvent = {
 			id: id,
-			color: 'rgb(96, 83, 247)',
+			color: 'transparent',
 			from: input.from,
 			to: to,
 			title: input.title,
@@ -196,12 +214,12 @@ const CalendarWidget = (props) => {
 
 		let from = input.from ? input.from : e.details.from;
 		let to = input.to ? input.to : e.details.to;
-		from = `${from}T00:00:00+00:00`;
-		to = `${to}T00:00:00+00:00`;
+		from = `${from}T00:35:00+00:00`;
+		to = `${to}T00:35:00+00:00`;
 
 		const editedEvent = {
 			id: e.details.id,
-			color: 'rgb(96, 83, 247)',
+			color: 'transparent',
 			from: from,
 			to: to,
 			title: input.title,
@@ -230,6 +248,7 @@ const CalendarWidget = (props) => {
 	};
 
 	const openEventDialog = (id) => {
+		
 		const eventDetails = fetchEventDetails(id);
 
 		setEvents((prev) => ({
@@ -249,6 +268,7 @@ const CalendarWidget = (props) => {
 			inputDialog: false,
 			editDialog: false,
 			viewDialog: false,
+			showCreate:true
 		});
 
 		setInput({
@@ -263,17 +283,51 @@ const CalendarWidget = (props) => {
 			events: [...e.events],
 			// details: {}
 		}));
+
 	};
+
+	const restructureCalendar = e => {
+
+	
+		if (e.mode === 'dailyMode'){
+
+			setOpen((prev) => ({
+				...prev,
+				showCreate: true
+			}));
+
+		const elements = document.getElementsByClassName('dailyHourWrapper');
+		for (let i = 1; i < elements.length; i++){
+		
+				elements[i].style.display = 'none';
+		
+		}
+
+		} else if (e.mode === 'monthlyMode' || 'yearlyMode'){
+			setOpen((prev) => ({
+				...prev,
+				showCreate: false
+			}));
+		}
+
+	}
+
+	const creteEventBtn = <div className={open.showCreate 
+	? 'createEventBtn' : 'createEventBtn-hide'}>
+	<h1>+</h1></div>
 
 	return (
 		<div id="calendar-widget">
 			<div className="calendar-class">
 				<Calendar
-					id='calendar-main'
+					id="calendar-main"
 					events={e.events}
+					onChange={(event) => restructureCalendar(event)}
 					onClickEvent={(event) => openEventDialog(event)}
 					onClickTimeLine={(event) => handleClickOpen(event)}
+					
 				/>
+		{creteEventBtn}
 			</div>
 
 			<Dialog
@@ -281,16 +335,17 @@ const CalendarWidget = (props) => {
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-					<DialogContent className="calendar-dialog-head">
+				<DialogContent className="calendar-dialog-head">
 					Create a new event
-					</DialogContent>
-				
-				<DialogContent className='calendar-dialog-wrapper'>
+				</DialogContent>
+
+				<DialogContent className="calendar-dialog-wrapper">
 					<DialogContentText id="calendar-dialog-body">
 						Simply enter your event details and save.
 					</DialogContentText>
+					<form className='calendar-inputs'>
 					<TextField
-			
+						className='calendar-inputs'
 						margin="dense"
 						id="title"
 						label="Title"
@@ -306,8 +361,9 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-					<div className='content-divider'></div>
+					<div className="content-divider"></div>
 					<TextField
+					  className='calendar-inputs'
 						margin="dense"
 						id="description"
 						label="Description"
@@ -323,10 +379,14 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
+<
+					</form>
 					<div className='content-bottom-divider'></div>
-					
+	
+
 					<form noValidate>
 						<TextField
+						  className='calendar-inputs'
 							id="date-picker"
 							label="End Date"
 							type="date"
@@ -337,40 +397,47 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-						
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
 					</form>
 				</DialogContent>
-				<DialogActions>
+
+				<DialogActions className='calendar-dialog-bottom'>
 					<Button id='calendar-cancel-btn' onClick={closeDialog} >
+
 						Cancel
 					</Button>
-					<Button id='calendar-save-btn' onClick={saveEvent} >
+					<Button id="calendar-save-btn" onClick={saveEvent}>
 						Save
-					</Button >
+					</Button>
 				</DialogActions>
 			</Dialog>
+
+
+
 
 			<Dialog
 				open={open.editDialog ? open.editDialog : false}
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
+
 					<DialogContent className='calendar-dialog-head' >
-						Edit event
+						Edit
 					</DialogContent>
 				<DialogContent className='calendar-dialog-wrapper'>
 					<DialogContentText id="calendar-dialog-body">
 						Simply edit your event details and save.
 					</DialogContentText>
-					
+					<form className='calendar-inputs'>
+
 					<TextField
+					className='calendar-inputs'
 						autoFocus
 						margin="dense"
-						id="title"
+						id="calendar-input-title"
 						label="Title"
 						type="text"
 						variant="outlined"
@@ -384,11 +451,11 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-				
+
 					<TextField
-					className='calendar-inputs'
+						className="calendar-inputs"
 						margin="dense"
-						id="description"
+						id="calendar-input-des"
 						label="Description"
 						type="text"
 						variant="outlined"
@@ -402,11 +469,14 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
+
 					<div className='content-bottom-divider'></div>
-					
+					</form>
+
 					<form noValidate>
 						<TextField
-							id="start_date"
+						className='calendar-inputs'
+							id="start-date"
 							label="Start Date"
 							type="date"
 							value={input.from ? input.from : e.details.from}
@@ -416,18 +486,18 @@ const CalendarWidget = (props) => {
 									from: event.target.value,
 								}))
 							}
-						
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
-
 					</form>
-					<div className='content-bottom-divider'></div>
-					
+					<div className="content-bottom-divider"></div>
+
 					<form>
+
 					<TextField
-							id="end_date"
+					className='calendar-inputs'
+							id="end-date"
 							label="End Date"
 							type="date"
 							value={input.to ? input.to : e.details.to}
@@ -437,26 +507,23 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-							
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
 					</form>
 
-				
 				</DialogContent>
-				<DialogActions>
+				<DialogActions className='calendar-dialog-bottom'>
 					<Button id='calendar-cancel-btn' onClick={closeDialog} >
+
 						Cancel
 					</Button>
-					<Button id='calendar-save-btn' onClick={saveEdit} >
+					<Button id="calendar-save-btn" onClick={saveEdit}>
 						Save
 					</Button>
 				</DialogActions>
 			</Dialog>
-
-
 
 			<Dialog
 				className="alert-dialog-slide-background"
@@ -466,37 +533,33 @@ const CalendarWidget = (props) => {
 				aria-labelledby="alert-dialog-slide-title"
 				aria-describedby="alert-dialog-slide-description"
 			>
-				<div className='calendar-dialog-wrapper'>
-				<DialogContent 
-				className='calendar-dialog-head'>
-					{e.details ? e.details.title : ''}
-				</DialogContent>
+				<div className="calendar-dialog-wrapper">
+					<DialogContent className="calendar-dialog-head">
+						{e.details ? e.details.title : ''}
+					</DialogContent>
 
-				<DialogContent 	>
-					<DialogContentText
-						id='calendar-dialog-body'
-					>
-						{e.details ? e.details.description : ''}
-					</DialogContentText>
-					<DialogContentText
-						className='calendar-dialog-foot'
-						id="alert-dialog-slide-description"
-					>
-						{e.details ? `From: ${e.details.from}` : ''}
-					</DialogContentText>
-					<DialogContentText
-			
-						id="alert-dialog-slide-description"
-					>
-						{e.details ? `To: ${e.details.to}` : ''}
-					</DialogContentText>
-				</DialogContent>
+					<DialogContent>
+						<DialogContentText id="calendar-dialog-body">
+							{e.details ? e.details.description : ''}
+						</DialogContentText>
+						<DialogContentText
+							className="calendar-dialog-foot"
+							id="alert-dialog-slide-description"
+						>
+							{e.details ? `From: ${e.details.from}` : ''}
+						</DialogContentText>
+						<DialogContentText id="alert-dialog-slide-description">
+							{e.details ? `To: ${e.details.to}` : ''}
+						</DialogContentText>
+					</DialogContent>
 				</div>
-				<DialogActions >
+
+				<DialogActions className='calendar-dialog-bottom'>
 					<Button id='calendar-edit-btn' onClick={openEdit}>
+
 						Edit
 					</Button>
-					<Button id='calendar-delete-btn' onClick={deleteEvent}>
+					<Button id="calendar-delete-btn" onClick={deleteEvent}>
 						Delete
 					</Button>
 				</DialogActions>

@@ -3,7 +3,6 @@
 
 #widget-chores {
 	@include card-layout;
-	// padding: 10px;
 	display: flex;
 	height: 100%;
 	flex-direction: column;
@@ -21,21 +20,35 @@
 
 	#chores-btn {
 		height: 35px;
-		margin-left: 0.5rem;
-		margin-right: 4rem;
+		margin-left: 5px;
+		margin-right: 10px;
 		background-color: var(--accent-color-alt);
 		color: var(--card-color);
 	}
 
 	#chores-progress-bar {
 		margin: 0.5rem;
-		// border: 1px solid red;
+	}
+
+	#chores-trophy {
+		color: var(--accent-color-alt);
+	}
+
+	.MuiFormControl-root {
+		> label {
+				color: var(--text-color);
+		}
+		.MuiInputBase-root {
+				> input {
+						color: var(--text-color);
+				}
+		}
 	}
 
 	h2 {
 		margin: 0;
-		margin-left: 4rem;
-		margin-right: 1rem;
+		margin-left: 10px;
+		margin-right: 0.5rem;
 		font-size: 2rem;
     font-weight: bold;
 		color: var(--accent-color);
@@ -77,33 +90,20 @@
     flex-wrap: wrap;
 
 		.MuiChip-root {
-			// color: white;
-			// border: 1px solid black;
 			background-color: var(--accent-color-alt);
 		}
 
-		.MuiChip-deleteable {
-			color: #fff;
-			// background-color: var(--accent-color);
-			background-color: white;
-		}
-
 		.MuiChip-avatar {
-			// color: var(--accent-color);
-			// background-color: #fff;
-			color: #fff;
+			color: var(--text-color-button);
 			background-color: var(--accent-color);
 		}
 		
 		.MuiChip-deleteIcon {
-			// background-color: #fff;
 			color: var(--accent-color);
-			// color: #fff;
 		}
 
 		.MuiChip-label {
 			color: var(--text-color-button);
-			// color: var(--accent-color);
 		}
 	}
 }

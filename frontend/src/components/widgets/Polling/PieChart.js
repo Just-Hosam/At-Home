@@ -1,6 +1,48 @@
 import Chart from "react-google-charts";
+import { useCookies } from 'react-cookie';
+
 const PieChart = (props) => {
+
+	const [cookies] = useCookies(['userID']);
+
+	const theme = cookies.theme.includes('DARK') ?
+	{
+		font: '#fff',
+		background:'#2c303a' 
+	}
+	:
+	{
+		font: '#2c303a',
+		background:'#fff' 
+	};
+
+	const colorOptions = [
+		['#8076fb', '#9a92fa', '#bdb7fa'],
+		['#1b8fee','#2fa2ff','#78c2fe'],
+		['#e2a54a','#d39a45','#c99b55'],
+		['#c96784','#cc5276','#f786a8']
+	];
+
+	let i = 0;
+	switch(cookies.theme){
+		case 'LIGHT_PURPLE':
+		i = 0
+		break;
+		case 'LIGHT_BLUE':
+		i = 1
+		break;
+		case 'DARK_YELLOW':
+		i = 2
+		break;
+		case 'DARK_PINK':
+		i = 3
+		break;
+		default:
+		i = 0;
+	}
 	
+
+
 	let title = "No Polling Data";
 	let pieParams = ['...','...','...'];
 
@@ -41,15 +83,21 @@ if (props.options){
   ]}
   options={{
 		
-    title: title.title,
+    title: null,
     is3D: true,
-		colors: ['rgb(96, 83, 247)', 'rgb(128, 118, 251)', 'rgb(160, 153, 255)'],
-		 
+		colors: [colorOptions[i][0],colorOptions[i][1],colorOptions[i][2]],
+		color:theme.font,
+		backgroundColor: theme.background,
 		titleTextStyle: {
-		
+			color: theme.font,
 			fontSize: 18, 
-		
-	}
+	},
+	legend: {
+		textStyle: {
+				color: theme.font,
+				fontWeight: 'normal'
+		}
+}
 		
   }}
   rootProps={{ 'data-testid': '2' }}
