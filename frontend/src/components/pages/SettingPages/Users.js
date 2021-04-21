@@ -10,18 +10,32 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import axios from 'axios';
 import useMailer from '../../../hooks/useMailer';
-import useSocket from "../../../hooks/useSocket";
+import useSocket from '../../../hooks/useSocket';
 
 export default function Dashboards() {
 	const [cookies] = useCookies(['userID']);
 	const [users, setUsers] = useState([]);
 	const [allUsers, setAllUsers] = useState([]);
 
-	const {sendInvite} = useMailer(); // <-- connect mailer
-	const {broadcast} = useSocket(); // <-- connect websocket
-
+	const { sendInvite } = useMailer(); // <-- connect mailer
+	const { broadcast } = useSocket(); // <-- connect websocket
 
 	useEffect(() => {
+		if (broadcast.invite) {
+			axios
+				.post(`/dashboards/${cookies.dashboardId}/users`, {
+					userEmail: broadcast.invite,
+				})
+				.then((res) => {
+					setUsers((prev) => {
+						return [res.data, ...prev];
+					});
+					setAllUsers((prev) => {
+						return prev.filter((elem) => elem.id !== res.data.id);
+					});
+				});
+		}
+
 		axios
 			.get(`/dashboards/${cookies.dashboardId}/users`)
 			.then((res) => {
@@ -41,7 +55,7 @@ export default function Dashboards() {
 					.catch((err) => console.log(err));
 			})
 			.catch((err) => console.log(err));
-	}, []);
+	}, [broadcast.invite, cookies.dashboardId]);
 
 	const removeUser = (userObj) => {
 		axios
@@ -109,30 +123,10 @@ export default function Dashboards() {
 		);
 	});
 
-	useEffect(() => { // <-- updates ui when  user accepts invite
-
-	if(broadcast.invite) {  
-		
-		axios
-			.post(`/dashboards/${cookies.dashboardId}/users`, {
-				userEmail: broadcast.invite,
-			})
-			.then((res) => {
-				setUsers((prev) => {
-					return [res.data, ...prev];
-				});
-				setAllUsers((prev) => {
-					return prev.filter((elem) => elem.id !== res.data.id);
-				});
-			});
-	}
-
-	}, [broadcast.invite]); 
-
-	const sendInviteEmail = event => {
-	event.preventDefault();
-	sendInvite(event.target[0].value); // <-- send email invite
-	}
+	const sendInviteEmail = (event) => {
+		event.preventDefault();
+		sendInvite(event.target[0].value); // <-- send email invite
+	};
 
 	return (
 		<div id="settings-users">

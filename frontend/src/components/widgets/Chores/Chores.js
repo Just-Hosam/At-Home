@@ -34,7 +34,7 @@ console.log(`useStyles`, useStyles);
 export default function Chores(props) {
 	const [cookies] = useCookies(['userID']);
 	const dashboardId = cookies.dashboardId;
-	const classes = useStyles();
+
 	const parentUsers = [...props.choreState.dashboardUsers];
 	const setParentUsers = props.choreState.setDashboardUsers;
 	const parentChores = [...props.choreState.choresList];
@@ -44,7 +44,7 @@ export default function Chores(props) {
 	const parentProgress = { ...props.choreState.progress };
 	const setParentProgress = props.choreState.setProgress;
 
-	const { sendSocketMessage, broadcast } = useSocket();
+	const { broadcast } = useSocket();
 
 	useEffect(() => {
 		axios
@@ -58,7 +58,15 @@ export default function Chores(props) {
 				});
 			})
 			.catch((err) => console.log('CHORES COMPONENT ERROR', err));
-	}, [broadcast.chores]);
+	}, [
+		broadcast.chores,
+		dashboardId,
+		parentProgress,
+		setParentChores,
+		setParentDone,
+		setParentProgress,
+		setParentUsers,
+	]);
 
 	const handleToggle = (value) => () => {
 		value.done = !value.done;

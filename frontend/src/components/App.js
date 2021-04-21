@@ -17,7 +17,6 @@ const { darkYellowTheme } = require('./pages/SettingPages/Themes/darkYellow');
 const { darkPinkTheme } = require('./pages/SettingPages/Themes/darkPink');
 
 const App = () => {
-
 	const { sendSocketMessage } = useSocket();
 	const [cookies, setCookie] = useCookies(null);
 	const initialPage = cookies.userData ? 'GRID' : 'LOGIN';
@@ -35,7 +34,6 @@ const App = () => {
 		if (invite) {
 			setCookie('dashboardId', invite.id, { path: '/' });
 			sendSocketMessage(invite.email);
-
 		}
 	}, []);
 
