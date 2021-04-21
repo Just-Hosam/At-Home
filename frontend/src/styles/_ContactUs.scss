@@ -1,0 +1,85 @@
+@import './variables';
+
+#contact-page {
+	@include card-layout;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 600px;
+
+	header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 0;
+		padding: 0;
+
+		h2 {
+			margin: 0;
+			font-size: 2.5rem;
+			color: var(--accent-color);
+		}
+
+		p {
+			font-size: 1.2rem;
+			color: var(--text-color);
+
+			span {
+				color: var(--accent-color-alt);
+			}
+		}
+	}
+
+	ul {
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: flex;
+			color: var(--text-color);
+			justify-content: space-between;
+			align-items: center;
+			border: 1px solid var(--text-color-alt);
+			border-radius: 10px;
+			padding: 0 10px;
+			margin-bottom: 10px;
+
+			.contact-details {
+				padding: 10px;
+
+				p {
+					font-size: 1.1rem;
+					color: var(--text-color);
+					margin: 0;
+					padding: 0;
+					margin-bottom: 3px;
+				}
+
+				span {
+					font-size: 0.9rem;
+					color: var(--text-color-alt);
+					margin: 0;
+					padding: 0;
+					font-style: italic;
+				}
+			}
+
+			.contact-icons {
+				font-size: 2rem;
+
+				a {
+					text-decoration: none;
+					color: var(--accent-color-alt);
+				}
+				i {
+					margin-left: 10px;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

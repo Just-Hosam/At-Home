@@ -28,6 +28,13 @@
 
 	#chores-progress-bar {
 		margin: 0.5rem;
+		.MuiLinearProgress-root {
+			background-color: rgb(197, 197, 197);
+		}
+
+		.MuiLinearProgress-bar {
+			background-color: var(--accent-color);
+		}
 	}
 
 	#chores-trophy {
@@ -36,12 +43,12 @@
 
 	.MuiFormControl-root {
 		> label {
-				color: var(--text-color);
+			color: var(--text-color);
 		}
 		.MuiInputBase-root {
-				> input {
-						color: var(--text-color);
-				}
+			> input {
+				color: var(--text-color);
+			}
 		}
 	}
 
@@ -50,7 +57,7 @@
 		margin-left: 10px;
 		margin-right: 0.5rem;
 		font-size: 2rem;
-    font-weight: bold;
+		font-weight: bold;
 		color: var(--accent-color);
 	}
 
@@ -86,8 +93,8 @@
 
 	.chore-chip {
 		display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+		justify-content: center;
+		flex-wrap: wrap;
 
 		.MuiChip-root {
 			background-color: var(--accent-color-alt);
@@ -97,7 +104,7 @@
 			color: var(--text-color-button);
 			background-color: var(--accent-color);
 		}
-		
+
 		.MuiChip-deleteIcon {
 			color: var(--accent-color);
 		}
