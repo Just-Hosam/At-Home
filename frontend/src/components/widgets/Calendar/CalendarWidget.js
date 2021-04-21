@@ -14,12 +14,10 @@ import useSocket from '../../../hooks/useSocket';
 //COMPONENT STARTS
 
 const CalendarWidget = () => {
-
 	const [cookies] = useCookies(['userID']);
 	const dash_id = cookies.dashboardId;
 
 	const { sendSocketMessage, broadcast } = useSocket();
-	
 
 	const [e, setEvents] = useState({
 		events: [],
@@ -40,19 +38,18 @@ const CalendarWidget = () => {
 		inputDialog: false,
 		editDialog: false,
 		viewDialog: false,
-		showCreate: false
+		showCreate: false,
 	});
 
 	const hideUnusedUi = () => {
 		const elements = document.getElementsByClassName('modeButton');
-		const hideMode = elements[elements.length -1];
+		const hideMode = elements[elements.length - 1];
 		hideMode.style.display = 'none';
-	}
+	};
 
 	useEffect(() => {
-
 		hideUnusedUi();
-			
+
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
 			// Necessary because of naming conflics between the calendar component and SQL, for example the object key 'from' is need for the calendar to render but cannot be used in a SQL query.
 			const parsedEvents = e[0].data.map((event) => {
@@ -67,7 +64,6 @@ const CalendarWidget = () => {
 					description: event.description,
 				};
 			});
-		
 
 			setEvents((prev) => ({
 				...prev,
@@ -75,9 +71,7 @@ const CalendarWidget = () => {
 				details: {},
 			}));
 		});
-
 	}, [broadcast.calendar, dash_id]);
-
 
 	const renderWidget = () => {
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
@@ -93,7 +87,6 @@ const CalendarWidget = () => {
 					description: event.description,
 				};
 			});
-	
 
 			setEvents((prev) => ({
 				...prev,
@@ -105,7 +98,6 @@ const CalendarWidget = () => {
 
 	//create event
 	const createEvent = (newEvent) => {
-	
 		axios
 			.post(`/dashboards/${dash_id}/events`, { newEvent })
 			.then((res) => {
@@ -152,10 +144,7 @@ const CalendarWidget = () => {
 			.catch((err) => console.log(err));
 	};
 
-
-
 	const handleClickOpen = (event) => {
-	
 		setOpen({
 			inputDialog: true,
 		});
@@ -248,7 +237,6 @@ const CalendarWidget = () => {
 	};
 
 	const openEventDialog = (id) => {
-		
 		const eventDetails = fetchEventDetails(id);
 
 		setEvents((prev) => ({
@@ -268,7 +256,7 @@ const CalendarWidget = () => {
 			inputDialog: false,
 			editDialog: false,
 			viewDialog: false,
-			showCreate:true
+			showCreate: true,
 		});
 
 		setInput({
@@ -283,38 +271,32 @@ const CalendarWidget = () => {
 			events: [...e.events],
 			// details: {}
 		}));
-
 	};
 
-	const restructureCalendar = e => {
-
-	
-		if (e.mode === 'dailyMode'){
-
+	const restructureCalendar = (e) => {
+		if (e.mode === 'dailyMode') {
 			setOpen((prev) => ({
 				...prev,
-				showCreate: true
+				showCreate: true,
 			}));
 
-		const elements = document.getElementsByClassName('dailyHourWrapper');
-		for (let i = 1; i < elements.length; i++){
-		
+			const elements = document.getElementsByClassName('dailyHourWrapper');
+			for (let i = 1; i < elements.length; i++) {
 				elements[i].style.display = 'none';
-		
-		}
-
-		} else if (e.mode === 'monthlyMode' || 'yearlyMode'){
+			}
+		} else if (e.mode === 'monthlyMode' || 'yearlyMode') {
 			setOpen((prev) => ({
 				...prev,
-				showCreate: false
+				showCreate: false,
 			}));
 		}
+	};
 
-	}
-
-	const creteEventBtn = <div className={open.showCreate 
-	? 'createEventBtn' : 'createEventBtn-hide'}>
-	<h1>+</h1></div>
+	const creteEventBtn = (
+		<div className={open.showCreate ? 'createEventBtn' : 'createEventBtn-hide'}>
+			<h1>+</h1>
+		</div>
+	);
 
 	return (
 		<div id="calendar-widget">
@@ -325,9 +307,8 @@ const CalendarWidget = () => {
 					onChange={(event) => restructureCalendar(event)}
 					onClickEvent={(event) => openEventDialog(event)}
 					onClickTimeLine={(event) => handleClickOpen(event)}
-					
 				/>
-		{creteEventBtn}
+				{creteEventBtn}
 			</div>
 
 			<Dialog
@@ -343,50 +324,49 @@ const CalendarWidget = () => {
 					<DialogContentText id="calendar-dialog-body">
 						Simply enter your event details and save.
 					</DialogContentText>
-					<form className='calendar-inputs'>
-					<TextField
-						className='calendar-inputs'
-						margin="dense"
-						id="title"
-						label="Title"
-						type="text"
-						variant="outlined"
-						autoComplete="off"
-						fullWidth
-						value={input.title ? input.title : ''}
-						onChange={(event) =>
-							setInput((prev) => ({
-								...prev,
-								title: event.target.value,
-							}))
-						}
-					/>
-					<div className="content-divider"></div>
-					<TextField
-					  className='calendar-inputs'
-						margin="dense"
-						id="description"
-						label="Description"
-						type="text"
-						variant="outlined"
-						autoComplete="off"
-						fullWidth
-						value={input.description ? input.description : ''}
-						onChange={(event) =>
-							setInput((prev) => ({
-								...prev,
-								description: event.target.value,
-							}))
-						}
-					/>
-<
+					<form className="calendar-inputs">
+						<TextField
+							className="calendar-inputs"
+							margin="dense"
+							id="title"
+							label="Title"
+							type="text"
+							variant="outlined"
+							autoComplete="off"
+							fullWidth
+							value={input.title ? input.title : ''}
+							onChange={(event) =>
+								setInput((prev) => ({
+									...prev,
+									title: event.target.value,
+								}))
+							}
+						/>
+						<div className="content-divider"></div>
+						<TextField
+							className="calendar-inputs"
+							margin="dense"
+							id="description"
+							label="Description"
+							type="text"
+							variant="outlined"
+							autoComplete="off"
+							fullWidth
+							value={input.description ? input.description : ''}
+							onChange={(event) =>
+								setInput((prev) => ({
+									...prev,
+									description: event.target.value,
+								}))
+							}
+						/>
+						{/* < */}
 					</form>
-					<div className='content-bottom-divider'></div>
-	
+					<div className="content-bottom-divider"></div>
 
 					<form noValidate>
 						<TextField
-						  className='calendar-inputs'
+							className="calendar-inputs"
 							id="date-picker"
 							label="End Date"
 							type="date"
@@ -404,9 +384,8 @@ const CalendarWidget = () => {
 					</form>
 				</DialogContent>
 
-				<DialogActions className='calendar-dialog-bottom'>
-					<Button id='calendar-cancel-btn' onClick={closeDialog} >
-
+				<DialogActions className="calendar-dialog-bottom">
+					<Button id="calendar-cancel-btn" onClick={closeDialog}>
 						Cancel
 					</Button>
 					<Button id="calendar-save-btn" onClick={saveEvent}>
@@ -415,67 +394,60 @@ const CalendarWidget = () => {
 				</DialogActions>
 			</Dialog>
 
-
-
-
 			<Dialog
 				open={open.editDialog ? open.editDialog : false}
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-
-					<DialogContent className='calendar-dialog-head' >
-						Edit
-					</DialogContent>
-				<DialogContent className='calendar-dialog-wrapper'>
+				<DialogContent className="calendar-dialog-head">Edit</DialogContent>
+				<DialogContent className="calendar-dialog-wrapper">
 					<DialogContentText id="calendar-dialog-body">
 						Simply edit your event details and save.
 					</DialogContentText>
-					<form className='calendar-inputs'>
+					<form className="calendar-inputs">
+						<TextField
+							className="calendar-inputs"
+							autoFocus
+							margin="dense"
+							id="calendar-input-title"
+							label="Title"
+							type="text"
+							variant="outlined"
+							autoComplete="off"
+							fullWidth
+							value={input.title ? input.title : ''}
+							onChange={(event) =>
+								setInput((prev) => ({
+									...prev,
+									title: event.target.value,
+								}))
+							}
+						/>
 
-					<TextField
-					className='calendar-inputs'
-						autoFocus
-						margin="dense"
-						id="calendar-input-title"
-						label="Title"
-						type="text"
-						variant="outlined"
-						autoComplete="off"
-						fullWidth
-						value={input.title ? input.title : ''}
-						onChange={(event) =>
-							setInput((prev) => ({
-								...prev,
-								title: event.target.value,
-							}))
-						}
-					/>
+						<TextField
+							className="calendar-inputs"
+							margin="dense"
+							id="calendar-input-des"
+							label="Description"
+							type="text"
+							variant="outlined"
+							autoComplete="off"
+							fullWidth
+							value={input.description ? input.description : ''}
+							onChange={(event) =>
+								setInput((prev) => ({
+									...prev,
+									description: event.target.value,
+								}))
+							}
+						/>
 
-					<TextField
-						className="calendar-inputs"
-						margin="dense"
-						id="calendar-input-des"
-						label="Description"
-						type="text"
-						variant="outlined"
-						autoComplete="off"
-						fullWidth
-						value={input.description ? input.description : ''}
-						onChange={(event) =>
-							setInput((prev) => ({
-								...prev,
-								description: event.target.value,
-							}))
-						}
-					/>
-
-					<div className='content-bottom-divider'></div>
+						<div className="content-bottom-divider"></div>
 					</form>
 
 					<form noValidate>
 						<TextField
-						className='calendar-inputs'
+							className="calendar-inputs"
 							id="start-date"
 							label="Start Date"
 							type="date"
@@ -494,9 +466,8 @@ const CalendarWidget = () => {
 					<div className="content-bottom-divider"></div>
 
 					<form>
-
-					<TextField
-					className='calendar-inputs'
+						<TextField
+							className="calendar-inputs"
 							id="end-date"
 							label="End Date"
 							type="date"
@@ -512,11 +483,9 @@ const CalendarWidget = () => {
 							}}
 						/>
 					</form>
-
 				</DialogContent>
-				<DialogActions className='calendar-dialog-bottom'>
-					<Button id='calendar-cancel-btn' onClick={closeDialog} >
-
+				<DialogActions className="calendar-dialog-bottom">
+					<Button id="calendar-cancel-btn" onClick={closeDialog}>
 						Cancel
 					</Button>
 					<Button id="calendar-save-btn" onClick={saveEdit}>
@@ -554,9 +523,8 @@ const CalendarWidget = () => {
 					</DialogContent>
 				</div>
 
-				<DialogActions className='calendar-dialog-bottom'>
-					<Button id='calendar-edit-btn' onClick={openEdit}>
-
+				<DialogActions className="calendar-dialog-bottom">
+					<Button id="calendar-edit-btn" onClick={openEdit}>
 						Edit
 					</Button>
 					<Button id="calendar-delete-btn" onClick={deleteEvent}>
