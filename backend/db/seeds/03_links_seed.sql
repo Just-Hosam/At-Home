@@ -1,9 +1,8 @@
 INSERT INTO links (user_id, dashboard_id, admin) VALUES
 (1, 1, true),
-(1, 2, false),
-(1, 3, false),
-(4, 1, false),
-(2, 2, true),
-(5, 2, false),
-(3, 3, true),
-(6, 3, false);
+(1, 2, true),
+(1, 3, true),
+(2, 1, true),
+(3, 1, false),
+(5, 1, true),
+(6, 1, false);
