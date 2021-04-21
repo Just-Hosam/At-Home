@@ -379,7 +379,6 @@ const CalendarWidget = () => {
 							}))
 						}
 					/>
-<
 					</form>
 					<div className='content-bottom-divider'></div>
 	
