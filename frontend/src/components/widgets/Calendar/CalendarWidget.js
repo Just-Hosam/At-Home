@@ -13,12 +13,10 @@ import useSocket from '../../../hooks/useSocket';
 
 //COMPONENT STARTS
 const CalendarWidget = (props) => {
-
-
 	const [cookies] = useCookies(['userID']);
 	const dash_id = cookies.dashboardId;
 
-		//websocket connection
+	//websocket connection
 	const { sendSocketMessage, broadcast } = useSocket();
 
 	const [e, setEvents] = useState({
@@ -63,7 +61,7 @@ const CalendarWidget = (props) => {
 				details: {},
 			}));
 		});
-	}, [broadcast.calendar]);
+	}, [broadcast.calendar, dash_id]);
 
 	const renderWidget = () => {
 		Promise.all([axios.get(`/dashboards/${dash_id}/events`)]).then((e) => {
@@ -120,7 +118,6 @@ const CalendarWidget = (props) => {
 
 	//delete event
 	const deleteEvent = () => {
-	
 		axios
 			.delete(`/dashboards/${dash_id}/events/${e.details.id}`)
 			.then((res) => {
@@ -269,7 +266,7 @@ const CalendarWidget = (props) => {
 		<div id="calendar-widget">
 			<div className="calendar-class">
 				<Calendar
-					id='calendar-main'
+					id="calendar-main"
 					events={e.events}
 					onClickEvent={(event) => openEventDialog(event)}
 					onClickTimeLine={(event) => handleClickOpen(event)}
@@ -281,16 +278,15 @@ const CalendarWidget = (props) => {
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-					<DialogContent className="calendar-dialog-head">
+				<DialogContent className="calendar-dialog-head">
 					Create a new event
-					</DialogContent>
-				
-				<DialogContent className='calendar-dialog-wrapper'>
+				</DialogContent>
+
+				<DialogContent className="calendar-dialog-wrapper">
 					<DialogContentText id="calendar-dialog-body">
 						Simply enter your event details and save.
 					</DialogContentText>
 					<TextField
-			
 						margin="dense"
 						id="title"
 						label="Title"
@@ -306,7 +302,7 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-					<div className='content-divider'></div>
+					<div className="content-divider"></div>
 					<TextField
 						margin="dense"
 						id="description"
@@ -323,8 +319,8 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-					<div className='content-bottom-divider'></div>
-					
+					<div className="content-bottom-divider"></div>
+
 					<form noValidate>
 						<TextField
 							id="date-picker"
@@ -337,7 +333,6 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-						
 							InputLabelProps={{
 								shrink: true,
 							}}
@@ -345,12 +340,12 @@ const CalendarWidget = (props) => {
 					</form>
 				</DialogContent>
 				<DialogActions>
-					<Button id='calendar-cancel-btn' onClick={closeDialog} >
+					<Button id="calendar-cancel-btn" onClick={closeDialog}>
 						Cancel
 					</Button>
-					<Button id='calendar-save-btn' onClick={saveEvent} >
+					<Button id="calendar-save-btn" onClick={saveEvent}>
 						Save
-					</Button >
+					</Button>
 				</DialogActions>
 			</Dialog>
 
@@ -359,14 +354,14 @@ const CalendarWidget = (props) => {
 				onClose={closeDialog}
 				aria-labelledby="form-dialog-title"
 			>
-					<DialogContent className='calendar-dialog-head' >
-						Edit event
-					</DialogContent>
-				<DialogContent className='calendar-dialog-wrapper'>
+				<DialogContent className="calendar-dialog-head">
+					Edit event
+				</DialogContent>
+				<DialogContent className="calendar-dialog-wrapper">
 					<DialogContentText id="calendar-dialog-body">
 						Simply edit your event details and save.
 					</DialogContentText>
-					
+
 					<TextField
 						autoFocus
 						margin="dense"
@@ -384,9 +379,9 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-				
+
 					<TextField
-					className='calendar-inputs'
+						className="calendar-inputs"
 						margin="dense"
 						id="description"
 						label="Description"
@@ -402,8 +397,8 @@ const CalendarWidget = (props) => {
 							}))
 						}
 					/>
-					<div className='content-bottom-divider'></div>
-					
+					<div className="content-bottom-divider"></div>
+
 					<form noValidate>
 						<TextField
 							id="start_date"
@@ -416,17 +411,15 @@ const CalendarWidget = (props) => {
 									from: event.target.value,
 								}))
 							}
-						
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
-
 					</form>
-					<div className='content-bottom-divider'></div>
-					
+					<div className="content-bottom-divider"></div>
+
 					<form>
-					<TextField
+						<TextField
 							id="end_date"
 							label="End Date"
 							type="date"
@@ -437,26 +430,21 @@ const CalendarWidget = (props) => {
 									to: event.target.value,
 								}))
 							}
-							
 							InputLabelProps={{
 								shrink: true,
 							}}
 						/>
 					</form>
-
-				
 				</DialogContent>
 				<DialogActions>
-					<Button id='calendar-cancel-btn' onClick={closeDialog} >
+					<Button id="calendar-cancel-btn" onClick={closeDialog}>
 						Cancel
 					</Button>
-					<Button id='calendar-save-btn' onClick={saveEdit} >
+					<Button id="calendar-save-btn" onClick={saveEdit}>
 						Save
 					</Button>
 				</DialogActions>
 			</Dialog>
-
-
 
 			<Dialog
 				className="alert-dialog-slide-background"
@@ -466,37 +454,31 @@ const CalendarWidget = (props) => {
 				aria-labelledby="alert-dialog-slide-title"
 				aria-describedby="alert-dialog-slide-description"
 			>
-				<div className='calendar-dialog-wrapper'>
-				<DialogContent 
-				className='calendar-dialog-head'>
-					{e.details ? e.details.title : ''}
-				</DialogContent>
+				<div className="calendar-dialog-wrapper">
+					<DialogContent className="calendar-dialog-head">
+						{e.details ? e.details.title : ''}
+					</DialogContent>
 
-				<DialogContent 	>
-					<DialogContentText
-						id='calendar-dialog-body'
-					>
-						{e.details ? e.details.description : ''}
-					</DialogContentText>
-					<DialogContentText
-						className='calendar-dialog-foot'
-						id="alert-dialog-slide-description"
-					>
-						{e.details ? `From: ${e.details.from}` : ''}
-					</DialogContentText>
-					<DialogContentText
-			
-						id="alert-dialog-slide-description"
-					>
-						{e.details ? `To: ${e.details.to}` : ''}
-					</DialogContentText>
-				</DialogContent>
+					<DialogContent>
+						<DialogContentText id="calendar-dialog-body">
+							{e.details ? e.details.description : ''}
+						</DialogContentText>
+						<DialogContentText
+							className="calendar-dialog-foot"
+							id="alert-dialog-slide-description"
+						>
+							{e.details ? `From: ${e.details.from}` : ''}
+						</DialogContentText>
+						<DialogContentText id="alert-dialog-slide-description">
+							{e.details ? `To: ${e.details.to}` : ''}
+						</DialogContentText>
+					</DialogContent>
 				</div>
-				<DialogActions >
-					<Button id='calendar-edit-btn' onClick={openEdit}>
+				<DialogActions>
+					<Button id="calendar-edit-btn" onClick={openEdit}>
 						Edit
 					</Button>
-					<Button id='calendar-delete-btn' onClick={deleteEvent}>
+					<Button id="calendar-delete-btn" onClick={deleteEvent}>
 						Delete
 					</Button>
 				</DialogActions>

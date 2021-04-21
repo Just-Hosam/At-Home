@@ -124,7 +124,7 @@
 
 					.MuiInputBase-root {
 						> input {
-							color: red;
+							color: var(--text-color);
 						}
 					}
 				}
@@ -173,7 +173,7 @@
 		#settings-appearance {
 			li {
 				height: 70px;
-				max-width: 467px;
+				// max-width: 467px;
 				padding-right: 0;
 
 				.color-palette {

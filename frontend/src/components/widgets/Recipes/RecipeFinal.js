@@ -63,7 +63,6 @@ export default function RecipeFinal(props) {
 								handleClose={handleClose}
 								handleView={handleView}
 								setGroceries={props.setGroceries}
-								handleClose={handleClose}
 							/>
 						)}
 						{modalView === 'RECIPE_ADD' && (

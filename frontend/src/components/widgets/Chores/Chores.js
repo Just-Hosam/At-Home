@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Chip from '../Misc/Chip';
+import useSocket from '../../../hooks/useSocket';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,6 +17,7 @@ import Select from '@material-ui/core/Select';
 
 export default function Chores(props) {
   const [cookies] = useCookies(['userID']);
+  const { broadcast } = useSocket();
   const dashboardId = cookies.dashboardId;
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
@@ -38,7 +40,7 @@ export default function Chores(props) {
         });
       })
       .catch((err) => console.log('CHORES COMPONENT ERROR', err));
-  }, []);
+  }, [broadcast.chores]);
 
   const handleToggle = (value) => () => {
     value.done = !value.done;

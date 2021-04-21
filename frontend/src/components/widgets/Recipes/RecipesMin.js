@@ -18,7 +18,7 @@ export default function RecipesMin(props) {
 			.get(`/dashboards/${dashboardId}/recipes/`)
 			.then((res) => setRecipes(res.data))
 			.catch((err) => console.log('Error getting recipes', err));
-	}, []);
+	}, [dashboardId]);
 
 	const handleAddButton = () => {
 		props.handleView('RECIPE_ADD');
