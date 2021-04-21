@@ -41,8 +41,13 @@ const PollsWidgetItem = (props) => {
 				poll: all[0].data,
 				options: all[1].data,
 			}));
-
+			console.log(all[1].data.length);
+		if(all[1].data.length < 1){
+			setMode('INIT')
+		} else {
 			setMode('OPTIONS');
+		}
+	
 		});
 	}, [broadcast.polls]); // <-- listen for websocket
 
@@ -220,13 +225,13 @@ const PollsWidgetItem = (props) => {
 	};
 
 	const core = determineMode(mode);
-
+	
 	return (
 		<div className="polls">
 			
 			<div className="header-wrapper">
 				<header className="header">
-				<h1>Voting Booth</h1>
+			{mode === 'INIT' || mode === 'CREATE' ? null:  <h1>Voting Booth</h1>}	
 			
 						{pollingData.options && mode === 'OPTIONS'
 								

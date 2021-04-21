@@ -137,6 +137,7 @@ const CalendarWidget = () => {
 
 				setOpen({
 					viewDialog: false,
+					showCreate: true
 				});
 
 				sendSocketMessage('calendar'); // <-- send websocket msg
@@ -308,7 +309,9 @@ const CalendarWidget = () => {
 					onClickEvent={(event) => openEventDialog(event)}
 					onClickTimeLine={(event) => handleClickOpen(event)}
 				/>
-				{creteEventBtn}
+
+			{creteEventBtn}
+
 			</div>
 
 			<Dialog
@@ -324,64 +327,47 @@ const CalendarWidget = () => {
 					<DialogContentText id="calendar-dialog-body">
 						Simply enter your event details and save.
 					</DialogContentText>
-					<form className="calendar-inputs">
-						<TextField
-							className="calendar-inputs"
-							margin="dense"
-							id="title"
-							label="Title"
-							type="text"
-							variant="outlined"
-							autoComplete="off"
-							fullWidth
-							value={input.title ? input.title : ''}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									title: event.target.value,
-								}))
-							}
-						/>
-						<div className="content-divider"></div>
-						<TextField
-							className="calendar-inputs"
-							margin="dense"
-							id="description"
-							label="Description"
-							type="text"
-							variant="outlined"
-							autoComplete="off"
-							fullWidth
-							value={input.description ? input.description : ''}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									description: event.target.value,
-								}))
-							}
-						/>
-						{/* < */}
-					</form>
-					<div className="content-bottom-divider"></div>
 
-					<form noValidate>
-						<TextField
-							className="calendar-inputs"
-							id="date-picker"
-							label="End Date"
-							type="date"
-							value={input.to ? input.to : ''}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									to: event.target.value,
-								}))
-							}
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>
+					<form className='calendar-inputs'>
+					<TextField
+						className='calendar-inputs'
+						margin="dense"
+						id="title"
+						label="Title"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
+						fullWidth
+						value={input.title ? input.title : ''}
+						onChange={(event) =>
+							setInput((prev) => ({
+								...prev,
+								title: event.target.value,
+							}))
+						}
+					/>
+					<div className="content-divider"></div>
+					<TextField
+					  className='calendar-inputs'
+						margin="dense"
+						id="description"
+						label="Description"
+						type="text"
+						variant="outlined"
+						autoComplete="off"
+						fullWidth
+						value={input.description ? input.description : ''}
+						onChange={(event) =>
+							setInput((prev) => ({
+								...prev,
+								description: event.target.value,
+							}))
+						}
+					/>
+
 					</form>
+					<div className='content-bottom-divider'></div>
+	
 				</DialogContent>
 
 				<DialogActions className="calendar-dialog-bottom">
@@ -465,24 +451,6 @@ const CalendarWidget = () => {
 					</form>
 					<div className="content-bottom-divider"></div>
 
-					<form>
-						<TextField
-							className="calendar-inputs"
-							id="end-date"
-							label="End Date"
-							type="date"
-							value={input.to ? input.to : e.details.to}
-							onChange={(event) =>
-								setInput((prev) => ({
-									...prev,
-									to: event.target.value,
-								}))
-							}
-							InputLabelProps={{
-								shrink: true,
-							}}
-						/>
-					</form>
 				</DialogContent>
 				<DialogActions className="calendar-dialog-bottom">
 					<Button id="calendar-cancel-btn" onClick={closeDialog}>
