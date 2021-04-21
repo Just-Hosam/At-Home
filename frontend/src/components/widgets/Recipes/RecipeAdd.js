@@ -120,8 +120,9 @@ export default function RecipeAdd(props) {
 		axios
 			.post(`/dashboards/${dashboardId}/recipes/`, inputRecipe)
 			.then((res) => {
+				props.setRecipes((prev) => [res.data, ...prev]);
 				props.handleView('');
-				return res;
+				props.handleClose();
 			});
 	};
 
