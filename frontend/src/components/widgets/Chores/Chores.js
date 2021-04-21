@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Chip from '../Misc/Chip';
+import useSocket from '../../../hooks/useSocket';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import List from '@material-ui/core/List';
@@ -15,24 +14,11 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-// import Zoom from '@material-ui/core/Zoom';
-
-const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: '100%',
-  //   backgroundColor: theme.palette.background.paper,
-  // },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
-console.log(`useStyles`, useStyles);
 
 export default function Chores(props) {
   const [cookies] = useCookies(['userID']);
+  const { broadcast } = useSocket();
   const dashboardId = cookies.dashboardId;
-  const classes = useStyles();
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
   const parentChores = [...props.choreState.choresList];
@@ -54,7 +40,7 @@ export default function Chores(props) {
         });
       })
       .catch((err) => console.log('CHORES COMPONENT ERROR', err));
-  }, []);
+  }, [broadcast.chores]);
 
   const handleToggle = (value) => () => {
     value.done = !value.done;
@@ -114,8 +100,8 @@ export default function Chores(props) {
   if (parentDone.length === parentChores.length) {
     trophy = (
       <i
+        id="chores-trophy"
         className="fas fa-trophy fa-3x"
-        style={{ color: 'rgb(96, 83, 247)' }}
       ></i>
     );
   } else {
@@ -139,11 +125,11 @@ export default function Chores(props) {
 
           if (value.name === 'none') {
             secondarySwitcher = (
-              <FormControl size="small" className="chore-selector">
-                <InputLabel id="demo-simple-select-label">Users</InputLabel>
+              <FormControl size="small" className="chore-selector" variant="outlined">
+                <InputLabel id="demo-simple-select-outlined-label">Users</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
                   defaultValue=""
                   onChange={(e) => handleChange(e, value.id)}
                 >
@@ -177,7 +163,6 @@ export default function Chores(props) {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
                         <Checkbox
-                          edge="start"
                           className="chore-checkbox"
                           checked={value.done}
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -195,7 +180,6 @@ export default function Chores(props) {
                     </ListItemSecondaryAction>
                   </div>
                 </ListItem>
-                <Divider className="chore-divider" />
               </div>
             );
           } else {

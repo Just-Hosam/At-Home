@@ -12,10 +12,20 @@
 
 	form {
 		margin-bottom: 10px;
+		.MuiFormControl-root {
+			> label {
+				color: var(--text-color);
+			}
+			.MuiInputBase-root {
+				> input {
+					color: var(--text-color);
+				}
+			}
+		}
 	}
 
 	#groceries-text {
-		color: var(--text-color);
+		// color: var(--text-color);
 		// temporary
 		width: 186px;
 	}

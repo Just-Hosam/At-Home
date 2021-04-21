@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 		flexWrap: 'wrap',
 		justifyContent: 'space-around',
 		overflow: 'hidden',
-		backgroundColor: theme.palette.background.paper,
 	},
 
 	icon: {
@@ -50,10 +49,14 @@ export default function Gallery(props) {
 	};
 
 	return (
-		<div className={classes.root}>
+		<div id="gallery-comp" className={classes.root}>
 			<GridList cellHeight={180} className={classes.gridList}>
 				{tileData.map((tile) => (
-					<GridListTile key={tile.id} onClick={() => loadImage(tile)}>
+					<GridListTile
+						style={{ padding: 0 }}
+						key={tile.id}
+						onClick={() => loadImage(tile)}
+					>
 						<img src={tile.img_url} alt={tile.text} />
 						<GridListTileBar title={tile.text} />
 					</GridListTile>

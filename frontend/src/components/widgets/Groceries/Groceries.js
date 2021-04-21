@@ -27,7 +27,7 @@ function Groceries(props) {
 			.get(`/dashboards/${dashboardId}/groceries/`)
 			.then((res) => setGroceries(res.data))
 			.catch((err) => console.log('I AM A COMPONENT ERROR', err));
-	}, [broadcast.groceries]);
+	}, [broadcast.groceries, dashboardId, setGroceries]);
 
 	const toggleGrocery = (dashboardId, groceryId) => {
 		axios
