@@ -49,9 +49,10 @@ const validateInput = createPoll => {
 		
 		<section className='create-poll'>
 
-		<form id="poll-input" onSubmit={(event) => event.preventDefault()}>	
+		<form id="create-poll-input" onSubmit={(event) => event.preventDefault()}>	
 
 <h1>Create Poll</h1>
+
 		<TextField
 			key='0'
 			className={'create-poll-input'}

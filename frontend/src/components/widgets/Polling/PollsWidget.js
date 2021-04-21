@@ -10,10 +10,12 @@ import PieChartIcon from '@material-ui/icons/PieChart';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import useSocket from '../../../hooks/useSocket';
 import { useCookies } from 'react-cookie';
+import { light } from '@material-ui/core/styles/createPalette';
 
 const PollsWidgetItem = (props) => {
+
 	const [cookies] = useCookies(['userID']);
-	const dash_id = cookies.dashboardId; // <-------- TEMP. DASHBOARD_ID FOR TESTING
+	const dash_id = cookies.dashboardId; 
 
 	//websocket connection
 	const { sendSocketMessage, broadcast } = useSocket();
@@ -156,9 +158,12 @@ const PollsWidgetItem = (props) => {
 		!state.options || state.options.length < 1 ? null : (
 			<div className="poll-icons">
 				<PieChartIcon className="poll-pie-icon" onClick={showPie} />
-				<DeleteIcon className="poll-delete-icon" onClick={openConfirmDelete} />
 			</div>
 		);
+
+		const deleteIcon = <div className='delete-icon-wrapper'>
+		<DeleteIcon className="poll-delete-icon" onClick={openConfirmDelete} />
+		</div>;
 
 	const initial = (
 		<div className="add-poll-container">
@@ -218,21 +223,28 @@ const PollsWidgetItem = (props) => {
 
 	return (
 		<div className="polls">
-			{pollIcons && mode !== 'DELETE' ? pollIcons : null}
-
+			
 			<div className="header-wrapper">
 				<header className="header">
-					<h1>
+				<h1>Voting Booth</h1>
+			
 						{pollingData.options && mode === 'OPTIONS'
-							? pollingData.title
+								
+							? <h2> {pollingData.title} </h2>
 							: null}
-					</h1>
+					
 				</header>
 			</div>
+			{pollIcons && mode !== 'DELETE' ? pollIcons : null}
 
 			<div>
 				<h3>{core}</h3>
+				
 			</div>
+
+			{pollIcons && mode !== 'DELETE' && mode !== 'PIE' ? deleteIcon : null}
+			
+		
 		</div>
 	);
 };
