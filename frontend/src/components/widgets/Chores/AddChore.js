@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import useSocket from '../../../hooks/useSocket';
 
 export default function AddChore(props) {
-	const dashboardId = 1; // TODO: needs useContext
-	const [input, setInput] = useState('');
+  const [cookies] = useCookies(['userID']);
+  const dashboardId = cookies.dashboardId;
+  const [input, setInput] = useState('');
 
 	const { sendSocketMessage } = useSocket();
+
 
 	const addNewChore = (input) => {
 		axios

@@ -17,15 +17,12 @@ export default function Login(props) {
 		event.preventDefault();
 		axios.post(`/login`, { inputUser: userDetails }).then((res) => {
 			const userData = res.data;
-			axios
-				.get(`/users/${userData.id}/dashboards`)
-				.then((dashRes) => {
-					setCookie('userData', userData, { path: '/' });
-					if (cookies.dashboardId === undefined) {
-						setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
-					}
-				})
-				.then(() => props.handlePage('GRID'));
+
+			axios.get(`/users/${userData.id}/dashboards`).then((dashRes) => {
+				setCookie('userData', userData, { path: '/' });
+        setCookie('dashboardId', dashRes.data[0].id, { path: '/' });
+				props.handlePage('GRID');
+			});
 		});
 	};
 

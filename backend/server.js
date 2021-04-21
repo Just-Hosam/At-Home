@@ -17,7 +17,6 @@ const server = require('http').createServer(app);
 const cors = require('cors');
 app.use(cors());
 
-// if (ENV !== 'production') {
 const environment = 'http://localhost:3030'; // < -- frontend conn.
 const io = require('socket.io')(server, {
 	cors: {
