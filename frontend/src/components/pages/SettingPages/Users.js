@@ -147,7 +147,7 @@ export default function Dashboards() {
 					)}
 				/>
 				<Button type="submit" className="add-btn" variant="contained" fullWidth>
-					Add
+					Invite to Dashboard
 				</Button>
 			</form>
 			<ul>{usersList}</ul>

@@ -60,7 +60,6 @@ export default function RecipeSend(props) {
 			.post(`/dashboards/${dashboardId}/groceries/`, { inputGrocery: ingArr })
 			.then((res) => {
 				props.setGroceries((prev) => [...res.data, ...prev]);
-				// props.handleEdit('SHOW');
 				props.handleClose();
 			});
 	};

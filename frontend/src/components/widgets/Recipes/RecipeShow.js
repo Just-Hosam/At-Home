@@ -37,9 +37,16 @@ export default function RecipeShow(props) {
 	}, [dashboardId, recipeId]);
 
 	const handleDelete = () => {
-		axios
-			.delete(`/dashboards/${dashboardId}/recipes/${recipeId}`)
-			.then(() => props.handleView(''));
+		axios.delete(`/dashboards/${dashboardId}/recipes/${recipeId}`).then(() => {
+			props.handleView('');
+			props.handleClose();
+			props.setRecipes((prev) => {
+				return prev.filter((elem) => {
+					if (elem.id === recipeId) return false;
+					return true;
+				});
+			});
+		});
 	};
 
 	const ingredientsList = ingredients.map((elem) => {

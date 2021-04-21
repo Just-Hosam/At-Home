@@ -113,7 +113,10 @@ export default function RecipeEdit(props) {
 	const submitState = (dashboardId, recipe) => {
 		axios
 			.patch(`/dashboards/${dashboardId}/recipes/${recipe.id}`, recipe)
-			.then(() => props.handleEdit('SHOW'))
+			.then(() => {
+				props.handleEdit('SHOW');
+				// props.handleClose();
+			})
 			.catch((err) => console.log('hi', err));
 	};
 

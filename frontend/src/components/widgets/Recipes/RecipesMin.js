@@ -11,12 +11,12 @@ export default function RecipesMin(props) {
 	const [cookies] = useCookies(['userID']);
 	const dashboardId = cookies.dashboardId;
 
-	const [recipes, setRecipes] = useState([]);
+	// const [recipes, setRecipes] = useState([]);
 
 	useEffect(() => {
 		axios
 			.get(`/dashboards/${dashboardId}/recipes/`)
-			.then((res) => setRecipes(res.data))
+			.then((res) => props.setRecipes(res.data))
 			.catch((err) => console.log('Error getting recipes', err));
 	}, [dashboardId]);
 
@@ -25,7 +25,7 @@ export default function RecipesMin(props) {
 		props.handleOpen();
 	};
 
-	const recipeList = recipes.map((recipe) => (
+	const recipeList = props.recipes.map((recipe) => (
 		<RecipesListItem
 			key={recipe.id}
 			recipeId={recipe.id}

@@ -6,6 +6,7 @@ import urlParams from '../helpers/urlParams';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import ContactUs from './pages/ContactUs';
 import Navbar from './widgets/Navbar/Navbar';
 import Grid from './widgets/Grid';
 import useSocket from '../hooks/useSocket';
@@ -44,6 +45,7 @@ const App = () => {
 			{page === 'SETTINGS' && <Settings handlePage={handlePage} />}
 			{page === 'LOGIN' && <Login handlePage={handlePage} />}
 			{page === 'REGISTER' && <Register handlePage={handlePage} />}
+			{page === 'CONTACT' && <ContactUs />}
 		</div>
 	);
 };

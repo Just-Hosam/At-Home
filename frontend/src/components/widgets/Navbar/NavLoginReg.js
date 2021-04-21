@@ -19,6 +19,13 @@ export default function NavLoginReg(props) {
 			>
 				Register
 			</Button>
+			<Button
+				onClick={() => props.handlePage('CONTACT')}
+				className="navbtn"
+				variant="contained"
+			>
+				Contact
+			</Button>
 		</div>
 	);
 }

@@ -28,6 +28,13 @@ export default function NavLoginReg(props) {
 			<Button onClick={() => logout()} className="navbtn" variant="contained">
 				Logout
 			</Button>
+			<Button
+				onClick={() => props.handlePage('CONTACT')}
+				className="navbtn"
+				variant="contained"
+			>
+				Contact
+			</Button>
 		</div>
 	);
 }

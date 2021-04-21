@@ -26,6 +26,8 @@ export default function RecipeFinal(props) {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
 
+	const [recipes, setRecipes] = useState([]);
+
 	const handleOpen = () => {
 		setOpen(true);
 	};
@@ -44,7 +46,12 @@ export default function RecipeFinal(props) {
 
 	return (
 		<div id="recipes-final">
-			<RecipeMin handleView={handleView} handleOpen={handleOpen} />
+			<RecipeMin
+				recipes={recipes}
+				setRecipes={setRecipes}
+				handleView={handleView}
+				handleOpen={handleOpen}
+			/>
 			<Modal
 				className={classes.modal}
 				open={open}
@@ -63,10 +70,15 @@ export default function RecipeFinal(props) {
 								handleClose={handleClose}
 								handleView={handleView}
 								setGroceries={props.setGroceries}
+								setRecipes={setRecipes}
 							/>
 						)}
 						{modalView === 'RECIPE_ADD' && (
-							<RecipeAdd handleClose={handleClose} handleView={handleView} />
+							<RecipeAdd
+								setRecipes={setRecipes}
+								handleClose={handleClose}
+								handleView={handleView}
+							/>
 						)}
 					</div>
 				</Fade>
