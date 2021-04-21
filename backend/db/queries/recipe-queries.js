@@ -38,12 +38,15 @@ const getRecipe = (recipeId) => {
 		.catch((err) => console.log('Error at recipes queries "getRecipe"', err));
 };
 
-const addRecipe = (dashboardId, { title, directions, time, ingredients }) => {
+const addRecipe = (
+	dashboardId,
+	{ title, directions, time, ingredients, img_url }
+) => {
 	const textRecipes = `
-	INSERT INTO recipes (dashboard_id, title, directions, time)
-	VALUES ($1, $2, $3, $4)
+	INSERT INTO recipes (dashboard_id, title, directions, time, img_url)
+	VALUES ($1, $2, $3, $4, $5)
 	RETURNING *;`;
-	const valuesRecipes = [dashboardId, title, directions, time];
+	const valuesRecipes = [dashboardId, title, directions, time, img_url];
 
 	return db
 		.query(textRecipes, valuesRecipes)
