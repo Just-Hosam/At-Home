@@ -3,9 +3,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Chip from '../Misc/Chip';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import List from '@material-ui/core/List';
@@ -16,17 +14,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
-
 export default function Chores(props) {
   const [cookies] = useCookies(['userID']);
   const dashboardId = cookies.dashboardId;
-  const classes = useStyles();
   const parentUsers = [...props.choreState.dashboardUsers];
   const setParentUsers = props.choreState.setDashboardUsers;
   const parentChores = [...props.choreState.choresList];
@@ -108,8 +98,8 @@ export default function Chores(props) {
   if (parentDone.length === parentChores.length) {
     trophy = (
       <i
+        id="chores-trophy"
         className="fas fa-trophy fa-3x"
-        style={{ color: 'rgb(96, 83, 247)' }}
       ></i>
     );
   } else {
@@ -134,11 +124,10 @@ export default function Chores(props) {
           if (value.name === 'none') {
             secondarySwitcher = (
               <FormControl size="small" className="chore-selector" variant="outlined">
-                <InputLabel id="demo-simple-select-label">Users</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label">Users</InputLabel>
                 <Select
-                  // variant="outlined"
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
                   defaultValue=""
                   onChange={(e) => handleChange(e, value.id)}
                 >
@@ -172,7 +161,6 @@ export default function Chores(props) {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <ListItemIcon>
                         <Checkbox
-                          // edge="start"
                           className="chore-checkbox"
                           checked={value.done}
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -190,7 +178,6 @@ export default function Chores(props) {
                     </ListItemSecondaryAction>
                   </div>
                 </ListItem>
-                {/* <Divider className="chore-divider" /> */}
               </div>
             );
           } else {
