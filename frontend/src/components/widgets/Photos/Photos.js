@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Fab from '@material-ui/core/Fab';
 
 import useSocket from '../../../hooks/useSocket';
 import { useCookies } from 'react-cookie';
@@ -22,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
 	header: {
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent: 'space-between',
 		height: 50,
-		paddingLeft: theme.spacing(4),
+		padding: '0 10px',
 		backgroundColor: theme.palette.background.default,
 	},
 	img: {
@@ -107,8 +109,16 @@ export default function Photos(props) {
 	};
 
 	return (
-		<div className={classes.root}>
-			<Paper square elevation={0} className={classes.header}>
+		<div className={classes.root} id="photos-carosel">
+			<Fab
+				color="primary"
+				id="photos-delete-btn"
+				aria-label="delete"
+				onClick={handleDelete}
+			>
+				<DeleteIcon />
+			</Fab>
+			{/* <Paper square elevation={0} className={classes.header}>
 				<Typography>
 					{maxSteps > 0 && photos[activeStep].text}
 
@@ -118,7 +128,7 @@ export default function Photos(props) {
 						</IconButton>
 					</span>
 				</Typography>
-			</Paper>
+			</Paper> */}
 			{maxSteps > 0 && (
 				<img
 					className={classes.img}
@@ -128,12 +138,14 @@ export default function Photos(props) {
 			)}
 			<MobileStepper
 				steps={maxSteps}
+				id="carosel-stepper"
 				position="static"
 				variant="text"
 				activeStep={activeStep}
 				nextButton={
 					<Button
 						size="small"
+						className="stepper-btn"
 						onClick={handleNext}
 						onKeyDown={(k) => handleNextKey(k.key)}
 						disabled={activeStep === maxSteps - 1}
@@ -149,6 +161,7 @@ export default function Photos(props) {
 				backButton={
 					<Button
 						size="small"
+						className="stepper-btn"
 						onClick={handleBack}
 						onKeyDown={(k) => handleBackKey(k.key)}
 						disabled={activeStep === 0}
