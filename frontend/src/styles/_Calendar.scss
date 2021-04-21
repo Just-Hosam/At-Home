@@ -5,34 +5,64 @@
 	overflow: auto;
   padding: 10px;
   color: var(--accent-color-alt);
- 
+  background-color: var(--card-color);
+  // color:#f786a8;
 }
-
-
 
 .content-bottom-divider{
   margin: 10px;
+  background-color: var(--card-color);
 }
 
 .calendar-dialog-wrapper{
-  width:400px
+  width:400px;
+  background-color: var(--card-color);
 }
 
 .calendar-dialog-head{
   color:var(--accent-color);
+  background-color: var(--card-color);
   font-weight: bold;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
 }
 
 #calendar-dialog-body{
-  color:var(--text-color-alt);
-  font-weight: bold;
-  font-size: 1.2rem;
+  color:var(--text-color);
+  background-color: var(--card-color);
+  
+  font-size: 1.5rem;
 }
 
-.calendar-dialog-foot{
-  color:grey;
-  font-size: 2.5rem;
+#alert-dialog-slide-description{
+  background-color: var(--card-color);
+  color:var(--text-color-alt);
+  font-size: 0.8rem;
+}
+
+.calendar-dialog-bottom{
+  background-color: var(--card-color);
+}
+
+
+
+form {
+ 
+
+  .calendar-inputs{
+    margin-bottom: 10px;
+
+    > label {
+      color: var(--text-color-alt);
+    }
+
+    .MuiInputBase-root {
+      > input {
+        color: var(--text-color);
+      }
+    }
+  }
+
+
 }
 
 #calendar-save-btn{
@@ -52,10 +82,10 @@
 }
 
 #calendar-cancel-btn{
-  color: white;
-  background-color: lightgray;
+  color: var(--text-color);
+  background-color: transparent;
   &:hover{
-    background-color: grey
+    color: var(--accent-color)
   }
 }
 
@@ -68,10 +98,21 @@
   }
 }
 
+
+
+
+//calendar component digging
+
+.calendarWrapper{
+  position: relative;
+  
+}
+
 .modeWrapper{
 
   .modeButton{
     color:var(--text-color);
+   
     &:hover{
       color: var(--accent-color-alt);
     }
@@ -81,9 +122,30 @@
     color: var(--accent-color);
   }
     
-  
   }
 
+.dailyTimeLineWrapper{
+cursor: pointer;
+margin-top: 10px;
+background-color: transparent;
+height: 55px !important;
+border: none;
+border-left-style: solid;
+border-left-width:5px;
+border-left-color: var(--accent-color-alt);
+margin-right:40px;
+padding-bottom: 10px;
+overflow:hidden;
+
+}
+
+.dailyHourText{
+  display: none !important;
+}
+
+.yearlyMonth{
+  color:var(--text-color-alt)
+}
 
 
   .calendarHeaderButtons{
@@ -114,10 +176,43 @@
 
  .calendarDayOfWeek{
    color:var(--text-color);
+   
    font-weight: bold;
    padding-top:5px;
  }
 
  .weekRow{
    color:var(--text-color);
+ }
+
+ .eventTitle{
+   background-color:var(--accent-color-alt);
+  border-radius: 10px;
+
+ 
+ }
+
+ .dailyEventTitle{
+  background-color:var(--accent-color-alt);
+  border-radius: 10px;
+  margin: auto;
+  padding: 10px 10px;
+ }
+
+
+ .createEventBtn{
+ display: block;
+ text-align: left;
+ margin-left:10px;
+ margin-top: -82px;
+ font-size: 1.5rem;
+ color: var(--text-color-alt);
+
+ &:hover{
+  color: var(--accent-color);
+ }
+ }
+
+ .createEventBtn-hide{
+   display: none;
  }
