@@ -28,7 +28,6 @@ const getOptions = values => {
 };
 
 const createPoll = values => {
-
 		const text = `
 	INSERT INTO polls (dashboard_id, title, description) 
 	VALUES($1,$2,$3);`;
@@ -40,7 +39,6 @@ const createPoll = values => {
 };
 
 const createOptions = values => {
-
 	const text = `
 	INSERT INTO options (poll_id, choice, votes) 
 	VALUES ($1,$2,0),($1,$3,0),($1,$4,0);`;
