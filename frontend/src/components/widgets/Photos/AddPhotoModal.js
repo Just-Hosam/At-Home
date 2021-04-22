@@ -86,7 +86,7 @@ export default function AddPhotoModal(props) {
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{
-					timeout: 500,
+					timeout: 200,
 				}}
 			>
 				<Fade in={open}>

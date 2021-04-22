@@ -1,8 +1,9 @@
 INSERT INTO photos (dashboard_id, img_url, text) VALUES
 (1, 'https://images.pexels.com/photos/5779170/pexels-photo-5779170.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 'Chirstmas dinner with the crew'),
-(1, 'https://images.unsplash.com/photo-1545622783-b3e021430fee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1948&q=80', 'Happy holidays, be merry!'),
 (1, 'https://images.unsplash.com/photo-1600628421066-f6bda6a7b976?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80', 'Family pizza night'),
 (1, 'https://images.pexels.com/photos/39691/family-pier-man-woman-39691.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260', 'Sunset at the pier'),
+(1, 'https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/andy%20fam%20gathering%2002.png?raw=true', 'All Andy'),
+(1, 'https://images.unsplash.com/photo-1545622783-b3e021430fee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1948&q=80', 'Happy holidays, be merry!'),
 (1, 'https://images.unsplash.com/photo-1557671498-c6947a1c80e3?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80', 'That time of the year!'),
 (1, 'https://images.unsplash.com/photo-1565992441121-4367c2967103?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1482&q=80', 'Snow session'),
 (1, 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1306&q=80', 'So fresh!'),

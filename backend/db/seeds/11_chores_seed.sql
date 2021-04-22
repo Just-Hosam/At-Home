@@ -1,6 +1,6 @@
 INSERT INTO chores (dashboard_id, text, name, done) VALUES
-(1, 'Complete final project', default, default),
-(1, 'Deploy final project', default, default),
+(1, 'Complete final project', 'Andy Lindsay', default),
+(1, 'Deploy final project', 'Andy Lindsay', default),
 (1, 'Prep weekly meals', default, true),
 (1, 'Vacuum the floors', default, true),
 (2, 'put away clean dishes', default, default),
