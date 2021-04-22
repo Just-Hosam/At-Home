@@ -22,7 +22,16 @@ export default function Register(props) {
 		event.preventDefault();
 		axios.post(`/users/`, { inputUser: userDetails }).then((res) => {
 			setCookie('userData', res.data, { path: '/' });
-			props.handlePage('GRID');
+			axios
+				.post(`/users/${res.data.id}/dashboards`, {
+					dashboardObj: {
+						name: 'New Dashboard',
+					},
+				})
+				.then((dashRes) => {
+					setCookie('dashboardId', dashRes.data.dashboard_id, { path: '/' });
+					props.handlePage('GRID');
+				});
 		});
 	};
 
