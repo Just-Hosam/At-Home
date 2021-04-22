@@ -25,3 +25,27 @@
 		border-radius: 100px;
 	}
 }
+
+@media only screen, (max-width: 800px) {
+	#grid-wrapper {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding: 0;
+
+		> div {
+			min-height: 400px;
+			max-height: 600px;
+		}
+	}
+
+	#nav-user-details {
+		p {
+			display: none;
+		}
+	}
+
+	#contact-page {
+		width: 90%;
+	}
+}
