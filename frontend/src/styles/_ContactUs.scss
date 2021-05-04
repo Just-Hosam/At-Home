@@ -9,6 +9,16 @@
 	justify-content: space-evenly;
 	width: 600px;
 
+	.github-link {
+		width: 100%;
+		text-decoration: none;
+
+		.github-btn {
+			background-color: var(--accent-color-alt);
+			color: var(--card-color);
+		}
+	}
+
 	header {
 		display: flex;
 		flex-direction: column;
