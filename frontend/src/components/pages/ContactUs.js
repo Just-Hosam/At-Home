@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Button from '@material-ui/core/Button';
+
 export default function ContactUs() {
 	return (
 		<div id="contact-page">
@@ -16,10 +18,7 @@ export default function ContactUs() {
 						<span>hosamdahrouj56@gmail.com</span>
 					</div>
 					<div className="contact-icons">
-						<a
-							target="_blank"
-							href="https://www.linkedin.com/in/hosam-dahrooge/"
-						>
+						<a target="_blank" href="https://www.linkedin.com/in/hosam-dahrooge/">
 							<i class="fab fa-linkedin"></i>
 						</a>
 						<a target="_blank" href="https://github.com/Just-Hosam">
@@ -47,10 +46,7 @@ export default function ContactUs() {
 						<span>kylej.lemmon@gmail.com</span>
 					</div>
 					<div className="contact-icons">
-						<a
-							target="_blank"
-							href="https://www.linkedin.com/in/kylejameslemmon/"
-						>
+						<a target="_blank" href="https://www.linkedin.com/in/kylejameslemmon/">
 							<i class="fab fa-linkedin"></i>
 						</a>
 						<a target="_blank" href="https://github.com/lemmonk">
@@ -59,6 +55,11 @@ export default function ContactUs() {
 					</div>
 				</li>
 			</ul>
+			<a target="_blank" className="github-link" href="https://github.com/Just-Hosam/modular_dashboard">
+				<Button className="github-btn" variant="contained" fullWidth>
+					Project Github Repo
+				</Button>
+			</a>
 		</div>
 	);
 }
