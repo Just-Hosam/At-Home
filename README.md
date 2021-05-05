@@ -79,7 +79,12 @@ NOTE: App.scss is our main file, all additional scss files created must have an 
 
 ## Final Product
 
-Screenshots coming soon!
+!["Light Grid"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Light-Grid.png?raw=true)
+!["Light Recipe"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Light-Recipe.png?raw=true)
+!["Light Settings Users"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Settings-Users.png?raw=true)
+!["Dark Grid"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Dark-Grid.png?raw=true)
+!["Dark Gallery"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Dark-Gallery.png?raw=true)
+!["Dark Settings Appearance"](https://github.com/Just-Hosam/modular_dashboard/blob/main/private_docs/ReadMePics/Settings-Appearance.png?raw=true)
 
 ## Known Issues/Bugs
 
